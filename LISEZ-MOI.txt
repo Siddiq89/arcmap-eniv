@@ -1,0 +1,41 @@
+ArcMap 10.8 pas à pas — site d'apprentissage pour l'ENIV
+=========================================================
+
+OUVRIR LE SITE
+  Double-cliquez sur index.html (fonctionne sans Internet, sauf les polices
+  et les vidéos YouTube). Pour la salle informatique, copiez tout le dossier
+  sur un partage réseau ou un serveur web de l'école.
+
+CONTENU DU DOSSIER
+  index.html          page du site
+  style.css           apparence
+  app.js              fonctionnement (navigation, quiz, progression)
+  donnees/cours.js    niveaux, leçons, exercices et quiz (modifiable)
+  donnees/videos.js   liste des vidéos (modifiable)
+  donnees/fichiers.js liste des fichiers d'exemple à télécharger (modifiable)
+  fichiers/           données de TP (shapefiles zippés, tables, MNT, scripts)
+  videos/             placez ici vos fichiers .mp4
+
+AJOUTER UNE VIDÉO (sans programmer)
+  1. Ouvrez le site, page « Administration ».
+  2. Choisissez le niveau et la leçon, collez le lien YouTube
+     ou écrivez videos/mon_fichier.mp4 (après avoir copié le fichier
+     dans le dossier videos/).
+  3. Cliquez « Télécharger videos.js » et remplacez donnees/videos.js
+     par le fichier téléchargé. Tous les élèves voient alors la vidéo.
+
+  Variante : ouvrez donnees/videos.js avec le Bloc-notes et copiez un bloc { ... }.
+
+PROGRESSION DES ÉLÈVES
+  Elle est enregistrée dans le navigateur de chaque poste (leçons terminées
+  et meilleur score de chaque quiz). Un bouton en bas de l'accueil l'efface.
+
+MODIFIER LES LEÇONS OU LES QUIZ
+  Éditez donnees/cours.js (texte en HTML simple). Dans un quiz, "bonne"
+  est le numéro de la bonne réponse en comptant à partir de 0.
+
+FICHIERS D'EXEMPLE
+  Page « Téléchargements » du site, et dans chaque leçon. Les données
+  (zone d'étude fictive) se décompressent dans C:\ENIV\ -> C:\ENIV\TP.
+  Pour ajouter un fichier : copiez-le dans fichiers/ et ajoutez un bloc
+  dans donnees/fichiers.js (mode d'emploi en tête du fichier).

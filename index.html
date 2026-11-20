@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ArcMap 10.8 pas à pas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#accueil" aria-label="Accueil">
+      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
+        <rect x="1" y="1" width="32" height="32" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M6 24c4-6 8-2 11-7s7-6 11-3" fill="none" stroke="var(--water)" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M6 15c3-3 6-1 8-4s5-4 8-2" fill="none" stroke="var(--contour)" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="24" cy="23" r="2.6" fill="var(--veg)"/>
+      </svg>
+      <span><b>ArcMap 10.8 pas à pas</b><small>ENIV · ArcGIS Desktop et ArcToolbox</small></span>
+    </a>
+    <nav class="topnav" aria-label="Navigation principale">
+      <a href="#accueil" data-nav="accueil">Parcours</a>
+      <a href="#videos" data-nav="videos">Vidéos</a>
+      <a href="#telechargements" data-nav="telechargements">Téléchargements</a>
+      <a href="#admin" data-nav="admin">Administration</a>
+    </nav>
+    <div class="meter" title="Progression globale">
+      <div class="bar"><i id="meter-fill" style="width:0%"></i></div>
+      <span id="meter-text">0 %</span>
+    </div>
+  </div>
+</header>
+
+<div id="app"></div>
+
+<footer>
+  <div class="wrap">
+    <span>Parcours de formation ArcMap 10.8 pour les élèves de l'ENIV.</span>
+    <span>La progression est enregistrée dans ce navigateur.</span>
+  </div>
+</footer>
+
+<script src="donnees/cours.js"></script>
+<script src="donnees/videos.js"></script>
+<script src="donnees/fichiers.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
