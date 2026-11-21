@@ -247,3 +247,12 @@ footer .wrap { padding-block: 18px; display: flex; justify-content: space-betwee
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 .files.off .btn { opacity: .45; pointer-events: none; }
 .hero .enseignant { margin: 0 0 18px; font-size: .95rem; letter-spacing: .02em; }
+.logiciels { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: calc(var(--radius) + 4px); background: var(--paper); justify-self: start; margin-bottom: 4px; }
+.logiciels a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: .92rem; padding: 6px 14px; border-radius: var(--radius); }
+.logiciels a:hover { color: var(--ink); background: var(--surface-2); }
+.logiciels a.on { background: var(--water); color: var(--surface); }
+main > .logiciels { margin-bottom: 14px; }
+.merci { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 8px; }
+.merci li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); min-width: 0; }
+.merci a { font-weight: 600; overflow-wrap: anywhere; }
+.merci .tag { white-space: nowrap; }

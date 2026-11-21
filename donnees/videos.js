@@ -15,7 +15,6 @@
  *                 ou fichier local placé dans le dossier videos/ (ex. "videos/zone_tampon.mp4")
  *   duree       : texte libre, ex. "12:30"
  *   description : une ou deux phrases
- *   secours     : (facultatif) lien proposé si le fichier local est absent
  *
  * Attention : chaque bloc se termine par une virgule, sauf le dernier.
  */
@@ -82,7 +81,7 @@ window.VIDEOS = [
     "titre": "Digitalisation des couches (polygone, polyligne et point)",
     "url": "https://www.youtube.com/watch?v=Te24LU_Mles",
     "duree": "",
-    "description": "Chaîne YouTube : Formation SIG, MINES, STATISTIQUES FSMS."
+    "description": "Chaîne YouTube : Formation SIG, Mines, Statistiques FSMS."
   },
   {
     "niveau": "n2",
@@ -130,7 +129,7 @@ window.VIDEOS = [
     "titre": "Créer une mise en page et exporter la carte",
     "url": "https://www.youtube.com/watch?v=-xUIG9CwSaY",
     "duree": "",
-    "description": "Chaîne YouTube : Formation SIG, MINES, STATISTIQUES FSMS."
+    "description": "Chaîne YouTube : Formation SIG, Mines, Statistiques FSMS."
   },
   {
     "niveau": "n3",
@@ -218,7 +217,7 @@ window.VIDEOS = [
     "titre": "Utiliser Model Builder dans ArcGIS",
     "url": "https://www.youtube.com/watch?v=ykV3NwSxwlo",
     "duree": "",
-    "description": "Chaîne YouTube : Formation SIG, MINES, STATISTIQUES FSMS."
+    "description": "Chaîne YouTube : Formation SIG, Mines, Statistiques FSMS."
   },
   {
     "niveau": "n5",
@@ -274,7 +273,7 @@ window.VIDEOS = [
     "titre": "Carte des pentes à partir d'un MNT",
     "url": "https://www.youtube.com/watch?v=4tAnUTb_vmY",
     "duree": "",
-    "description": "Chaîne YouTube : EGD ACADEMIA."
+    "description": "Chaîne YouTube : EGD Academia."
   },
   {
     "niveau": "n7",

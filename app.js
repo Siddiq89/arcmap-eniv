@@ -1,9 +1,36 @@
-/* ArcMap 10.8 pas à pas : navigation, progression, quiz, vidéos et administration. */
+/* SIG pas à pas (ArcMap, ArcGIS Pro, QGIS) : navigation, progression, quiz, vidéos et administration. */
 (function () {
   "use strict";
 
-  var COURS = window.COURS || { niveaux: [] };
+  // Un parcours par logiciel : ArcMap (n1…), ArcGIS Pro (p1…), QGIS (q1…)
+  var PARCOURS = [window.COURS, window.COURS_PRO, window.COURS_QGIS].filter(Boolean);
+  var DEFAUTS = {
+    arcmap: { cle: "arcmap", nom: "ArcMap 10.8", court: "ArcMap", logiciel: "ArcGIS Desktop 10.8", recherche: "ArcMap 10.8",
+      accroche: "De la première carte à la cartographie des risques",
+      lead: "Un parcours progressif pour apprendre ArcMap avec les boîtes à outils : interface, données, symbologie, géotraitement avec ArcToolbox, ModelBuilder, programmation Python, puis hydrologie à partir du MNT et cartes de vulnérabilité aux risques naturels (inondation, feux de forêt, séisme, tsunami, glissements). Chaque leçon propose un exercice, des vidéos et un quiz de fin de niveau." }
+  };
+  PARCOURS.forEach(function (c, i) {
+    var d = DEFAUTS[c.cle || "arcmap"] || {};
+    for (var k in d) if (c[k] == null) c[k] = d[k];
+    if (!c.cle) c.cle = "arcmap";
+  });
+  var CLE_PARCOURS = "arcmap-eniv-parcours";
+  var COURS = PARCOURS[0] || { niveaux: [] };
   var NIVEAUX = COURS.niveaux;
+  function choisirParcours(cle) {
+    for (var i = 0; i < PARCOURS.length; i++) if (PARCOURS[i].cle === cle) {
+      COURS = PARCOURS[i]; NIVEAUX = COURS.niveaux; ecrire(CLE_PARCOURS, cle); return true;
+    }
+    return false;
+  }
+  function parcoursDe(id) {
+    for (var i = 0; i < PARCOURS.length; i++)
+      for (var j = 0; j < PARCOURS[i].niveaux.length; j++) {
+        var n = PARCOURS[i].niveaux[j];
+        if (n.id === id || id.indexOf(n.id + "-") === 0) return PARCOURS[i];
+      }
+    return null;
+  }
   var CLE_PROGRESSION = "arcmap-eniv-progression";
   var CLE_VIDEOS = "arcmap-eniv-videos-ajouts";
   var CLE_MASQUEES = "arcmap-eniv-videos-masquees";
@@ -82,13 +109,8 @@
     var m = String(url || "").match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
     return m ? m[1] : null;
   }
-  function idDrive(url) {
-    var m = String(url || "").match(/drive\.google\.com\/(?:file\/d\/|open\?id=)([A-Za-z0-9_-]{20,})/);
-    return m ? m[1] : null;
-  }
   function typeVideo(url) {
     if (idYoutube(url)) return "youtube";
-    if (idDrive(url)) return "drive";
     if (/\.(mp4|webm|ogg|ogv|m4v)(\?.*)?$/i.test(url || "")) return "fichier";
     return "lien";
   }
@@ -96,17 +118,14 @@
     var t = typeVideo(v.url);
     var ecran;
     if (t === "fichier") {
-      ecran = '<video controls preload="metadata" src="' + esc(encodeURI(v.url)) + '"' + (v.secours ? ' data-secours="' + esc(v.secours) + '"' : "") + '></video>';
+      ecran = '<video controls preload="metadata" src="' + esc(encodeURI(v.url)) + '"' + '></video>';
     } else if (t === "youtube") {
       ecran = '<button type="button" data-yt="' + esc(idYoutube(v.url)) + '">▶ Lire ici</button>';
-    } else if (t === "drive") {
-      ecran = '<button type="button" data-drive="' + esc(idDrive(v.url)) + '">▶ Lire ici</button>';
     } else {
       ecran = '<a class="btn small" href="' + esc(v.url) + '" target="_blank" rel="noopener">Ouvrir la vidéo ↗</a>';
     }
     var lien = t === "youtube"
-      ? ' · <a href="https://www.youtube.com/watch?v=' + esc(idYoutube(v.url)) + '" target="_blank" rel="noopener">Ouvrir sur YouTube ↗</a>'
-      : t === "drive" ? ' · <a href="https://drive.google.com/file/d/' + esc(idDrive(v.url)) + '/view" target="_blank" rel="noopener">Ouvrir dans Google Drive ↗</a>' : "";
+      ? ' · <a href="https://www.youtube.com/watch?v=' + esc(idYoutube(v.url)) + '" target="_blank" rel="noopener">Ouvrir sur YouTube ↗</a>' : "";
     var src = v._source === "local" ? ' <span class="tag local" title="Ajoutée depuis la page Administration de ce poste">ajoutée sur ce poste</span>' : "";
     var lec = v.lecon ? trouverLecon(v.lecon) : null;
     return '<div class="video"><div class="screen">' + ecran + '</div><div class="info">' +
@@ -121,11 +140,6 @@
   }
   // Lecteur YouTube intégré au clic ; message clair pour les vidéos locales introuvables
   app.addEventListener("click", function (e) {
-    var d = e.target.closest("[data-drive]");
-    if (d) {
-      d.parentNode.innerHTML = '<iframe src="https://drive.google.com/file/d/' + d.getAttribute("data-drive") + '/preview" title="Vidéo Google Drive" allow="autoplay; fullscreen" allowfullscreen></iframe>';
-      return;
-    }
     var b = e.target.closest("[data-yt]");
     if (!b) return;
     var id = b.getAttribute("data-yt");
@@ -135,9 +149,7 @@
     var el = e.target;
     if (el && el.tagName === "VIDEO") {
       var s = el.getAttribute("src");
-      var sec = el.getAttribute("data-secours");
-      el.parentNode.innerHTML = '<div class="err">Fichier introuvable :<br><code>' + esc(decodeURI(s)) + '</code><br>Placez la vidéo dans le dossier <code>videos/</code> du site.' +
-        (sec ? '<br><br><a class="btn small" href="' + esc(sec) + '" target="_blank" rel="noopener">Voir sur Google Drive ↗</a>' : "") + '</div>';
+      el.parentNode.innerHTML = '<div class="err">Fichier introuvable :<br><code>' + esc(decodeURI(s)) + '</code><br>Placez la vidéo dans le dossier <code>videos/</code> du site.' + '</div>';
     }
   }, true);
 
@@ -185,13 +197,20 @@
   }
 
   /* ---------------- Vues ---------------- */
+  function selecteur(cible) {
+    if (PARCOURS.length < 2) return "";
+    return '<div class="logiciels" role="tablist" aria-label="Choisir le logiciel">' + PARCOURS.map(function (c) {
+      return '<a role="tab" href="#' + c.cle + (cible ? "/" + cible : "") + '"' + (c === COURS ? ' aria-selected="true" class="on"' : "") + '>' + esc(c.nom) + '</a>';
+    }).join("") + '</div>';
+  }
+
   function vueAccueil() {
     var suite = prochaineEtape();
     var nbLecons = toutesLecons().length;
     var html = '<section class="hero"><canvas aria-hidden="true"></canvas><div class="wrap">' +
-      '<span class="eyebrow">ArcGIS Desktop 10.8 · ' + NIVEAUX.length + ' niveaux · ' + nbLecons + ' leçons</span>' +
-      '<h1>De la première carte à la cartographie des risques</h1>' +
-      '<p class="lead">Un parcours progressif pour apprendre ArcMap avec les boîtes à outils : interface, données, symbologie, géotraitement avec ArcToolbox, ModelBuilder, programmation Python, puis hydrologie à partir du MNT et cartes de vulnérabilité aux risques naturels (inondation, feux de forêt, séisme, tsunami, glissements). Chaque leçon propose un exercice, des vidéos et un quiz de fin de niveau.</p>' +
+      selecteur() + '<span class="eyebrow">' + esc(COURS.logiciel) + ' · ' + NIVEAUX.length + ' niveaux · ' + nbLecons + ' leçons</span>' +
+      '<h1>' + esc(COURS.accroche) + '</h1>' +
+      '<p class="lead">' + esc(COURS.lead) + '</p>' +
       '<p class="enseignant">Enseignant : <b>BOUHAFSI SIDDIQ</b></p>' +
       '<div class="actions">' +
       (suite ? '<a class="btn primary" href="#' + suite.hash + '">' + (pctGlobal() ? "Reprendre : " : "Commencer : ") + esc(suite.label) + ' →</a>'
@@ -215,8 +234,8 @@
     html += '</ol>';
 
     html += '<div class="section-title"><h2>Comment travailler</h2></div><div class="grid-2">' +
-      '<div class="panel"><h3>Pour les élèves</h3><p>Lisez la leçon, regardez la vidéo, faites l\'exercice dans ArcMap, puis cliquez sur « Marquer comme terminée ». Le quiz valide le niveau.</p><p>La progression reste enregistrée sur ce navigateur.</p></div>' +
-      '<div class="panel"><h3>Pour les enseignants</h3><p>Ajoutez des vidéos YouTube ou des fichiers .mp4 depuis la page <a href="#admin">Administration</a>, sans toucher au code.</p><p>Le contenu des leçons et des quiz se trouve dans <code>donnees/cours.js</code>.</p></div>' +
+      '<div class="panel"><h3>Pour les élèves</h3><p>Lisez la leçon, regardez la vidéo, faites l\'exercice dans ' + esc(COURS.court) + ', puis cliquez sur « Marquer comme terminée ». Le quiz valide le niveau.</p><p>La progression reste enregistrée sur ce navigateur.</p></div>' +
+      '<div class="panel"><h3>Pour les enseignants</h3><p>Ajoutez des vidéos YouTube ou des fichiers .mp4 depuis la page <a href="#admin">Administration</a>, sans toucher au code.</p><p>Le contenu des leçons et des quiz se trouve dans <code>donnees/cours.js</code> (ArcMap), <code>cours_pro.js</code> (ArcGIS Pro) et <code>cours_qgis.js</code> (QGIS).</p></div>' +
       '<div class="panel"><h3>Données de TP</h3><p>Téléchargez les <a href="#telechargements">fichiers d\'exemple</a> (zone d\'étude fictive : communes, routes, oueds, forages, occupation du sol, MNT, tables et scripts) et décompressez-les dans <code>C:\\ENIV\\</code>.</p></div>' +
       '</div>';
     html += '<div class="section-title"><h2>Réinitialiser</h2></div><div class="row"><button class="btn small danger" id="reset" type="button">Effacer ma progression</button><span id="reset-msg" class="tag" hidden>Cliquez à nouveau pour confirmer</span></div>';
@@ -245,7 +264,7 @@
     return h + '</nav>';
   }
   function entete(n, titre) {
-    return '<div class="crumbs"><a href="#accueil">Parcours</a> / <a href="#' + n.id + '">Niveau ' + n.numero + '</a>' + (titre ? ' / ' + esc(titre) : "") + '</div>';
+    return '<div class="crumbs"><a href="#' + COURS.cle + '">Parcours ' + esc(COURS.nom) + '</a> / <a href="#' + n.id + '">Niveau ' + n.numero + '</a>' + (titre ? ' / ' + esc(titre) : "") + '</div>';
   }
 
   function vueNiveau(n) {
@@ -266,7 +285,7 @@
     h += '</table></div>' + (ficsN.length ? '<h3>Fichiers d\'exemple du niveau</h3>' + blocFichiers(ficsN) : "") +
       '<h3>Toutes les vidéos du niveau</h3>' +
       blocVideos(vids, 'Aucune vidéo pour ce niveau pour l\'instant. Un enseignant peut en ajouter depuis la page <a href="#admin">Administration</a>.') +
-      '<div class="lesson-foot"><a class="btn" href="#accueil">← Parcours</a><a class="btn primary" href="#' + n.lecons[0].id + '">Commencer la leçon 1 →</a></div>' +
+      '<div class="lesson-foot"><a class="btn" href="#' + COURS.cle + '">← Parcours</a><a class="btn primary" href="#' + n.lecons[0].id + '">Commencer la leçon 1 →</a></div>' +
       '</article></div></main>';
     app.innerHTML = h;
   }
@@ -278,7 +297,7 @@
     var precedent = r.idx > 0 ? n.lecons[r.idx - 1].id : n.id;
     var suivant = r.idx < n.lecons.length - 1 ? n.lecons[r.idx + 1].id : n.id + "-quiz";
     var fait = !!prog.lecons[l.id];
-    var recherche = "https://www.youtube.com/results?search_query=" + encodeURIComponent("ArcMap 10.8 " + l.titre);
+    var recherche = "https://www.youtube.com/results?search_query=" + encodeURIComponent(COURS.recherche + " " + l.titre);
     var h = '<main class="wrap">' + entete(n, l.titre) +
       '<div class="layout">' + barreLaterale(n, l.id) + '<article class="lesson">' +
       '<span class="eyebrow">Niveau ' + n.numero + ' · leçon ' + (r.idx + 1) + ' sur ' + n.lecons.length + '</span>' +
@@ -288,7 +307,7 @@
       blocVideos(vids, 'Pas encore de vidéo pour cette leçon. <a href="' + recherche + '" target="_blank" rel="noopener">Chercher une vidéo sur YouTube ↗</a> puis l\'ajouter depuis la page <a href="#admin">Administration</a>.') +
       '<h3>Cours</h3><div class="body">' + l.contenu + '</div>' +
       (fics.length ? '<h3>Fichiers d\'exemple</h3>' + blocFichiers(fics) : "") +
-      '<h3>Exercice pratique dans ArcMap</h3><div class="exercice">' + l.exercice + '</div>' +
+      '<h3>Exercice pratique dans ' + esc(COURS.court) + '</h3><div class="exercice">' + l.exercice + '</div>' +
       '<div class="lesson-foot"><a class="btn" href="#' + precedent + '">← Précédent</a>' +
       '<button class="btn ' + (fait ? "done" : "primary") + '" id="toggle-fait" type="button">' + (fait ? "Leçon terminée ✓" : "Marquer comme terminée") + '</button>' +
       '<a class="btn" href="#' + suivant + '">Suivant →</a></div>' +
@@ -337,7 +356,7 @@
     h += '</ol><div class="row"><button class="btn primary" type="submit">Valider mes réponses</button><button class="btn" type="button" id="quiz-reset">Recommencer</button></div></form>' +
       '<div id="quiz-score"></div>' +
       '<div class="lesson-foot"><a class="btn" href="#' + n.lecons[n.lecons.length - 1].id + '">← Dernière leçon</a>' +
-      (niveau("n" + (n.numero + 1)) ? '<a class="btn" href="#n' + (n.numero + 1) + '">Niveau suivant →</a>' : '<a class="btn" href="#accueil">Retour au parcours</a>') + '</div>' +
+      (NIVEAUX[NIVEAUX.indexOf(n) + 1] ? '<a class="btn" href="#' + NIVEAUX[NIVEAUX.indexOf(n) + 1].id + '">Niveau suivant →</a>' : '<a class="btn" href="#' + COURS.cle + '">Retour au parcours</a>') + '</div>' +
       '</article></div></main>';
     app.innerHTML = h;
 
@@ -376,21 +395,22 @@
 
   function vueVideos() {
     var all = toutesVideos();
-    var h = '<main class="wrap"><div class="level-head"><span class="eyebrow">Médiathèque</span><h1>Vidéos tutorielles</h1><p>Toutes les vidéos du parcours, classées par niveau. ' + all.length + ' vidéo' + (all.length > 1 ? "s" : "") + ' au total.</p></div>';
+    var h = '<main class="wrap">' + selecteur("videos") + '<div class="level-head"><span class="eyebrow">Médiathèque · ' + esc(COURS.nom) + '</span><h1>Vidéos tutorielles</h1><p>Toutes les vidéos du parcours ' + esc(COURS.nom) + ', classées par niveau.</p></div>';
     NIVEAUX.forEach(function (n) {
       var v = all.filter(function (x) { return x.niveau === n.id; });
       h += '<div class="section-title"><h2>' + n.numero + '. ' + esc(n.titre) + '</h2><p class="scale">' + esc(n.echelle) + '</p></div>' +
         blocVideos(v, 'Aucune vidéo pour ce niveau.');
     });
-    h += '<div class="section-title"><h2>Ajouter une vidéo</h2></div><p>Rendez-vous sur la page <a href="#admin">Administration</a>.</p></main>';
+    h += '<div class="section-title"><h2>Merci aux chaînes YouTube</h2></div><p>Ces vidéos sont l\'œuvre de créateurs qui partagent gratuitement leur savoir. Voir la page <a href="#remerciements">Remerciements</a> pour la liste complète des chaînes.</p>' +
+      '<div class="section-title"><h2>Ajouter une vidéo</h2></div><p>Rendez-vous sur la page <a href="#admin">Administration</a>.</p></main>';
     app.innerHTML = h;
   }
 
   function vueTelechargements() {
     var all = tousFichiers();
     var general = all.filter(function (f) { return !f.niveau; });
-    var h = '<main class="wrap"><div class="level-head"><span class="eyebrow">Données de TP</span><h1>Fichiers d\'exemple</h1>' +
-      '<p>Les données décrivent une zone d\'étude <b>fictive</b> de 20 × 20 km (bassin de l\'oued Tamda), placée au sud de Tlemcen, en WGS 1984 UTM zone 30N, avec ses séismes, feux, glissements et crues également inventés, plus une côte fictive pour l\'exercice tsunami. Décompressez l\'archive complète dans <code>C:\\ENIV\\</code> : les leçons utilisent le dossier <code>C:\\ENIV\\TP</code>.</p></div>';
+    var h = '<main class="wrap">' + selecteur("telechargements") + '<div class="level-head"><span class="eyebrow">Données de TP · ' + esc(COURS.nom) + '</span><h1>Fichiers d\'exemple</h1>' +
+      '<p>Les données décrivent une zone d\'étude <b>fictive</b> de 20 × 20 km (bassin de l\'oued Tamda), placée au sud de Tlemcen, en WGS 1984 UTM zone 30N, avec ses séismes, feux, glissements et crues également inventés, plus une côte fictive pour l\'exercice tsunami. Les mêmes données servent aux trois logiciels. Décompressez l\'archive complète dans <code>C:\\ENIV\\</code> : les leçons utilisent le dossier <code>C:\\ENIV\\TP</code>.</p></div>';
     if (general.length) h += blocFichiers(general);
     NIVEAUX.forEach(function (n) {
       var f = all.filter(function (x) { return x.niveau === n.id; });
@@ -401,25 +421,48 @@
     app.innerHTML = h;
   }
 
+  /* ---------------- Remerciements aux chaînes YouTube ---------------- */
+  function chaines() {
+    var vus = {}, out = [];
+    videosFichier().forEach(function (v) {
+      var m = String(v.description || "").match(/Chaîne YouTube : (.+?)(?:\.(?:\s|$)|$)/);
+      if (!m || !idYoutube(v.url)) return;
+      var nom = m[1].trim();
+      var k = nom.toLowerCase();
+      if (!vus[k]) { vus[k] = { nom: nom, n: 0 }; out.push(vus[k]); }
+      vus[k].n++;
+    });
+    return out.sort(function (a, b) { return a.nom.localeCompare(b.nom, "fr", { sensitivity: "base" }); });
+  }
+  function vueRemerciements() {
+    var c = chaines();
+    var h = '<main class="wrap"><div class="level-head"><span class="eyebrow">Merci</span><h1>Remerciements</h1>' +
+      '<p>Ce site s\'appuie sur des vidéos publiées gratuitement sur YouTube. Un grand merci aux ' + c.length + ' chaînes qui partagent leur savoir en français et en arabe, et qui rendent cette formation plus vivante pour les élèves de l\'ENIV. Les vidéos restent la propriété de leurs auteurs : elles sont lues depuis YouTube, sans copie. Abonnez-vous à ces chaînes pour les soutenir.</p></div>' +
+      '<ul class="merci">' + c.map(function (x) {
+        return '<li><a href="https://www.youtube.com/results?search_query=' + encodeURIComponent(x.nom) + '&sp=EgIQAg%253D%253D" target="_blank" rel="noopener">' + esc(x.nom) + ' ↗</a><span class="tag">' + x.n + ' vidéo' + (x.n > 1 ? "s" : "") + '</span></li>';
+      }).join("") + '</ul>' +
+      '<p style="margin-top:20px">Si vous êtes l\'auteur d\'une de ces vidéos et souhaitez qu\'elle soit retirée, contactez l\'enseignant : BOUHAFSI SIDDIQ.</p></main>';
+    app.innerHTML = h;
+  }
+
   /* ---------------- Administration ---------------- */
   function exporterTexte() {
     var masquees = lire(CLE_MASQUEES, []);
     var liste = videosFichier().filter(function (v) { return masquees.indexOf(cleVideo(v)) < 0; }).concat(lire(CLE_VIDEOS, []));
     var propres = liste.map(function (v) {
       var o = { niveau: v.niveau || "", lecon: v.lecon || "", titre: v.titre || "", url: v.url || "", duree: v.duree || "", description: v.description || "" };
-      if (v.secours) o.secours = v.secours;
       return o;
     });
     return "/*\n * VIDÉOS TUTORIELLES : fichier généré depuis la page Administration le " + new Date().toLocaleString("fr-FR") + ".\n" +
       " * Remplacez donnees/videos.js par ce fichier pour publier les vidéos à tous les élèves.\n" +
-      " * Champs : niveau (n1 à n6), lecon (ex. n4-l2 ou vide), titre, url (YouTube ou videos/fichier.mp4), duree, description.\n */\n" +
+      " * Champs : niveau (n1… ArcMap, p1… ArcGIS Pro, q1… QGIS), lecon (ex. n4-l2 ou vide), titre, url (YouTube ou videos/fichier.mp4), duree, description.\n */\n" +
       "window.VIDEOS = " + JSON.stringify(propres, null, 2) + ";\n";
   }
 
   function vueAdmin(message) {
     var all = toutesVideos();
     var optsNiv = NIVEAUX.map(function (n) { return '<option value="' + n.id + '">' + n.numero + '. ' + esc(n.titre) + '</option>'; }).join("");
-    var h = '<main class="wrap"><div class="level-head"><span class="eyebrow">Espace enseignant</span><h1>Administration des vidéos</h1>' +
+    var h = '<main class="wrap">' + selecteur("admin") + '<div class="level-head"><span class="eyebrow">Espace enseignant · ' + esc(COURS.nom) + '</span><h1>Administration des vidéos</h1>' +
       '<p>Ajoutez une vidéo YouTube ou un fichier vidéo local. Elle apparaît tout de suite sur ce poste. Pour la publier à tous les élèves, téléchargez le fichier <code>videos.js</code> en bas de page et remplacez celui du dossier <code>donnees/</code> du site.</p></div>' +
       '<div class="panel"><h3>Nouvelle vidéo</h3><form id="f-video" class="form">' +
       '<div class="field"><label for="f-niveau">Niveau</label><select id="f-niveau" required>' + optsNiv + '</select></div>' +
@@ -460,7 +503,7 @@
     var urlIn = document.getElementById("f-url"), typeOut = document.getElementById("f-type");
     urlIn.addEventListener("input", function () {
       var t = urlIn.value.trim() ? typeVideo(urlIn.value.trim()) : "";
-      typeOut.textContent = t === "youtube" ? "Vidéo YouTube détectée" : t === "drive" ? "Vidéo Google Drive détectée (partagez-la « Tous les utilisateurs disposant du lien »)" : t === "fichier" ? "Fichier vidéo local" : t ? "Lien externe (ouvert dans un nouvel onglet)" : "";
+      typeOut.textContent = t === "youtube" ? "Vidéo YouTube détectée" : t === "fichier" ? "Fichier vidéo local" : t ? "Lien externe (ouvert dans un nouvel onglet)" : "";
     });
     document.getElementById("export-txt").value = exporterTexte();
 
@@ -508,10 +551,15 @@
   function route() {
     var h = (location.hash || "#accueil").slice(1);
     var nav = "accueil";
+    // #pro, #qgis, #arcmap (+ /videos, /telechargements, /admin) : choix du logiciel
+    var m = h.match(/^([a-z]+)(?:\/(videos|telechargements|admin))?$/);
+    if (m && choisirParcours(m[1])) h = m[2] || "accueil";
+    else { var pc = parcoursDe(h); if (pc) choisirParcours(pc.cle); }
     if (h === "admin") { vueAdmin(); nav = "admin"; }
     else if (h === "videos") { vueVideos(); nav = "videos"; }
     else if (h === "telechargements") { vueTelechargements(); nav = "telechargements"; }
-    else if (/^n\d+-quiz$/.test(h) && niveau(h.replace("-quiz", ""))) vueQuiz(niveau(h.replace("-quiz", "")));
+    else if (h === "remerciements") { vueRemerciements(); nav = "remerciements"; }
+    else if (/^[a-z]\d+-quiz$/.test(h) && niveau(h.replace("-quiz", ""))) vueQuiz(niveau(h.replace("-quiz", "")));
     else if (niveau(h)) vueNiveau(niveau(h));
     else if (trouverLecon(h)) vueLecon(trouverLecon(h));
     else vueAccueil();
@@ -522,5 +570,6 @@
     window.scrollTo(0, 0);
   }
   window.addEventListener("hashchange", route);
+  choisirParcours(lire(CLE_PARCOURS, "arcmap"));
   route();
 })();
