@@ -1,4 +1,4 @@
-SIG ENIV — site d'apprentissage ArcMap 10.8, ArcGIS Pro et QGIS
+SIG ENIV — Maîtrisez ArcMap, ArcGIS Pro et QGIS : de la première carte à l'analyse des risques naturels
 Enseignant : BOUHAFSI SIDDIQ
 =========================================================
 

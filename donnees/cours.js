@@ -9,7 +9,7 @@
  * avec le nom anglais entre parenthèses (utile pour chercher de l'aide).
  */
 window.COURS = {
-  titre: "ArcMap 10.8 pas à pas",
+  titre: "ArcMap 10.8, de la carte aux risques",
   niveaux: [
     /* ============================================================ */
     {

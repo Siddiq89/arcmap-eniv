@@ -1,4 +1,6 @@
-# SIG ENIV
+# SIG ENIV — Maîtrisez ArcMap, ArcGIS Pro et QGIS
+
+*De la première carte à l'analyse des risques naturels.*
 
 Site d'apprentissage SIG pour les élèves de l'ENIV (enseignant : BOUHAFSI SIDDIQ) : trois parcours, ArcMap 10.8, ArcGIS Pro et QGIS, de l'interface à la programmation Python, puis hydrologie à partir du MNT et cartes de vulnérabilité aux risques naturels. Quiz, progression par logiciel, vidéos YouTube en français et en arabe, données de TP à télécharger.
 

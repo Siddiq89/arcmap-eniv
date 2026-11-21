@@ -6,7 +6,7 @@
   var PARCOURS = [window.COURS, window.COURS_PRO, window.COURS_QGIS].filter(Boolean);
   var DEFAUTS = {
     arcmap: { cle: "arcmap", nom: "ArcMap 10.8", court: "ArcMap", logiciel: "ArcGIS Desktop 10.8", recherche: "ArcMap 10.8",
-      accroche: "De la première carte à la cartographie des risques",
+      accroche: "ArcMap 10.8, de la première carte à la cartographie des risques",
       lead: "Un parcours progressif pour apprendre ArcMap avec les boîtes à outils : interface, données, symbologie, géotraitement avec ArcToolbox, ModelBuilder, programmation Python, puis hydrologie à partir du MNT et cartes de vulnérabilité aux risques naturels (inondation, feux de forêt, séisme, tsunami, glissements). Chaque leçon propose un exercice, des vidéos et un quiz de fin de niveau." }
   };
   PARCOURS.forEach(function (c, i) {
@@ -212,9 +212,13 @@
   function vueAccueil() {
     var suite = prochaineEtape();
     var nbLecons = toutesLecons().length;
+    var totalLecons = PARCOURS.reduce(function (t, c) { return t + c.niveaux.reduce(function (u, n) { return u + n.lecons.length; }, 0); }, 0);
     var html = '<section class="hero"><canvas aria-hidden="true"></canvas><div class="wrap">' +
-      selecteur() + '<span class="eyebrow">' + esc(COURS.logiciel) + ' · ' + NIVEAUX.length + ' niveaux · ' + nbLecons + ' leçons</span>' +
-      '<h1>' + esc(COURS.accroche) + '</h1>' +
+      '<div class="vitrine"><span class="eyebrow">SIG ENIV · ' + PARCOURS.length + ' logiciels · ' + totalLecons + ' leçons · vidéos en français et en arabe</span>' +
+      '<h1>Maîtrisez ArcMap, ArcGIS Pro et QGIS</h1>' +
+      '<p class="sous-titre">De la première carte à l\'analyse des risques naturels : inondations, feux de forêt, séismes, tsunamis et glissements de terrain.</p></div>' +
+      selecteur() + '<span class="eyebrow">Parcours ' + esc(COURS.nom) + ' · ' + NIVEAUX.length + ' niveaux · ' + nbLecons + ' leçons</span>' +
+      '<h2 class="accroche">' + esc(COURS.accroche) + '</h2>' +
       '<p class="lead">' + esc(COURS.lead) + '</p>' +
       '<p class="enseignant">Enseignant : <b>BOUHAFSI SIDDIQ</b></p>' +
       '<div class="actions">' +

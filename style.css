@@ -257,3 +257,7 @@ main > .logiciels { margin-bottom: 14px; }
 .merci a { font-weight: 600; overflow-wrap: anywhere; }
 .merci .tag { white-space: nowrap; }
 .logiciels a small { font-weight: 500; opacity: .75; font-size: .78rem; }
+.hero .vitrine { display: grid; gap: 10px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.hero .vitrine h1 { max-width: 20ch; }
+.hero .vitrine .sous-titre { margin: 0; max-width: 62ch; font-size: 1.15rem; color: var(--ink, inherit); }
+.hero h2.accroche { font-size: clamp(1.4rem, 3vw, 2rem); margin: 0; max-width: 30ch; }
