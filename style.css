@@ -256,3 +256,4 @@ main > .logiciels { margin-bottom: 14px; }
 .merci li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); min-width: 0; }
 .merci a { font-weight: 600; overflow-wrap: anywhere; }
 .merci .tag { white-space: nowrap; }
+.logiciels a small { font-weight: 500; opacity: .75; font-size: .78rem; }

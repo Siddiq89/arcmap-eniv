@@ -1,7 +1,14 @@
-ArcMap 10.8 pas à pas — site d'apprentissage pour l'ENIV
+SIG ENIV — site d'apprentissage ArcMap 10.8, ArcGIS Pro et QGIS
+Enseignant : BOUHAFSI SIDDIQ
 =========================================================
 
-PARCOURS (8 niveaux, 33 leçons)
+TROIS PARCOURS, chacun avec sa progression (onglets en haut de l'accueil)
+  ArcMap 10.8   : donnees/cours.js       (niveaux n1 à n8, 33 leçons)
+  ArcGIS Pro    : donnees/cours_pro.js   (niveaux p1 à p8, 23 leçons ; niveau 5
+                  ModelBuilder inspiré du programme de Fathy Geo Code)
+  QGIS          : donnees/cours_qgis.js  (niveaux q1 à q8, 19 leçons)
+
+PARCOURS ARCMAP (8 niveaux, 33 leçons)
   1 Interface  2 Données  3 Symbologie  4 ArcToolbox  5 ModelBuilder
   6 ArcPy  7 MNT, hydrologie et inondations
   8 Vulnérabilité aux risques naturels (feux, séisme, tsunami, glissements,

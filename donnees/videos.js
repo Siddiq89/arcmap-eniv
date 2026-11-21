@@ -8,7 +8,7 @@
  *   2. Ou copiez un bloc { ... } ci-dessous et modifiez-le à la main.
  *
  * Champs :
- *   niveau      : "n1" à "n8"
+ *   niveau      : "n1"…"n8" (ArcMap), "p1"… (ArcGIS Pro), "q1"… (QGIS)
  *   lecon       : identifiant de la leçon (ex. "n4-l2"), ou "" pour tout le niveau
  *   titre       : titre affiché
  *   url         : lien YouTube (https://www.youtube.com/watch?v=...  ou https://youtu.be/...)
@@ -410,5 +410,429 @@ window.VIDEOS = [
     "url": "https://www.youtube.com/watch?v=zH8xTO1-HsI",
     "duree": "",
     "description": "Chaîne YouTube : Hussein Mzuory. Vidéo en arabe."
+  },
+  {
+    "niveau": "p1",
+    "lecon": "p1-l1",
+    "titre": "Installer ArcGIS Pro et découvrir son interface",
+    "url": "https://www.youtube.com/watch?v=TTaE5QeZE5s",
+    "duree": "",
+    "description": "Chaîne YouTube : FormaSIG Academy."
+  },
+  {
+    "niveau": "p1",
+    "lecon": "p1-l1",
+    "titre": "Comment structurer un projet SIG dans ArcGIS Pro",
+    "url": "https://www.youtube.com/watch?v=ue22cUxtqAo",
+    "duree": "",
+    "description": "Chaîne YouTube : FormaSIG Academy."
+  },
+  {
+    "niveau": "p1",
+    "lecon": "p1-l1",
+    "titre": "Débuter avec ArcGIS Pro",
+    "url": "https://www.youtube.com/watch?v=X9mJn-rjjEg",
+    "duree": "",
+    "description": "Chaîne YouTube : Professeur Cot."
+  },
+  {
+    "niveau": "p1",
+    "lecon": "p1-l2",
+    "titre": "Maîtriser et comprendre l'interface d'ArcGIS Pro",
+    "url": "https://www.youtube.com/watch?v=EfblaeRJ0Ts",
+    "duree": "",
+    "description": "Chaîne YouTube : Formation SIG, Mines, Statistiques FSMS."
+  },
+  {
+    "niveau": "p1",
+    "lecon": "p1-l2",
+    "titre": "Présentation et visualisation de l'interface d'ArcGIS Pro",
+    "url": "https://www.youtube.com/watch?v=dkgAqGiG96g",
+    "duree": "",
+    "description": "Chaîne YouTube : Home Made School."
+  },
+  {
+    "niveau": "p2",
+    "lecon": "p2-l3",
+    "titre": "Numérisation des données dans ArcGIS Pro",
+    "url": "https://www.youtube.com/watch?v=vcln3ZUOMYY",
+    "duree": "",
+    "description": "Chaîne YouTube : FormaSIG Academy."
+  },
+  {
+    "niveau": "p4",
+    "lecon": "p4-l3",
+    "titre": "Créer un MNT à partir de points cotés et de courbes de niveau dans ArcGIS Pro",
+    "url": "https://www.youtube.com/watch?v=pDl2U2IhdJ8",
+    "duree": "",
+    "description": "Chaîne YouTube : Kévin ELLA-EKABANE."
+  },
+  {
+    "niveau": "p5",
+    "lecon": "p5-l1",
+    "titre": "Créer un outil avec ModelBuilder (en arabe)",
+    "url": "https://www.youtube.com/watch?v=9IAkeZg8eGM",
+    "duree": "",
+    "description": "Chaîne YouTube : GeoJamal Tv. Vidéo en arabe."
+  },
+  {
+    "niveau": "p7",
+    "lecon": "p7-l2",
+    "titre": "Délimiter un bassin versant sous ArcGIS",
+    "url": "https://www.youtube.com/watch?v=-Kdl_MqZack",
+    "duree": "",
+    "description": "Chaîne YouTube : Badreddine ENNASSIRI."
+  },
+  {
+    "niveau": "p7",
+    "lecon": "p7-l2",
+    "titre": "Délimitation des bassins versants et classement automatique des cours d'eau",
+    "url": "https://www.youtube.com/watch?v=0Qy-GFJHTMY",
+    "duree": "",
+    "description": "Chaîne YouTube : Home Made School."
+  },
+  {
+    "niveau": "p8",
+    "lecon": "p8-l2",
+    "titre": "Incendies de forêt : la cartographie au secours des arbres ?",
+    "url": "https://www.youtube.com/watch?v=6Dpyh158tFQ",
+    "duree": "",
+    "description": "Chaîne YouTube : Ces portes qui donnent."
+  },
+  {
+    "niveau": "p8",
+    "lecon": "p8-l2",
+    "titre": "Cartographier les zones à risque sismique",
+    "url": "https://www.youtube.com/watch?v=2FiSSHqSmOQ",
+    "duree": "",
+    "description": "Chaîne YouTube : Inria."
+  },
+  {
+    "niveau": "p8",
+    "lecon": "p8-l2",
+    "titre": "Carte des inondations et de la submersion marine à partir d'un MNT",
+    "url": "https://www.youtube.com/watch?v=Emy4rQJYwig",
+    "duree": "",
+    "description": "Chaîne YouTube : Learn Learn."
+  },
+  {
+    "niveau": "p8",
+    "lecon": "p8-l2",
+    "titre": "La prévention des glissements de terrain par l'aménagement du territoire",
+    "url": "https://www.youtube.com/watch?v=weF8uoqbB4Y",
+    "duree": "",
+    "description": "Chaîne YouTube : MAMROT."
+  },
+  {
+    "niveau": "q1",
+    "lecon": "q1-l1",
+    "titre": "Apprendre QGIS : tutoriel pour débutants",
+    "url": "https://www.youtube.com/watch?v=a4yYIY0E0yM",
+    "duree": "",
+    "description": "Chaîne YouTube : GOJAMBAR."
+  },
+  {
+    "niveau": "q1",
+    "lecon": "q1-l1",
+    "titre": "Formation complète de QGIS pour SIG et cartographie, niveau I",
+    "url": "https://www.youtube.com/watch?v=JaAKsWzUKJ8",
+    "duree": "",
+    "description": "Chaîne YouTube : EGD Academia."
+  },
+  {
+    "niveau": "q1",
+    "lecon": "q1-l1",
+    "titre": "Cours QGIS 1 : présentation générale et interface (en arabe)",
+    "url": "https://www.youtube.com/watch?v=gPC9C9Ld9LE",
+    "duree": "",
+    "description": "Chaîne YouTube : GIS 4 YOU. Vidéo en arabe."
+  },
+  {
+    "niveau": "q1",
+    "lecon": "q1-l2",
+    "titre": "Maîtriser QGIS rapidement grâce à un tutoriel simple",
+    "url": "https://www.youtube.com/watch?v=W3v1_4g5Pcw",
+    "duree": "",
+    "description": "Chaîne YouTube : GOJAMBAR."
+  },
+  {
+    "niveau": "q2",
+    "lecon": "q2-l3",
+    "titre": "Maîtrisez la digitalisation sur QGIS",
+    "url": "https://www.youtube.com/watch?v=1LSC598_bqs",
+    "duree": "",
+    "description": "Chaîne YouTube : GOJAMBAR."
+  },
+  {
+    "niveau": "q2",
+    "lecon": "q2-l3",
+    "titre": "Le géoréférencement d'une carte dans QGIS",
+    "url": "https://www.youtube.com/watch?v=XJwPq69kEDQ",
+    "duree": "",
+    "description": "Chaîne YouTube : Formation SIG, Mines, Statistiques FSMS."
+  },
+  {
+    "niveau": "q3",
+    "lecon": "q3-l1",
+    "titre": "QGIS tuto 3 : sémiologie graphique",
+    "url": "https://www.youtube.com/watch?v=TLOf-ovfgDs",
+    "duree": "",
+    "description": "Chaîne YouTube : Silf la solution."
+  },
+  {
+    "niveau": "q3",
+    "lecon": "q3-l2",
+    "titre": "Créer une mise en page dans QGIS",
+    "url": "https://www.youtube.com/watch?v=mqKXNsplmXQ",
+    "duree": "",
+    "description": "Chaîne YouTube : Numelion IT."
+  },
+  {
+    "niveau": "q3",
+    "lecon": "q3-l2",
+    "titre": "Générer facilement un atlas dans QGIS",
+    "url": "https://www.youtube.com/watch?v=i1fmzL28Y2w",
+    "duree": "",
+    "description": "Chaîne YouTube : EGD Academia."
+  },
+  {
+    "niveau": "q3",
+    "lecon": "q3-l2",
+    "titre": "Mises en page et atlas avec QGIS",
+    "url": "https://www.youtube.com/watch?v=fSVRFDhY6kQ",
+    "duree": "",
+    "description": "Chaîne YouTube : christian persin."
+  },
+  {
+    "niveau": "q4",
+    "lecon": "q4-l2",
+    "titre": "Reclassifier un raster dans QGIS",
+    "url": "https://www.youtube.com/watch?v=xmU6gQHQoW0",
+    "duree": "",
+    "description": "Chaîne YouTube : Carnet de terrain."
+  },
+  {
+    "niveau": "q5",
+    "lecon": "q5-l1",
+    "titre": "Présentation rapide du modeleur graphique de QGIS",
+    "url": "https://www.youtube.com/watch?v=Kss132vJOEg",
+    "duree": "",
+    "description": "Chaîne YouTube : Axel Faulet."
+  },
+  {
+    "niveau": "q5",
+    "lecon": "q5-l1",
+    "titre": "QGIS : introduction au modeleur (Model Builder)",
+    "url": "https://www.youtube.com/watch?v=OJZ7I0XL3ZA",
+    "duree": "",
+    "description": "Chaîne YouTube : C. Kaiser."
+  },
+  {
+    "niveau": "q5",
+    "lecon": "q5-l2",
+    "titre": "Automatiser votre travail SIG avec le modeleur de QGIS",
+    "url": "https://www.youtube.com/watch?v=yeP3udwBHR0",
+    "duree": "",
+    "description": "Chaîne YouTube : GeoTechDev."
+  },
+  {
+    "niveau": "q6",
+    "lecon": "q6-l1",
+    "titre": "Présentation de la console Python de QGIS (PyQGIS)",
+    "url": "https://www.youtube.com/watch?v=4ChQfsFA5UA",
+    "duree": "",
+    "description": "Chaîne YouTube : Axel Faulet."
+  },
+  {
+    "niveau": "q6",
+    "lecon": "q6-l1",
+    "titre": "Créer et exécuter un script dans la console Python de QGIS",
+    "url": "https://www.youtube.com/watch?v=zGK9t9hJoGY",
+    "duree": "",
+    "description": "Chaîne YouTube : DAHA Service Technique."
+  },
+  {
+    "niveau": "q6",
+    "lecon": "q6-l3",
+    "titre": "Python et QGIS 8 : les outils de traitement",
+    "url": "https://www.youtube.com/watch?v=BlfhSj_Lukg",
+    "duree": "",
+    "description": "Chaîne YouTube : Professeur Cot."
+  },
+  {
+    "niveau": "q6",
+    "lecon": "q6-l3",
+    "titre": "Importer et exécuter un script Python dans QGIS",
+    "url": "https://www.youtube.com/watch?v=E-nTEzCC3-E",
+    "duree": "",
+    "description": "Chaîne YouTube : Axel Faulet."
+  },
+  {
+    "niveau": "q7",
+    "lecon": "q7-l1",
+    "titre": "Carte du bassin versant et du réseau hydrographique sous QGIS",
+    "url": "https://www.youtube.com/watch?v=DUpowf7FMkE",
+    "duree": "",
+    "description": "Chaîne YouTube : GeoTechDev."
+  },
+  {
+    "niveau": "q7",
+    "lecon": "q7-l1",
+    "titre": "Délimitation de bassin versant avec QGIS et SAGA",
+    "url": "https://www.youtube.com/watch?v=6K3KkHtHs5Q",
+    "duree": "",
+    "description": "Chaîne YouTube : Dr Sig."
+  },
+  {
+    "niveau": "q7",
+    "lecon": "q7-l2",
+    "titre": "Délimiter un bassin versant sur QGIS (hydrologie et ligne de crête)",
+    "url": "https://www.youtube.com/watch?v=x-kNeV4ALjQ",
+    "duree": "",
+    "description": "Chaîne YouTube : GéoApplications."
+  },
+  {
+    "niveau": "q7",
+    "lecon": "q7-l2",
+    "titre": "Délimitation automatique du bassin versant et du réseau avec le modeleur",
+    "url": "https://www.youtube.com/watch?v=bVRv9fIWb4I",
+    "duree": "",
+    "description": "Chaîne YouTube : GeoTechDev."
+  },
+  {
+    "niveau": "q8",
+    "lecon": "q8-l2",
+    "titre": "Incendies de forêt : la cartographie au secours des arbres ?",
+    "url": "https://www.youtube.com/watch?v=6Dpyh158tFQ",
+    "duree": "",
+    "description": "Chaîne YouTube : Ces portes qui donnent."
+  },
+  {
+    "niveau": "q8",
+    "lecon": "q8-l2",
+    "titre": "Cartographier les zones à risque sismique",
+    "url": "https://www.youtube.com/watch?v=2FiSSHqSmOQ",
+    "duree": "",
+    "description": "Chaîne YouTube : Inria."
+  },
+  {
+    "niveau": "q8",
+    "lecon": "q8-l2",
+    "titre": "Comprendre les tsunamis",
+    "url": "https://www.youtube.com/watch?v=HN3hD7i8KZs",
+    "duree": "",
+    "description": "Chaîne YouTube : Aviso Cnes."
+  },
+  {
+    "niveau": "q8",
+    "lecon": "q8-l2",
+    "titre": "La prévention des glissements de terrain par l'aménagement du territoire",
+    "url": "https://www.youtube.com/watch?v=weF8uoqbB4Y",
+    "duree": "",
+    "description": "Chaîne YouTube : MAMROT."
+  },
+  {
+    "niveau": "p2",
+    "lecon": "p2-l1",
+    "titre": "Transformer et reprojeter le système de coordonnées d'une couche",
+    "url": "https://www.youtube.com/watch?v=sVzmrAbBPW0",
+    "duree": "",
+    "description": "Chaîne YouTube : Formation SIG, Mines, Statistiques FSMS."
+  },
+  {
+    "niveau": "p2",
+    "lecon": "p2-l2",
+    "titre": "Statistiques zonales et jointure de table dans ArcGIS",
+    "url": "https://www.youtube.com/watch?v=Agzu6sNfGCo",
+    "duree": "",
+    "description": "Chaîne YouTube : tuto Arcgis chaine."
+  },
+  {
+    "niveau": "p3",
+    "lecon": "p3-l1",
+    "titre": "Représentation cartographique bivariée avec ArcGIS Pro",
+    "url": "https://www.youtube.com/watch?v=p10o6YMmJtU",
+    "duree": "",
+    "description": "Chaîne YouTube : FormaSIG Academy."
+  },
+  {
+    "niveau": "p5",
+    "lecon": "p5-l1",
+    "titre": "ArcGIS Pro : automatisation avec Tâches, ModelBuilder et Python",
+    "url": "https://www.youtube.com/watch?v=-8FFOmjlLQU",
+    "duree": "",
+    "description": "Chaîne YouTube : Esri BeLux."
+  },
+  {
+    "niveau": "p5",
+    "lecon": "p5-l2",
+    "titre": "Comment créer un modèle avec ModelBuilder",
+    "url": "https://www.youtube.com/watch?v=QnW1H086M_4",
+    "duree": "",
+    "description": "Chaîne YouTube : TopoGis4you."
+  },
+  {
+    "niveau": "p5",
+    "lecon": "p5-l3",
+    "titre": "Utilisation d'un itérateur dans ModelBuilder",
+    "url": "https://www.youtube.com/watch?v=avgUfiuYy2w",
+    "duree": "",
+    "description": "Chaîne YouTube : Professeur Cot."
+  },
+  {
+    "niveau": "p5",
+    "lecon": "p5-l4",
+    "titre": "ModelBuilder : évolutions récentes, conseils et astuces",
+    "url": "https://www.youtube.com/watch?v=L4JhtnCuxVY",
+    "duree": "",
+    "description": "Chaîne YouTube : Esri France."
+  },
+  {
+    "niveau": "p6",
+    "lecon": "p6-l1",
+    "titre": "ArcGIS Pro : automatisation avec Tâches, ModelBuilder et Python",
+    "url": "https://www.youtube.com/watch?v=-8FFOmjlLQU",
+    "duree": "",
+    "description": "Chaîne YouTube : Esri BeLux."
+  },
+  {
+    "niveau": "p6",
+    "lecon": "p6-l2",
+    "titre": "Python et ArcMap, cours 1 : automatiser les géotraitements avec arcpy",
+    "url": "https://www.youtube.com/watch?v=U9uVSBLpWFk",
+    "duree": "",
+    "description": "Chaîne YouTube : GeoForm."
+  },
+  {
+    "niveau": "q2",
+    "lecon": "q2-l1",
+    "titre": "Transformer et reprojeter le système de coordonnées d'une couche",
+    "url": "https://www.youtube.com/watch?v=sVzmrAbBPW0",
+    "duree": "",
+    "description": "Chaîne YouTube : Formation SIG, Mines, Statistiques FSMS."
+  },
+  {
+    "niveau": "q4",
+    "lecon": "q4-l1",
+    "titre": "Créer facilement une zone tampon dans QGIS",
+    "url": "https://www.youtube.com/watch?v=6bg7-3hmN-I",
+    "duree": "",
+    "description": "Chaîne YouTube : EGD Academia."
+  },
+  {
+    "niveau": "q4",
+    "lecon": "q4-l1",
+    "titre": "QGIS géotraitement : intersection",
+    "url": "https://www.youtube.com/watch?v=HZVAIIOhLG8",
+    "duree": "",
+    "description": "Chaîne YouTube : Eric Agbe."
+  },
+  {
+    "niveau": "q4",
+    "lecon": "q4-l1",
+    "titre": "Tampons et regroupements",
+    "url": "https://www.youtube.com/watch?v=4_aeR3nwQH0",
+    "duree": "",
+    "description": "Chaîne YouTube : QGIS pour les Piou Piou."
   }
 ];

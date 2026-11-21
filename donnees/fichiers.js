@@ -6,7 +6,7 @@
  *   2. ajoutez un bloc { ... } ci-dessous (virgule entre les blocs).
  *
  * Champs :
- *   niveau      : "n1" à "n8", ou "" pour un fichier général
+ *   niveau      : "n1"…"n8" (ArcMap), "p1"… (ArcGIS Pro), "q1"… (QGIS), ou "" pour un fichier général
  *   lecon       : identifiant de la leçon (ex. "n4-l2"), ou "" pour tout le niveau
  *   fichier     : chemin depuis le dossier du site, ex. "fichiers/mes_donnees.zip"
  *   titre, taille, description : texte affiché
@@ -19,7 +19,7 @@ window.FICHIERS = [
     "lecon": "",
     "fichier": "fichiers/TP_ENIV_complet.zip",
     "titre": "Toutes les données de TP",
-    "taille": "552 Ko",
+    "taille": "559 Ko",
     "description": "Shapefiles, tables, MNT et scripts. À décompresser dans C:\\ENIV\\ pour obtenir C:\\ENIV\\TP."
   },
   {
@@ -27,7 +27,7 @@ window.FICHIERS = [
     "lecon": "n1-l1",
     "fichier": "fichiers/TP_ENIV_complet.zip",
     "titre": "Toutes les données de TP",
-    "taille": "552 Ko",
+    "taille": "559 Ko",
     "description": "Décompressez dans C:\\ENIV\\ puis créez la connexion au dossier C:\\ENIV\\TP."
   },
   {
@@ -202,9 +202,9 @@ window.FICHIERS = [
     "niveau": "n6",
     "lecon": "",
     "fichier": "fichiers/scripts_arcpy.zip",
-    "titre": "Tous les scripts ArcPy",
-    "taille": "12 Ko",
-    "description": "Les 12 scripts du parcours (01 à 12) et outils_risques.py."
+    "titre": "Tous les scripts Python",
+    "taille": "18 Ko",
+    "description": "Scripts ArcPy 01 à 12 (ArcMap et ArcGIS Pro), outils_risques.py, script Pro et scripts PyQGIS."
   },
   {
     "niveau": "n7",
@@ -371,7 +371,391 @@ window.FICHIERS = [
     "lecon": "",
     "fichier": "fichiers/TP_ENIV_complet.zip",
     "titre": "Toutes les données de TP",
-    "taille": "552 Ko",
+    "taille": "559 Ko",
     "description": "Contient aussi les dossiers Risques, Risques_cote et les scripts 06 à 12."
+  },
+  {
+    "niveau": "p1",
+    "lecon": "p1-l1",
+    "fichier": "fichiers/TP_ENIV_complet.zip",
+    "titre": "Toutes les données de TP",
+    "taille": "559 Ko",
+    "description": "À décompresser dans C:\\ENIV\\. Mêmes données que le parcours ArcMap."
+  },
+  {
+    "niveau": "p2",
+    "lecon": "p2-l1",
+    "fichier": "fichiers/donnees_projections.zip",
+    "titre": "Données pour les projections",
+    "taille": "5 Ko",
+    "description": "Communes en WGS84 et Nord Sahara 1959, forages sans projection."
+  },
+  {
+    "niveau": "p2",
+    "lecon": "p2-l1",
+    "fichier": "fichiers/donnees_base_shapefiles.zip",
+    "titre": "Données de base (shapefiles)",
+    "taille": "13 Ko",
+    "description": "Mêmes données que le parcours ArcMap."
+  },
+  {
+    "niveau": "p2",
+    "lecon": "p2-l2",
+    "fichier": "fichiers/population_communes.xlsx",
+    "titre": "Population des communes (Excel)",
+    "taille": "5 Ko",
+    "description": "Jointure par le champ CODE."
+  },
+  {
+    "niveau": "p2",
+    "lecon": "p2-l2",
+    "fichier": "fichiers/population_communes.csv",
+    "titre": "Population des communes (CSV)",
+    "taille": "1 Ko",
+    "description": "Séparateur point-virgule."
+  },
+  {
+    "niveau": "p2",
+    "lecon": "p2-l2",
+    "fichier": "fichiers/releves_gps.csv",
+    "titre": "Relevés GPS",
+    "taille": "1 Ko",
+    "description": "Coordonnées X, Y (UTM 30N) et LON, LAT."
+  },
+  {
+    "niveau": "p3",
+    "lecon": "p3-l1",
+    "fichier": "fichiers/donnees_base_shapefiles.zip",
+    "titre": "Données de base (shapefiles)",
+    "taille": "13 Ko",
+    "description": "Mêmes données que le parcours ArcMap."
+  },
+  {
+    "niveau": "p4",
+    "lecon": "p4-l1",
+    "fichier": "fichiers/donnees_base_shapefiles.zip",
+    "titre": "Données de base (shapefiles)",
+    "taille": "13 Ko",
+    "description": "Mêmes données que le parcours ArcMap."
+  },
+  {
+    "niveau": "p4",
+    "lecon": "p4-l3",
+    "fichier": "fichiers/MNT_50m.zip",
+    "titre": "MNT 50 m",
+    "taille": "296 Ko",
+    "description": "MNT_50m.asc et sa projection."
+  },
+  {
+    "niveau": "p5",
+    "lecon": "p5-l2",
+    "fichier": "fichiers/donnees_base_shapefiles.zip",
+    "titre": "Données de base (shapefiles)",
+    "taille": "13 Ko",
+    "description": "Mêmes données que le parcours ArcMap."
+  },
+  {
+    "niveau": "p7",
+    "lecon": "p7-l1",
+    "fichier": "fichiers/MNT_50m.zip",
+    "titre": "MNT 50 m",
+    "taille": "296 Ko",
+    "description": "MNT du bassin de l'oued Tamda."
+  },
+  {
+    "niveau": "p7",
+    "lecon": "p7-l2",
+    "fichier": "fichiers/risques_bassin_tamda.zip",
+    "titre": "Données risques du bassin",
+    "taille": "307 Ko",
+    "description": "Exutoire, laisses de crue, lithologie, failles, épicentres, foyers, glissements + MNT."
+  },
+  {
+    "niveau": "p8",
+    "lecon": "p8-l1",
+    "fichier": "fichiers/poids_multicritere.xlsx",
+    "titre": "Table des poids multicritères",
+    "taille": "9 Ko",
+    "description": "Critères, classes, notes et poids de chaque carte."
+  },
+  {
+    "niveau": "p8",
+    "lecon": "p8-l2",
+    "fichier": "fichiers/risques_bassin_tamda.zip",
+    "titre": "Données risques du bassin",
+    "taille": "307 Ko",
+    "description": "Foyers d'incendie, failles, épicentres, lithologie, glissements."
+  },
+  {
+    "niveau": "p8",
+    "lecon": "p8-l2",
+    "fichier": "fichiers/risques_cote_tsunami.zip",
+    "titre": "Données côtières (tsunami)",
+    "taille": "202 Ko",
+    "description": "MNT côtier 25 m, trait de côte, route, enjeux."
+  },
+  {
+    "niveau": "q1",
+    "lecon": "q1-l1",
+    "fichier": "fichiers/TP_ENIV_complet.zip",
+    "titre": "Toutes les données de TP",
+    "taille": "559 Ko",
+    "description": "À décompresser dans C:\\ENIV\\. Mêmes données que le parcours ArcMap."
+  },
+  {
+    "niveau": "q2",
+    "lecon": "q2-l1",
+    "fichier": "fichiers/donnees_projections.zip",
+    "titre": "Données pour les projections",
+    "taille": "5 Ko",
+    "description": "Communes en WGS84 et Nord Sahara 1959, forages sans projection."
+  },
+  {
+    "niveau": "q2",
+    "lecon": "q2-l1",
+    "fichier": "fichiers/donnees_base_shapefiles.zip",
+    "titre": "Données de base (shapefiles)",
+    "taille": "13 Ko",
+    "description": "Mêmes données que le parcours ArcMap."
+  },
+  {
+    "niveau": "q2",
+    "lecon": "q2-l2",
+    "fichier": "fichiers/population_communes.xlsx",
+    "titre": "Population des communes (Excel)",
+    "taille": "5 Ko",
+    "description": "Jointure par le champ CODE."
+  },
+  {
+    "niveau": "q2",
+    "lecon": "q2-l2",
+    "fichier": "fichiers/population_communes.csv",
+    "titre": "Population des communes (CSV)",
+    "taille": "1 Ko",
+    "description": "Séparateur point-virgule."
+  },
+  {
+    "niveau": "q2",
+    "lecon": "q2-l2",
+    "fichier": "fichiers/releves_gps.csv",
+    "titre": "Relevés GPS",
+    "taille": "1 Ko",
+    "description": "Coordonnées X, Y (UTM 30N) et LON, LAT."
+  },
+  {
+    "niveau": "q3",
+    "lecon": "q3-l1",
+    "fichier": "fichiers/donnees_base_shapefiles.zip",
+    "titre": "Données de base (shapefiles)",
+    "taille": "13 Ko",
+    "description": "Mêmes données que le parcours ArcMap."
+  },
+  {
+    "niveau": "q4",
+    "lecon": "q4-l1",
+    "fichier": "fichiers/donnees_base_shapefiles.zip",
+    "titre": "Données de base (shapefiles)",
+    "taille": "13 Ko",
+    "description": "Mêmes données que le parcours ArcMap."
+  },
+  {
+    "niveau": "q4",
+    "lecon": "q4-l2",
+    "fichier": "fichiers/MNT_50m.zip",
+    "titre": "MNT 50 m",
+    "taille": "296 Ko",
+    "description": "MNT_50m.asc et sa projection."
+  },
+  {
+    "niveau": "q5",
+    "lecon": "q5-l1",
+    "fichier": "fichiers/donnees_base_shapefiles.zip",
+    "titre": "Données de base (shapefiles)",
+    "taille": "13 Ko",
+    "description": "Mêmes données que le parcours ArcMap."
+  },
+  {
+    "niveau": "q7",
+    "lecon": "q7-l1",
+    "fichier": "fichiers/MNT_50m.zip",
+    "titre": "MNT 50 m",
+    "taille": "296 Ko",
+    "description": "MNT du bassin de l'oued Tamda."
+  },
+  {
+    "niveau": "q7",
+    "lecon": "q7-l2",
+    "fichier": "fichiers/risques_bassin_tamda.zip",
+    "titre": "Données risques du bassin",
+    "taille": "307 Ko",
+    "description": "Exutoire, laisses de crue, lithologie, failles, épicentres, foyers, glissements + MNT."
+  },
+  {
+    "niveau": "q8",
+    "lecon": "q8-l1",
+    "fichier": "fichiers/poids_multicritere.xlsx",
+    "titre": "Table des poids multicritères",
+    "taille": "9 Ko",
+    "description": "Critères, classes, notes et poids de chaque carte."
+  },
+  {
+    "niveau": "q8",
+    "lecon": "q8-l2",
+    "fichier": "fichiers/risques_bassin_tamda.zip",
+    "titre": "Données risques du bassin",
+    "taille": "307 Ko",
+    "description": "Foyers d'incendie, failles, épicentres, lithologie, glissements."
+  },
+  {
+    "niveau": "q8",
+    "lecon": "q8-l2",
+    "fichier": "fichiers/risques_cote_tsunami.zip",
+    "titre": "Données côtières (tsunami)",
+    "taille": "202 Ko",
+    "description": "MNT côtier 25 m, trait de côte, route, enjeux."
+  },
+  {
+    "niveau": "p5",
+    "lecon": "p5-l5",
+    "fichier": "fichiers/MNT_50m.zip",
+    "titre": "MNT 50 m",
+    "taille": "296 Ko",
+    "description": "Raster d'entrée de l'application pratique."
+  },
+  {
+    "niveau": "p6",
+    "lecon": "p6-l2",
+    "fichier": "fichiers/01_fenetre_python.py",
+    "titre": "Script 01 : fenêtre Python",
+    "taille": "1 Ko",
+    "description": "Fonctionne aussi dans ArcGIS Pro."
+  },
+  {
+    "niveau": "p6",
+    "lecon": "p6-l2",
+    "fichier": "fichiers/03_curseurs.py",
+    "titre": "Script 03 : curseurs",
+    "taille": "2 Ko",
+    "description": "Fonctionne dans ArcGIS Pro (Python 3)."
+  },
+  {
+    "niveau": "p6",
+    "lecon": "p6-l3",
+    "fichier": "fichiers/pro_04_cartes_par_commune.py",
+    "titre": "Script Pro : une carte PDF par commune",
+    "taille": "1 Ko",
+    "description": "arcpy.mp (ArcGIS Pro), remplace le script 04 d'ArcMap."
+  },
+  {
+    "niveau": "p6",
+    "lecon": "p6-l3",
+    "fichier": "fichiers/05_outil_zone_protection.py",
+    "titre": "Script 05 : outil zone de protection",
+    "taille": "1 Ko",
+    "description": "À transformer en outil script."
+  },
+  {
+    "niveau": "p7",
+    "lecon": "p7-l1",
+    "fichier": "fichiers/06_hydrologie.py",
+    "titre": "Script 06 : modèle hydrologique",
+    "taille": "2 Ko",
+    "description": "Fonctionne tel quel dans ArcGIS Pro."
+  },
+  {
+    "niveau": "p7",
+    "lecon": "p7-l1",
+    "fichier": "fichiers/outils_risques.py",
+    "titre": "outils_risques.py",
+    "taille": "3 Ko",
+    "description": "Fonctions communes aux scripts 06 à 12."
+  },
+  {
+    "niveau": "p7",
+    "lecon": "p7-l2",
+    "fichier": "fichiers/07_zones_inondables.py",
+    "titre": "Script 07 : zones inondables",
+    "taille": "2 Ko",
+    "description": "Lancer après le script 06."
+  },
+  {
+    "niveau": "p8",
+    "lecon": "p8-l2",
+    "fichier": "fichiers/08_risque_feux.py",
+    "titre": "Script 08 : feux de forêt",
+    "taille": "2 Ko",
+    "description": ""
+  },
+  {
+    "niveau": "p8",
+    "lecon": "p8-l2",
+    "fichier": "fichiers/09_risque_sismique.py",
+    "titre": "Script 09 : séisme",
+    "taille": "2 Ko",
+    "description": ""
+  },
+  {
+    "niveau": "p8",
+    "lecon": "p8-l2",
+    "fichier": "fichiers/10_tsunami.py",
+    "titre": "Script 10 : tsunami",
+    "taille": "1 Ko",
+    "description": ""
+  },
+  {
+    "niveau": "p8",
+    "lecon": "p8-l2",
+    "fichier": "fichiers/11_glissements.py",
+    "titre": "Script 11 : glissements",
+    "taille": "1 Ko",
+    "description": ""
+  },
+  {
+    "niveau": "p8",
+    "lecon": "p8-l3",
+    "fichier": "fichiers/12_synthese_multirisque.py",
+    "titre": "Script 12 : synthèse multirisque",
+    "taille": "1 Ko",
+    "description": ""
+  },
+  {
+    "niveau": "q6",
+    "lecon": "q6-l1",
+    "fichier": "fichiers/qgis_01_bases.py",
+    "titre": "Script PyQGIS 01 : premiers pas",
+    "taille": "2 Ko",
+    "description": "Charger des couches, processing.run, lire et modifier les attributs."
+  },
+  {
+    "niveau": "q6",
+    "lecon": "q6-l3",
+    "fichier": "fichiers/qgis_01_bases.py",
+    "titre": "Script PyQGIS 01 : premiers pas",
+    "taille": "2 Ko",
+    "description": ""
+  },
+  {
+    "niveau": "q7",
+    "lecon": "q7-l1",
+    "fichier": "fichiers/qgis_02_hydrologie.py",
+    "titre": "Script PyQGIS 02 : hydrologie avec GRASS",
+    "taille": "3 Ko",
+    "description": "r.fill.dir, r.watershed, r.to.vect, r.water.outlet."
+  },
+  {
+    "niveau": "q7",
+    "lecon": "q7-l2",
+    "fichier": "fichiers/qgis_02_hydrologie.py",
+    "titre": "Script PyQGIS 02 : hydrologie avec GRASS",
+    "taille": "3 Ko",
+    "description": "Délimite le bassin versant depuis Exutoire.shp."
+  },
+  {
+    "niveau": "q8",
+    "lecon": "q8-l2",
+    "fichier": "fichiers/qgis_03_risque_feux.py",
+    "titre": "Script PyQGIS 03 : risque de feux",
+    "taille": "5 Ko",
+    "description": "Rastérisation, proximité, reclassification, somme pondérée, validation."
   }
 ];

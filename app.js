@@ -1,4 +1,4 @@
-/* SIG pas à pas (ArcMap, ArcGIS Pro, QGIS) : navigation, progression, quiz, vidéos et administration. */
+/* SIG ENIV (ArcMap, ArcGIS Pro, QGIS) : navigation, progression, quiz, vidéos et administration. */
 (function () {
   "use strict";
 
@@ -76,6 +76,11 @@
     return f;
   }
   function pctNiveau(n) { var t = etapesNiveau(n); return t ? Math.round(etapesFaites(n) * 100 / t) : 0; }
+  function pctParcours(c) {
+    var t = 0, f = 0;
+    c.niveaux.forEach(function (n) { t += etapesNiveau(n); f += etapesFaites(n); });
+    return t ? Math.round(f * 100 / t) : 0;
+  }
   function pctGlobal() {
     var t = 0, f = 0;
     NIVEAUX.forEach(function (n) { t += etapesNiveau(n); f += etapesFaites(n); });
@@ -200,7 +205,7 @@
   function selecteur(cible) {
     if (PARCOURS.length < 2) return "";
     return '<div class="logiciels" role="tablist" aria-label="Choisir le logiciel">' + PARCOURS.map(function (c) {
-      return '<a role="tab" href="#' + c.cle + (cible ? "/" + cible : "") + '"' + (c === COURS ? ' aria-selected="true" class="on"' : "") + '>' + esc(c.nom) + '</a>';
+      return '<a role="tab" href="#' + c.cle + (cible ? "/" + cible : "") + '"' + (c === COURS ? ' aria-selected="true" class="on"' : "") + '>' + esc(c.nom) + ' <small>' + pctParcours(c) + ' %</small></a>';
     }).join("") + '</div>';
   }
 
@@ -441,6 +446,9 @@
       '<ul class="merci">' + c.map(function (x) {
         return '<li><a href="https://www.youtube.com/results?search_query=' + encodeURIComponent(x.nom) + '&sp=EgIQAg%253D%253D" target="_blank" rel="noopener">' + esc(x.nom) + ' ↗</a><span class="tag">' + x.n + ' vidéo' + (x.n > 1 ? "s" : "") + '</span></li>';
       }).join("") + '</ul>' +
+      '<div class="section-title"><h2>Sources d\'inspiration</h2></div>' +
+      '<div class="panel"><p>Le programme du niveau 5 du parcours ArcGIS Pro (ModelBuilder : modélisation spatiale, outils et variables, itérateurs, paramètres et environnements, applications pratiques) reprend la structure de la formation gratuite « ModelBuilder dans ArcGIS Pro » de <b>Fathy Geo Code</b> (Eng. Ahmed Fathy). Merci pour ce travail de partage. Le contenu des leçons et les exercices ont été rédigés pour l\'ENIV, avec les données de TP de Tlemcen.</p>' +
+      '<p><a href="https://www.youtube.com/results?search_query=' + encodeURIComponent("Fathy Geo Code") + '" target="_blank" rel="noopener">Fathy Geo Code ↗</a></p></div>' +
       '<p style="margin-top:20px">Si vous êtes l\'auteur d\'une de ces vidéos et souhaitez qu\'elle soit retirée, contactez l\'enseignant : BOUHAFSI SIDDIQ.</p></main>';
     app.innerHTML = h;
   }
