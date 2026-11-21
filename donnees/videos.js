@@ -8,17 +8,99 @@
  *   2. Ou copiez un bloc { ... } ci-dessous et modifiez-le à la main.
  *
  * Champs :
- *   niveau      : "n1" à "n6"
+ *   niveau      : "n1" à "n8"
  *   lecon       : identifiant de la leçon (ex. "n4-l2"), ou "" pour tout le niveau
  *   titre       : titre affiché
  *   url         : lien YouTube (https://www.youtube.com/watch?v=...  ou https://youtu.be/...)
  *                 ou fichier local placé dans le dossier videos/ (ex. "videos/zone_tampon.mp4")
  *   duree       : texte libre, ex. "12:30"
  *   description : une ou deux phrases
+ *   secours     : (facultatif) lien proposé si le fichier local est absent
  *
  * Attention : chaque bloc se termine par une virgule, sauf le dernier.
  */
 window.VIDEOS = [
+  {
+    "niveau": "n1",
+    "lecon": "n1-l2",
+    "titre": "Formation ArcGIS Tlemcen : 1. L'interface ArcGIS",
+    "url": "videos/1-L'Interface ARCGIS.mp4",
+    "duree": "",
+    "description": "Vidéo du formateur. Fichier « 1-L'Interface ARCGIS.mp4 » à placer dans le dossier videos/ du site.",
+    "secours": "https://drive.google.com/file/d/12MvOsgbG30pEDbyovcQ7lb4VqYfkNsNB/view"
+  },
+  {
+    "niveau": "n2",
+    "lecon": "n2-l2",
+    "titre": "Formation ArcGIS Tlemcen : 2. Projection",
+    "url": "videos/2-PROJECTION.mp4",
+    "duree": "",
+    "description": "Vidéo du formateur. Fichier « 2-PROJECTION.mp4 » à placer dans le dossier videos/ du site.",
+    "secours": "https://drive.google.com/file/d/1zFFwfQ8_3H9mBlg-lrIGmhs9sMcFcesY/view"
+  },
+  {
+    "niveau": "n2",
+    "lecon": "n2-l5",
+    "titre": "Formation ArcGIS Tlemcen : 3. Calage (géoréférencement)",
+    "url": "videos/3-CALAGE.mp4",
+    "duree": "",
+    "description": "Vidéo du formateur. Fichier « 3-CALAGE.mp4 » à placer dans le dossier videos/ du site.",
+    "secours": "https://drive.google.com/file/d/1ytxqiE7ekjt1YMD1J_buPpSXtNuTObR9/view"
+  },
+  {
+    "niveau": "n2",
+    "lecon": "n2-l1",
+    "titre": "Formation ArcGIS Tlemcen : 4. Création de base de données",
+    "url": "videos/4-CREATION DE BASE DE DONNEE.mp4",
+    "duree": "",
+    "description": "Vidéo du formateur. Fichier « 4-CREATION DE BASE DE DONNEE.mp4 » à placer dans le dossier videos/ du site.",
+    "secours": "https://drive.google.com/file/d/1gDHXM83fUffOlg7j4j01mc6pVwulNv2Q/view"
+  },
+  {
+    "niveau": "n2",
+    "lecon": "n2-l4",
+    "titre": "Formation ArcGIS Tlemcen : 5.1 Numérisation des points",
+    "url": "videos/5-1numérisation point.mp4",
+    "duree": "",
+    "description": "Vidéo du formateur. Fichier « 5-1numérisation point.mp4 » à placer dans le dossier videos/ du site.",
+    "secours": "https://drive.google.com/file/d/1LhkY9T4WF7b_MajMvT-2qpI12Lx8ZUGh/view"
+  },
+  {
+    "niveau": "n2",
+    "lecon": "n2-l4",
+    "titre": "Formation ArcGIS Tlemcen : 5.2 Numérisation des polylignes",
+    "url": "videos/5-2numérisation polyline.mp4",
+    "duree": "",
+    "description": "Vidéo du formateur. Fichier « 5-2numérisation polyline.mp4 » à placer dans le dossier videos/ du site.",
+    "secours": "https://drive.google.com/file/d/1bjgApF7cDqzodzPZghWIoEyKnRdE3CY8/view"
+  },
+  {
+    "niveau": "n2",
+    "lecon": "n2-l4",
+    "titre": "Formation ArcGIS Tlemcen : 5.3 Numérisation des polygones",
+    "url": "videos/5-3numérisation polygon.mp4",
+    "duree": "",
+    "description": "Vidéo du formateur. Fichier « 5-3numérisation polygon.mp4 » à placer dans le dossier videos/ du site.",
+    "secours": "https://drive.google.com/file/d/172-rzbxyy_CNExNnE6t27IrT9vvUmEvX/view"
+  },
+  {
+    "niveau": "n4",
+    "lecon": "n4-l3",
+    "titre": "Formation ArcGIS Tlemcen : Raster vers vecteur et découpage (Clip)",
+    "url": "videos/RASTER TO VECTEUR + CLIP.mp4",
+    "duree": "",
+    "description": "Vidéo du formateur. Fichier « RASTER TO VECTEUR + CLIP.mp4 » à placer dans le dossier videos/ du site.",
+    "secours": "https://drive.google.com/file/d/1WdUjR7xYNz6MyEdvEqwHI5w70mH-dXWZ/view"
+  },
+  {
+    "niveau": "n4",
+    "lecon": "n4-l4",
+    "titre": "Formation ArcGIS Tlemcen : Vecteur vers raster",
+    "url": "videos/VECTEUR TO RASTER.mp4",
+    "duree": "",
+    "description": "Vidéo du formateur. Fichier « VECTEUR TO RASTER.mp4 » à placer dans le dossier videos/ du site.",
+    "secours": "https://drive.google.com/file/d/1toCmA-emf_hQihQ8hdRLzK5lgbcM-rub/view"
+  },
   {
     "niveau": "n1",
     "lecon": "n1-l1",
@@ -101,7 +183,7 @@ window.VIDEOS = [
   },
   {
     "niveau": "n2",
-    "lecon": "",
+    "lecon": "n2-l5",
     "titre": "Géoréférencer une carte dans ArcMap",
     "url": "https://www.youtube.com/watch?v=aTPfH4mblSU",
     "duree": "",
@@ -274,5 +356,141 @@ window.VIDEOS = [
     "url": "https://www.youtube.com/watch?v=QR2Kq_e4yRg",
     "duree": "",
     "description": "Chaîne YouTube : TechInsightCentral. Vidéo en anglais."
+  },
+  {
+    "niveau": "n7",
+    "lecon": "n7-l1",
+    "titre": "Remplissage, direction et accumulation de flux à partir d'un MNT (en anglais)",
+    "url": "https://www.youtube.com/watch?v=eRmaA9U_d_U",
+    "duree": "",
+    "description": "Chaîne YouTube : OpenTopography. Vidéo en anglais."
+  },
+  {
+    "niveau": "n7",
+    "lecon": "n7-l2",
+    "titre": "Modélisation hydrologique dans ArcMap avec les outils Hydrologie (en anglais)",
+    "url": "https://www.youtube.com/watch?v=u0gxtR6J7Qg",
+    "duree": "",
+    "description": "Chaîne YouTube : Geoscience Mapping Solutions. Vidéo en anglais."
+  },
+  {
+    "niveau": "n7",
+    "lecon": "n7-l2",
+    "titre": "Délimitation des bassins versants et classement automatique des cours d'eau",
+    "url": "https://www.youtube.com/watch?v=0Qy-GFJHTMY",
+    "duree": "",
+    "description": "Chaîne YouTube : Home Made School."
+  },
+  {
+    "niveau": "n7",
+    "lecon": "n7-l3",
+    "titre": "ArcMap : délimitation du bassin versant et de son exutoire",
+    "url": "https://www.youtube.com/watch?v=C4ZGOpYAwxY",
+    "duree": "",
+    "description": "Chaîne YouTube : Geokamiss."
+  },
+  {
+    "niveau": "n7",
+    "lecon": "n7-l3",
+    "titre": "Bassin versant avec ArcGIS : MNT, paramètres, surface et périmètre",
+    "url": "https://www.youtube.com/watch?v=hr3lw5QvlCs",
+    "duree": "",
+    "description": "Chaîne YouTube : Yam_Hydro_Tech."
+  },
+  {
+    "niveau": "n7",
+    "lecon": "n7-l4",
+    "titre": "Simuler une inondation dans ArcMap/ArcScene à partir d'un MNT",
+    "url": "https://www.youtube.com/watch?v=xvEBCafmyNk",
+    "duree": "",
+    "description": "Chaîne YouTube : SimplE."
+  },
+  {
+    "niveau": "n7",
+    "lecon": "n7-l4",
+    "titre": "Cartographie de l'aléa et du risque inondation dans ArcMap (en anglais)",
+    "url": "https://www.youtube.com/watch?v=RnbJTdpYejI",
+    "duree": "",
+    "description": "Chaîne YouTube : Earth Detective. Vidéo en anglais."
+  },
+  {
+    "niveau": "n7",
+    "lecon": "n7-l4",
+    "titre": "Hydrologie et carte de risque inondation : tutoriel complet (en anglais)",
+    "url": "https://www.youtube.com/watch?v=0DVVihogMQ0",
+    "duree": "",
+    "description": "Chaîne YouTube : HealthGIS. Vidéo en anglais."
+  },
+  {
+    "niveau": "n8",
+    "lecon": "n8-l1",
+    "titre": "Reclassification, superposition et algèbre raster dans ArcGIS (en anglais)",
+    "url": "https://www.youtube.com/watch?v=JDtwas-FZfc",
+    "duree": "",
+    "description": "Chaîne YouTube : LBSocial. Vidéo en anglais."
+  },
+  {
+    "niveau": "n8",
+    "lecon": "n8-l1",
+    "titre": "La superposition pondérée (Weighted Overlay) expliquée (en anglais)",
+    "url": "https://www.youtube.com/watch?v=qyNkZ2FRLb8",
+    "duree": "",
+    "description": "Chaîne YouTube : Aaron Maxwell. Vidéo en anglais."
+  },
+  {
+    "niveau": "n8",
+    "lecon": "n8-l1",
+    "titre": "Carte de susceptibilité aux inondations par AHP dans ArcGIS (en anglais)",
+    "url": "https://www.youtube.com/watch?v=GTpv6iNpeVY",
+    "duree": "",
+    "description": "Chaîne YouTube : GIS Tube. Vidéo en anglais."
+  },
+  {
+    "niveau": "n8",
+    "lecon": "n8-l2",
+    "titre": "Zonage du risque d'incendie de forêt dans ArcGIS (en anglais)",
+    "url": "https://www.youtube.com/watch?v=l5E39tQNO3A",
+    "duree": "",
+    "description": "Chaîne YouTube : GeoTech Studio. Vidéo en anglais."
+  },
+  {
+    "niveau": "n8",
+    "lecon": "n8-l2",
+    "titre": "Carte d'aléa feux de forêt, partie 1 (ArcGIS Pro) (en anglais)",
+    "url": "https://www.youtube.com/watch?v=nXbSS1J0lfU",
+    "duree": "",
+    "description": "Chaîne YouTube : Maps by RGD. Vidéo en anglais."
+  },
+  {
+    "niveau": "n8",
+    "lecon": "n8-l4",
+    "titre": "Carte de submersion à partir d'un MNT raster (en anglais)",
+    "url": "https://www.youtube.com/watch?v=l9E_eg1YpH8",
+    "duree": "",
+    "description": "Chaîne YouTube : Water Resources Engineering HUB. Vidéo en anglais."
+  },
+  {
+    "niveau": "n8",
+    "lecon": "n8-l5",
+    "titre": "Carte de susceptibilité aux glissements de terrain (ArcGIS Pro) (en anglais)",
+    "url": "https://www.youtube.com/watch?v=LATklqKOoU8",
+    "duree": "",
+    "description": "Chaîne YouTube : Maps by RGD. Vidéo en anglais."
+  },
+  {
+    "niveau": "n8",
+    "lecon": "n8-l5",
+    "titre": "Susceptibilité aux glissements par la méthode du ratio de fréquence, partie 1 (en anglais)",
+    "url": "https://www.youtube.com/watch?v=X5ho-1Iqn6E",
+    "duree": "",
+    "description": "Chaîne YouTube : Pradeep Gyawali. Vidéo en anglais."
+  },
+  {
+    "niveau": "n8",
+    "lecon": "n8-l6",
+    "titre": "Évaluation et cartographie du risque inondation dans ArcGIS (en anglais)",
+    "url": "https://www.youtube.com/watch?v=nCeXChN1T0I",
+    "duree": "",
+    "description": "Chaîne YouTube : GIS & RS Solution. Vidéo en anglais."
   }
 ];

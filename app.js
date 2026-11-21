@@ -82,8 +82,13 @@
     var m = String(url || "").match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
     return m ? m[1] : null;
   }
+  function idDrive(url) {
+    var m = String(url || "").match(/drive\.google\.com\/(?:file\/d\/|open\?id=)([A-Za-z0-9_-]{20,})/);
+    return m ? m[1] : null;
+  }
   function typeVideo(url) {
     if (idYoutube(url)) return "youtube";
+    if (idDrive(url)) return "drive";
     if (/\.(mp4|webm|ogg|ogv|m4v)(\?.*)?$/i.test(url || "")) return "fichier";
     return "lien";
   }
@@ -91,14 +96,17 @@
     var t = typeVideo(v.url);
     var ecran;
     if (t === "fichier") {
-      ecran = '<video controls preload="metadata" src="' + esc(v.url) + '"></video>';
+      ecran = '<video controls preload="metadata" src="' + esc(encodeURI(v.url)) + '"' + (v.secours ? ' data-secours="' + esc(v.secours) + '"' : "") + '></video>';
     } else if (t === "youtube") {
       ecran = '<button type="button" data-yt="' + esc(idYoutube(v.url)) + '">▶ Lire ici</button>';
+    } else if (t === "drive") {
+      ecran = '<button type="button" data-drive="' + esc(idDrive(v.url)) + '">▶ Lire ici</button>';
     } else {
       ecran = '<a class="btn small" href="' + esc(v.url) + '" target="_blank" rel="noopener">Ouvrir la vidéo ↗</a>';
     }
     var lien = t === "youtube"
-      ? ' · <a href="https://www.youtube.com/watch?v=' + esc(idYoutube(v.url)) + '" target="_blank" rel="noopener">Ouvrir sur YouTube ↗</a>' : "";
+      ? ' · <a href="https://www.youtube.com/watch?v=' + esc(idYoutube(v.url)) + '" target="_blank" rel="noopener">Ouvrir sur YouTube ↗</a>'
+      : t === "drive" ? ' · <a href="https://drive.google.com/file/d/' + esc(idDrive(v.url)) + '/view" target="_blank" rel="noopener">Ouvrir dans Google Drive ↗</a>' : "";
     var src = v._source === "local" ? ' <span class="tag local" title="Ajoutée depuis la page Administration de ce poste">ajoutée sur ce poste</span>' : "";
     var lec = v.lecon ? trouverLecon(v.lecon) : null;
     return '<div class="video"><div class="screen">' + ecran + '</div><div class="info">' +
@@ -113,6 +121,11 @@
   }
   // Lecteur YouTube intégré au clic ; message clair pour les vidéos locales introuvables
   app.addEventListener("click", function (e) {
+    var d = e.target.closest("[data-drive]");
+    if (d) {
+      d.parentNode.innerHTML = '<iframe src="https://drive.google.com/file/d/' + d.getAttribute("data-drive") + '/preview" title="Vidéo Google Drive" allow="autoplay; fullscreen" allowfullscreen></iframe>';
+      return;
+    }
     var b = e.target.closest("[data-yt]");
     if (!b) return;
     var id = b.getAttribute("data-yt");
@@ -122,7 +135,9 @@
     var el = e.target;
     if (el && el.tagName === "VIDEO") {
       var s = el.getAttribute("src");
-      el.parentNode.innerHTML = '<div class="err">Fichier introuvable :<br><code>' + esc(s) + '</code><br>Placez la vidéo dans le dossier <code>videos/</code> du site.</div>';
+      var sec = el.getAttribute("data-secours");
+      el.parentNode.innerHTML = '<div class="err">Fichier introuvable :<br><code>' + esc(decodeURI(s)) + '</code><br>Placez la vidéo dans le dossier <code>videos/</code> du site.' +
+        (sec ? '<br><br><a class="btn small" href="' + esc(sec) + '" target="_blank" rel="noopener">Voir sur Google Drive ↗</a>' : "") + '</div>';
     }
   }, true);
 
@@ -137,9 +152,12 @@
       '<small class="mono">' + esc(nom) + (f.taille ? " · " + esc(f.taille) : "") + '</small></div>' +
       '<a class="btn small" href="' + esc(f.fichier) + '" download="' + esc(nom) + '">Télécharger</a></li>';
   }
+  // Dans un aperçu intégré (cadre), le navigateur bloque les téléchargements : on le dit clairement.
+  var APERCU = (function () { try { return window.self !== window.top; } catch (e) { return true; } })();
   function blocFichiers(liste) {
     var vus = {}, uniques = liste.filter(function (f) { if (vus[f.fichier]) return false; vus[f.fichier] = 1; return true; });
-    return '<ul class="files">' + uniques.map(ligneFichier).join("") + '</ul>';
+    var note = APERCU ? '<div class="astuce"><b>Aperçu :</b> les téléchargements sont désactivés dans cet aperçu. Ils fonctionnent dans le site installé (ouvrez <code>index.html</code> du dossier décompressé) ou une fois le site hébergé en ligne.</div>' : "";
+    return note + '<ul class="files' + (APERCU ? " off" : "") + '">' + uniques.map(ligneFichier).join("") + '</ul>';
   }
 
   /* ---------------- Fond « courbes de niveau » ---------------- */
@@ -171,12 +189,12 @@
     var suite = prochaineEtape();
     var nbLecons = toutesLecons().length;
     var html = '<section class="hero"><canvas aria-hidden="true"></canvas><div class="wrap">' +
-      '<span class="eyebrow">ArcGIS Desktop 10.8 · 6 niveaux · ' + nbLecons + ' leçons</span>' +
-      '<h1>De la première carte au premier script ArcPy</h1>' +
-      '<p class="lead">Un parcours progressif pour apprendre ArcMap avec les boîtes à outils : interface, données, symbologie, géotraitement avec ArcToolbox, ModelBuilder, puis programmation Python. Chaque leçon propose un exercice, des vidéos et un quiz de fin de niveau.</p>' +
+      '<span class="eyebrow">ArcGIS Desktop 10.8 · ' + NIVEAUX.length + ' niveaux · ' + nbLecons + ' leçons</span>' +
+      '<h1>De la première carte à la cartographie des risques</h1>' +
+      '<p class="lead">Un parcours progressif pour apprendre ArcMap avec les boîtes à outils : interface, données, symbologie, géotraitement avec ArcToolbox, ModelBuilder, programmation Python, puis hydrologie à partir du MNT et cartes de vulnérabilité aux risques naturels (inondation, feux de forêt, séisme, tsunami, glissements). Chaque leçon propose un exercice, des vidéos et un quiz de fin de niveau.</p>' +
       '<div class="actions">' +
       (suite ? '<a class="btn primary" href="#' + suite.hash + '">' + (pctGlobal() ? "Reprendre : " : "Commencer : ") + esc(suite.label) + ' →</a>'
-             : '<a class="btn done" href="#n6">Parcours terminé ✓</a>') +
+             : '<a class="btn done" href="#' + NIVEAUX[NIVEAUX.length - 1].id + '">Parcours terminé ✓</a>') +
       '<a class="btn" href="#videos">Voir les vidéos</a></div>' +
       '</div></section>';
 
@@ -371,7 +389,7 @@
     var all = tousFichiers();
     var general = all.filter(function (f) { return !f.niveau; });
     var h = '<main class="wrap"><div class="level-head"><span class="eyebrow">Données de TP</span><h1>Fichiers d\'exemple</h1>' +
-      '<p>Les données décrivent une zone d\'étude <b>fictive</b> de 20 × 20 km (bassin de l\'oued Tamda), en WGS 1984 UTM zone 31N. Décompressez l\'archive complète dans <code>C:\\ENIV\\</code> : les leçons utilisent le dossier <code>C:\\ENIV\\TP</code>.</p></div>';
+      '<p>Les données décrivent une zone d\'étude <b>fictive</b> de 20 × 20 km (bassin de l\'oued Tamda), placée au sud de Tlemcen, en WGS 1984 UTM zone 30N, avec ses séismes, feux, glissements et crues également inventés, plus une côte fictive pour l\'exercice tsunami. Décompressez l\'archive complète dans <code>C:\\ENIV\\</code> : les leçons utilisent le dossier <code>C:\\ENIV\\TP</code>.</p></div>';
     if (general.length) h += blocFichiers(general);
     NIVEAUX.forEach(function (n) {
       var f = all.filter(function (x) { return x.niveau === n.id; });
@@ -387,7 +405,9 @@
     var masquees = lire(CLE_MASQUEES, []);
     var liste = videosFichier().filter(function (v) { return masquees.indexOf(cleVideo(v)) < 0; }).concat(lire(CLE_VIDEOS, []));
     var propres = liste.map(function (v) {
-      return { niveau: v.niveau || "", lecon: v.lecon || "", titre: v.titre || "", url: v.url || "", duree: v.duree || "", description: v.description || "" };
+      var o = { niveau: v.niveau || "", lecon: v.lecon || "", titre: v.titre || "", url: v.url || "", duree: v.duree || "", description: v.description || "" };
+      if (v.secours) o.secours = v.secours;
+      return o;
     });
     return "/*\n * VIDÉOS TUTORIELLES : fichier généré depuis la page Administration le " + new Date().toLocaleString("fr-FR") + ".\n" +
       " * Remplacez donnees/videos.js par ce fichier pour publier les vidéos à tous les élèves.\n" +
@@ -439,7 +459,7 @@
     var urlIn = document.getElementById("f-url"), typeOut = document.getElementById("f-type");
     urlIn.addEventListener("input", function () {
       var t = urlIn.value.trim() ? typeVideo(urlIn.value.trim()) : "";
-      typeOut.textContent = t === "youtube" ? "Vidéo YouTube détectée" : t === "fichier" ? "Fichier vidéo local" : t ? "Lien externe (ouvert dans un nouvel onglet)" : "";
+      typeOut.textContent = t === "youtube" ? "Vidéo YouTube détectée" : t === "drive" ? "Vidéo Google Drive détectée (partagez-la « Tous les utilisateurs disposant du lien »)" : t === "fichier" ? "Fichier vidéo local" : t ? "Lien externe (ouvert dans un nouvel onglet)" : "";
     });
     document.getElementById("export-txt").value = exporterTexte();
 

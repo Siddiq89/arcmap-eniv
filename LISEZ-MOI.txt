@@ -1,6 +1,13 @@
 ArcMap 10.8 pas à pas — site d'apprentissage pour l'ENIV
 =========================================================
 
+PARCOURS (8 niveaux, 33 leçons)
+  1 Interface  2 Données  3 Symbologie  4 ArcToolbox  5 ModelBuilder
+  6 ArcPy  7 MNT, hydrologie et inondations
+  8 Vulnérabilité aux risques naturels (feux, séisme, tsunami, glissements,
+    synthèse multirisque). Les niveaux 7 et 8 demandent l'extension
+    Spatial Analyst (Personnaliser > Extensions).
+
 OUVRIR LE SITE
   Double-cliquez sur index.html (fonctionne sans Internet, sauf les polices
   et les vidéos YouTube). Pour la salle informatique, copiez tout le dossier

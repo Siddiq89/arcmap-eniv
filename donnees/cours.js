@@ -125,7 +125,7 @@ window.COURS = {
       numero: 2,
       titre: "Les données géographiques",
       echelle: "1:250 000",
-      resume: "Formats vecteur et raster, géodatabase, systèmes de coordonnées, table attributaire, sélections et édition.",
+      resume: "Formats vecteur et raster, géodatabase, systèmes de coordonnées (UTM 30N, Nord Sahara 1959), table attributaire, sélections, numérisation et calage.",
       lecons: [
         {
           id: "n2-l1",
@@ -162,6 +162,15 @@ window.COURS = {
   <li><b>Système de coordonnées géographiques</b> : latitude/longitude en degrés (ex. WGS 1984).</li>
   <li><b>Système de coordonnées projetées</b> : coordonnées planes en mètres (ex. WGS 1984 UTM, zone adaptée à votre région). Indispensable pour mesurer des distances et des surfaces.</li>
 </ul>
+<p><b>Systèmes utilisés en Algérie</b> (fiche « projection » de la formation) :</p>
+<table class="tab">
+  <tr><th>Famille</th><th>Système dans ArcMap</th><th>Remarque</th></tr>
+  <tr><td>Géographique</td><td>GCS WGS 1984</td><td>Degrés ; données GPS, Google Earth</td></tr>
+  <tr><td>Projeté cylindrique (UTM)</td><td>WGS 1984 UTM Zone 29N à 32N</td><td>Tlemcen est en <b>zone 30N</b> ; Alger en 31N</td></tr>
+  <tr><td>Projeté cylindrique (UTM)</td><td>Nord Sahara 1959 UTM Zone 29N à 32N</td><td>Système des cartes topographiques algériennes (INCT)</td></tr>
+  <tr><td>Projeté conique (Lambert)</td><td>Nord Algérie (ancienne), dans <i>National Grids &gt; Africa</i></td><td>Anciennes cartes ; existe aussi en degrés</td></tr>
+</table>
+<p>Pour la zone de Tlemcen, choisissez par exemple <i>Projected Coordinate Systems &gt; UTM &gt; WGS 1984 &gt; Northern Hemisphere &gt; WGS 1984 UTM Zone 30N</i>.</p>
 <p>Deux outils à ne pas confondre :</p>
 <table class="tab">
   <tr><th>Outil</th><th>Rôle</th><th>Chemin ArcToolbox</th></tr>
@@ -171,7 +180,8 @@ window.COURS = {
 <div class="astuce"><b>Erreur classique :</b> utiliser « Définir une projection » pour changer de système. Les données se retrouvent alors au mauvais endroit.</div>`,
           exercice: `<ol>
   <li>Affichez les propriétés d'une couche (onglet <i>Source</i>) et notez son système de coordonnées.</li>
-  <li>Projetez cette couche dans un système UTM avec l'outil <b>Projeter</b>.</li>
+  <li>Projetez <code>Communes_NordSahara1959</code> et <code>Communes_WGS84</code> en WGS 1984 UTM Zone 30N avec l'outil <b>Projeter</b>.</li>
+  <li>Déclarez le système de <code>Forages_sans_projection</code> (WGS 1984 UTM Zone 30N) avec <b>Définir une projection</b>.</li>
   <li>Comparez la surface d'un polygone avant et après projection (champ calculé en mètres carrés).</li>
 </ol>`
         },
@@ -218,6 +228,31 @@ window.COURS = {
   <li>Sélectionnez les forages situés à moins de 1 km d'un oued.</li>
   <li>Numérisez 5 points dans la classe <code>Forages</code> et renseignez leurs attributs.</li>
 </ol>`
+        },
+        {
+          id: "n2-l5",
+          titre: "Calage (géoréférencement) d'une carte scannée",
+          duree: "30 min",
+          objectifs: [
+            "Caler une carte scannée ou une image sur des coordonnées connues",
+            "Contrôler l'erreur (RMS) et enregistrer le résultat"
+          ],
+          contenu: `
+<p>Une carte scannée (.jpg, .tif) n'a pas de coordonnées. Le <b>calage</b> lui en attribue à l'aide de <b>points de contrôle</b> dont on connaît les coordonnées : croisements du quadrillage, amorces des coordonnées en bordure de carte.</p>
+<ol>
+  <li>Réglez d'abord le système de coordonnées du bloc de données (ex. Nord Sahara 1959 UTM Zone 30N pour une carte INCT de la région de Tlemcen).</li>
+  <li>Ajoutez l'image, puis affichez la barre d'outils <b>Géoréférencement</b> (clic droit sur une zone vide des barres d'outils).</li>
+  <li>Choisissez la couche dans la liste de la barre, puis <i>Géoréférencement &gt; Ajuster à l'affichage</i> si l'image est loin de la zone.</li>
+  <li>Avec l'outil <b>Ajouter des points de contrôle</b>, cliquez un point sur l'image puis, clic droit &gt; <i>Saisir X et Y</i>, tapez ses coordonnées. Placez au moins 4 points bien répartis.</li>
+  <li>Ouvrez la <b>Table des liens</b> : vérifiez l'erreur résiduelle de chaque point et l'erreur RMS totale. Supprimez un point aberrant.</li>
+  <li>Enregistrez : <i>Géoréférencement &gt; Mettre à jour le géoréférencement</i> (fichier .aux.xml à côté de l'image) ou <i>Rectifier</i> pour créer un nouveau raster.</li>
+</ol>
+<div class="astuce"><b>Transformation :</b> 1er ordre (affine) avec 4 à 6 points suffit pour une carte scannée à plat. Les ordres supérieurs demandent plus de points et peuvent déformer les bords.</div>`,
+          exercice: `<ol>
+  <li>Calez une carte topographique scannée de votre secteur avec 6 points du quadrillage kilométrique.</li>
+  <li>Notez l'erreur RMS obtenue ; recommencez si elle dépasse la taille d'un pixel au sol.</li>
+  <li>Superposez une couche vecteur (routes, oueds) pour contrôler visuellement le calage.</li>
+</ol>`
         }
       ],
       quiz: [
@@ -250,6 +285,18 @@ window.COURS = {
           choix: ["Pour accélérer l'affichage", "Parce que les degrés ne sont pas une unité de surface fiable", "Pour réduire la taille du fichier", "Ce n'est pas nécessaire"],
           bonne: 1,
           explication: "Les surfaces doivent être calculées dans un système projeté, en mètres."
+        },
+        {
+          question: "Dans quelle zone UTM se trouve Tlemcen ?",
+          choix: ["Zone 29N", "Zone 30N", "Zone 31N", "Zone 32N"],
+          bonne: 1,
+          explication: "Tlemcen (environ 1,3° Ouest) est en zone 30N, entre 6° Ouest et 0°."
+        },
+        {
+          question: "Où vérifie-t-on l'erreur RMS d'un calage ?",
+          choix: ["Dans la table attributaire", "Dans la Table des liens de la barre Géoréférencement", "Dans les propriétés du bloc de données", "Dans ArcCatalog"],
+          bonne: 1,
+          explication: "La Table des liens affiche les résidus de chaque point de contrôle et l'erreur RMS totale."
         }
       ]
     },
@@ -783,6 +830,470 @@ arcpy.AddMessage("Termine : " + sortie)</code></pre>
           choix: ["arcpy.mp", "arcpy.mapping", "arcpy.da", "arcpy.sa"],
           bonne: 1,
           explication: "arcpy.mapping pour ArcMap ; arcpy.mp est son équivalent dans ArcGIS Pro."
+        }
+      ]
+    },
+
+    /* ============================================================ */
+    {
+      id: "n7",
+      numero: 7,
+      titre: "MNT, hydrologie et inondations",
+      echelle: "1:2 500",
+      resume: "Préparer un MNT, modéliser l'écoulement (Fill, directions, accumulation), extraire le réseau et le bassin versant, puis cartographier les zones inondables et les enjeux exposés.",
+      lecons: [
+        {
+          id: "n7-l1",
+          titre: "Préparer le MNT pour l'hydrologie",
+          duree: "35 min",
+          objectifs: [
+            "Importer un MNT ASCII et lui attribuer son système de coordonnées",
+            "Régler l'environnement de géotraitement d'une analyse raster",
+            "Comprendre et corriger les cuvettes avec Remplissage (Fill)"
+          ],
+          contenu: `
+<p>Le <b>MNT</b> (modèle numérique de terrain) est une grille où chaque cellule porte une altitude. Les données du TP (<code>TP\\MNT\\MNT_50m.asc</code>) couvrent le bassin fictif de l'oued Tamda : 400 × 400 cellules de 50 m, en WGS 1984 UTM zone 30N. Pour un vrai projet, on télécharge SRTM (30 m) ou ALOS (30 m) sur EarthExplorer, puis on le projette en UTM avant tout calcul : une pente calculée en degrés de latitude est fausse.</p>
+<h3>1. Importer et projeter</h3>
+<ol>
+  <li><b>ASCII vers raster</b> (<i>ASCII to Raster</i>, boîte Conversion), type <code>FLOAT</code>, sortie <code>mnt.tif</code>.</li>
+  <li><b>Définir une projection</b> (<i>Define Projection</i>) : WGS 1984 UTM Zone 30N. On <i>définit</i> car les coordonnées sont déjà en mètres UTM ; on <i>projette</i> seulement quand il faut changer de système.</li>
+  <li>Symbologie : étirement <i>Écart type</i> et une rampe hypsométrique, puis <b>Ombrage</b> (<i>Hillshade</i>) en dessous avec 40 % de transparence sur le MNT.</li>
+</ol>
+<h3>2. Activer Spatial Analyst et régler l'environnement</h3>
+<p><i>Personnaliser &gt; Extensions</i> : cochez <b>Spatial Analyst</b>. Puis <i>Géotraitement &gt; Environnements</i> :</p>
+<table class="tab">
+  <tr><th>Paramètre</th><th>Valeur</th><th>Pourquoi</th></tr>
+  <tr><td>Espace de travail courant</td><td><code>C:\\ENIV\\TP\\Sorties\\Risques</code></td><td>tous les résultats au même endroit</td></tr>
+  <tr><td>Étendue, Raster de capture, Taille de cellule</td><td>mnt.tif</td><td>toutes les grilles parfaitement superposées</td></tr>
+  <tr><td>Masque</td><td>mnt.tif (ou le bassin)</td><td>limite les calculs à la zone utile</td></tr>
+</table>
+<h3>3. Les cuvettes et l'outil Remplissage</h3>
+<p>Un MNT contient des <b>cuvettes</b> (puits) : cellules plus basses que toutes leurs voisines, souvent dues au bruit de mesure. L'eau y « s'arrête » et le réseau calculé se coupe. L'outil <b>Remplissage</b> (<i>Fill</i>, Spatial Analyst &gt; Hydrologie) relève ces cellules jusqu'au niveau de leur point de débordement.</p>
+<pre><code>fill = Fill("mnt.tif")
+fill.save("fill.tif")
+(fill - Raster("mnt.tif")).save("prof_cuvettes.tif")   # où le MNT a été corrigé</code></pre>
+<p>Visualisez <code>prof_cuvettes.tif</code> : les corrections doivent être faibles (quelques mètres) et dispersées. Une grande zone remplie de plusieurs dizaines de mètres signale soit une vraie dépression (sebkha, barrage), soit une erreur du MNT.</p>
+<div class="astuce"><b>À retenir :</b> toujours travailler sur le MNT <b>rempli</b> pour les directions de flux, mais garder le MNT brut pour les pentes et les altitudes affichées sur les cartes.</div>`,
+          exercice: `<ol>
+  <li>Importez <code>MNT_50m.asc</code>, définissez sa projection et créez un ombrage.</li>
+  <li>Réglez l'environnement comme dans le tableau, puis lancez <b>Remplissage</b>.</li>
+  <li>Calculez <code>fill - mnt</code> avec la <b>Calculatrice raster</b>. Quelle est la profondeur maximale corrigée ? Combien de cellules ont été modifiées (propriétés &gt; histogramme, ou <i>Construire la table attributaire</i> sur une version entière) ?</li>
+</ol>`
+        },
+        {
+          id: "n7-l2",
+          titre: "Directions, accumulation et réseau hydrographique",
+          duree: "40 min",
+          objectifs: [
+            "Calculer les directions d'écoulement D8 et l'accumulation des flux",
+            "Extraire un réseau hydrographique avec un seuil justifié",
+            "Hiérarchiser le réseau (Strahler) et le convertir en polylignes"
+          ],
+          contenu: `
+<h3>1. Direction de flux (Flow Direction)</h3>
+<p>Le modèle <b>D8</b> envoie l'eau de chaque cellule vers la voisine de plus forte pente, parmi 8. Le résultat est codé en puissances de 2 :</p>
+<table class="tab">
+  <tr><td>32 (NO)</td><td>64 (N)</td><td>128 (NE)</td></tr>
+  <tr><td>16 (O)</td><td>cellule</td><td>1 (E)</td></tr>
+  <tr><td>8 (SO)</td><td>4 (S)</td><td>2 (SE)</td></tr>
+</table>
+<p>Une valeur qui n'est pas une puissance de 2 indique une cuvette restante : relancez <b>Remplissage</b>.</p>
+<h3>2. Accumulation de flux (Flow Accumulation)</h3>
+<p>Chaque cellule reçoit le <b>nombre de cellules situées en amont</b>. Multiplié par la surface d'une cellule (50 × 50 m = 0,0025 km²), il donne la surface drainée. Affichez-le avec un étirement <i>Écart type</i> ou une symbologie en classes logarithmiques : les talwegs apparaissent.</p>
+<h3>3. Seuil et réseau</h3>
+<p>Un oued « commence » quand la surface drainée dépasse un seuil. Avec 400 cellules = 1 km², on obtient un réseau proche de celui des cartes au 1:50 000. Comparez avec la couche <code>Oueds</code> et ajustez (200 à 1 000 cellules).</p>
+<pre><code>fdir = FlowDirection(fill, "NORMAL")
+facc = FlowAccumulation(fdir)
+reseau = Con(facc &gt; 400, 1)                  # 1 = oued, NoData ailleurs
+strahler = StreamOrder(reseau, fdir, "STRAHLER")
+StreamToFeature(strahler, fdir, "reseau_hydro.shp", "SIMPLIFY")</code></pre>
+<p><b>Ordre des cours d'eau</b> (<i>Stream Order</i>) méthode <b>Strahler</b> : deux tronçons d'ordre n donnent un ordre n+1. <b>Cours d'eau vers entités</b> (<i>Stream to Feature</i>) produit des polylignes avec le champ <code>GRID_CODE</code> = ordre, utile pour faire varier l'épaisseur des traits.</p>
+<div class="astuce"><b>Astuce :</b> dans la <b>Calculatrice raster</b>, écrivez <code>Con("facc.tif" &gt; 400, 1)</code>. Les noms de couches entre guillemets doubles, et l'outil <b>Con</b> s'appelle <i>Conditionnelle</i> dans la boîte à outils.</div>`,
+          exercice: `<ol>
+  <li>Calculez <code>fdir</code> et <code>facc</code> à partir de <code>fill.tif</code>.</li>
+  <li>Extrayez trois réseaux avec 200, 400 et 1 000 cellules. Superposez la couche <code>Oueds</code> : quel seuil lui ressemble le plus ?</li>
+  <li>Calculez l'ordre de Strahler, convertissez en polylignes et symbolisez l'épaisseur selon <code>GRID_CODE</code>. Quel est l'ordre maximal à l'exutoire ?</li>
+  <li>Comparez avec le script <code>06_hydrologie.py</code>.</li>
+</ol>`
+        },
+        {
+          id: "n7-l3",
+          titre: "Délimiter un bassin versant et le caractériser",
+          duree: "35 min",
+          objectifs: [
+            "Recaler un exutoire sur le réseau calculé",
+            "Délimiter un bassin versant et tous les bassins d'une zone",
+            "Calculer les paramètres morphométriques classiques"
+          ],
+          contenu: `
+<h3>1. Recaler l'exutoire</h3>
+<p>Un point d'exutoire saisi à la main tombe rarement exactement sur la cellule d'accumulation maximale. <b>Ajuster le point d'écoulement</b> (<i>Snap Pour Point</i>) le déplace vers la cellule de plus forte accumulation dans un rayon donné (ici 150 m, soit 3 cellules). Un rayon trop grand peut faire « sauter » le point sur un affluent voisin.</p>
+<h3>2. Bassin versant</h3>
+<pre><code>exu = SnapPourPoint("Exutoire.shp", facc, 150, "ID")
+bv = Watershed(fdir, exu)
+arcpy.RasterToPolygon_conversion(bv, "bassin_versant.shp", "SIMPLIFY")
+Basin(fdir).save("bassins_tous.tif")     # tous les bassins qui sortent de la zone</code></pre>
+<p><b>Bassin versant</b> (<i>Watershed</i>) délimite tout ce qui s'écoule vers l'exutoire ; <b>Bassin</b> (<i>Basin</i>) découpe toute la zone en bassins qui se jettent au bord du MNT.</p>
+<h3>3. Paramètres morphométriques</h3>
+<table class="tab">
+  <tr><th>Paramètre</th><th>Formule</th><th>Outil ArcMap</th></tr>
+  <tr><td>Surface A (km²), périmètre P (km)</td><td>géométrie du polygone</td><td>Calculer la géométrie</td></tr>
+  <tr><td>Indice de compacité de Gravelius</td><td>Kc = 0,28 · P / √A</td><td>Calculatrice de champs</td></tr>
+  <tr><td>Altitudes min, moy, max</td><td>—</td><td>Statistiques zonales (table)</td></tr>
+  <tr><td>Longueur du talweg principal L (km)</td><td>plus long chemin d'écoulement</td><td>Longueur d'écoulement (<i>Flow Length</i>), UPSTREAM</td></tr>
+  <tr><td>Temps de concentration (Giandotti)</td><td>tc = (4√A + 1,5 L) / (0,8 √(Hmoy − Hmin)) en heures</td><td>calcul à partir des valeurs ci-dessus</td></tr>
+</table>
+<p>Kc proche de 1 = bassin ramassé, qui concentre vite les crues ; Kc &gt; 1,5 = bassin allongé, crues plus étalées.</p>`,
+          exercice: `<ol>
+  <li>Recalez <code>Risques\\Exutoire.shp</code> avec un rayon de 150 m puis délimitez le bassin versant.</li>
+  <li>Convertissez-le en polygone et calculez sa surface en km² et son périmètre.</li>
+  <li>Avec <b>Statistiques zonales (table)</b> sur le MNT, relevez Hmin, Hmoy et Hmax ; avec <b>Longueur d'écoulement</b>, la longueur L.</li>
+  <li>Calculez Kc et le temps de concentration de Giandotti. Le bassin est-il ramassé ou allongé ?</li>
+</ol>`
+        },
+        {
+          id: "n7-l4",
+          titre: "Cartographier les zones inondables et les enjeux",
+          duree: "45 min",
+          objectifs: [
+            "Calculer la hauteur au-dessus de l'oued le plus proche (méthode HAND)",
+            "Combiner plusieurs critères en une carte de susceptibilité à l'inondation",
+            "Valider la carte avec des laisses de crue et lister les enjeux exposés"
+          ],
+          contenu: `
+<p>Une vraie carte d'aléa inondation demande un modèle hydraulique (HEC-RAS, par exemple) avec des débits de crue. Pour un premier diagnostic à l'échelle d'un bassin, on utilise une <b>approche géomorphologique</b> à partir du MNT. Rappel : les crues de Bab El Oued (Alger, novembre 2001) ou de Ghardaïa (octobre 2008) ont touché des quartiers construits dans le lit majeur des oueds.</p>
+<h3>1. Hauteur au-dessus de l'oued (HAND)</h3>
+<p>Une cellule est d'autant plus inondable qu'elle est <b>peu au-dessus</b> de l'oued voisin. On attribue à chaque cellule l'altitude de l'oued le plus proche, puis on fait la différence :</p>
+<pre><code>alt_oued = Int(Con(Raster("reseau.tif") == 1, Raster("fill.tif")))
+alt_ref  = EucAllocation(alt_oued)          # Allocation euclidienne
+hauteur  = Raster("fill.tif") - alt_ref     # mètres au-dessus de l'oued</code></pre>
+<h3>2. Critères, notes et poids</h3>
+<p>Chaque critère est reclassé de 1 (peu favorable) à 5 (très favorable à l'inondation), puis combiné par <b>somme pondérée</b> (poids du fichier <code>Tables\\poids_multicritere.xlsx</code>) :</p>
+<table class="tab">
+  <tr><th>Critère</th><th>Outil</th><th>Note 5 si…</th><th>Poids</th></tr>
+  <tr><td>Distance à l'oued</td><td>Distance euclidienne</td><td>&lt; 100 m</td><td>35 %</td></tr>
+  <tr><td>Hauteur au-dessus de l'oued</td><td>HAND ci-dessus</td><td>&lt; 2 m</td><td>25 %</td></tr>
+  <tr><td>Pente</td><td>Pente (degrés)</td><td>&lt; 2°</td><td>20 %</td></tr>
+  <tr><td>Accumulation de flux</td><td>facc</td><td>&gt; 10 000 cellules</td><td>10 %</td></tr>
+  <tr><td>Occupation du sol</td><td>Polygone vers raster</td><td>Urbain (imperméable)</td><td>10 %</td></tr>
+</table>
+<p>L'indice obtenu (de 1 à 5) est découpé en cinq classes : très faible, faible, moyen, fort, très fort.</p>
+<h3>3. Valider et croiser avec les enjeux</h3>
+<ul>
+  <li><b>Extraire les valeurs vers des points</b> (<i>Extract Values to Points</i>) sur <code>Laisses_crues.shp</code> : une bonne carte place la majorité des laisses en classes 4 et 5.</li>
+  <li>Même outil sur <code>Ecoles.shp</code> : liste des établissements en zone forte, à reporter dans un tableau de bord communal.</li>
+</ul>
+<div class="astuce"><b>Attention :</b> cette carte indique une <b>susceptibilité</b>, pas une hauteur d'eau ni une période de retour. Elle sert à prioriser les études détaillées, pas à délivrer ou refuser un permis de construire.</div>`,
+          exercice: `<ol>
+  <li>Calculez la hauteur au-dessus de l'oued et symbolisez-la en 5 classes (0–2, 2–5, 5–10, 10–20, &gt; 20 m).</li>
+  <li>Reclassez les cinq critères et combinez-les avec la <b>Calculatrice raster</b> ou l'outil <b>Somme pondérée</b>.</li>
+  <li>Validez avec <code>Laisses_crues.shp</code> : quel pourcentage tombe en classe forte ou très forte ?</li>
+  <li>Changez les poids (par exemple 25/35/20/10/10) et comparez. Exécutez ensuite <code>07_zones_inondables.py</code>.</li>
+</ol>`
+        }
+      ],
+      quiz: [
+        {
+          question: "Pourquoi applique-t-on Remplissage (Fill) avant Direction de flux ?",
+          choix: ["Pour lisser le relief", "Pour supprimer les cuvettes qui interrompent l'écoulement", "Pour reprojeter le MNT", "Pour réduire la taille du fichier"],
+          bonne: 1,
+          explication: "Une cuvette n'a pas de voisine plus basse : l'eau s'y arrête et le réseau se coupe."
+        },
+        {
+          question: "Dans le codage D8, quelle valeur indique un écoulement vers le sud ?",
+          choix: ["1", "4", "16", "64"],
+          bonne: 1,
+          explication: "1 = E, 2 = SE, 4 = S, 8 = SO, 16 = O, 32 = NO, 64 = N, 128 = NE."
+        },
+        {
+          question: "Avec des cellules de 50 m, un seuil de 400 cellules d'accumulation correspond à :",
+          choix: ["0,4 km²", "1 km²", "4 km²", "20 km²"],
+          bonne: 1,
+          explication: "400 × 0,0025 km² = 1 km² de surface drainée."
+        },
+        {
+          question: "À quoi sert Ajuster le point d'écoulement (Snap Pour Point) ?",
+          choix: ["À déplacer l'exutoire sur la cellule d'accumulation maximale proche", "À créer le réseau hydrographique", "À calculer la pente", "À fusionner les bassins"],
+          bonne: 0,
+          explication: "Un exutoire décalé d'une cellule peut donner un bassin minuscule."
+        },
+        {
+          question: "Dans l'ordre de Strahler, deux tronçons d'ordre 2 qui se rejoignent donnent :",
+          choix: ["Un ordre 2", "Un ordre 3", "Un ordre 4", "Cela dépend de leur longueur"],
+          bonne: 1,
+          explication: "L'ordre n'augmente que lorsque deux tronçons de même ordre confluent."
+        },
+        {
+          question: "Un indice de Gravelius Kc = 1,05 décrit un bassin :",
+          choix: ["Très allongé", "Ramassé, presque circulaire", "Sans exutoire", "Endoréique"],
+          bonne: 1,
+          explication: "Kc = 1 pour un cercle ; un bassin ramassé concentre rapidement les crues."
+        },
+        {
+          question: "Que représente la carte multicritère d'inondation de la leçon 4 ?",
+          choix: ["Des hauteurs d'eau pour la crue centennale", "Une susceptibilité relative à l'inondation", "Le débit de l'oued", "Le zonage réglementaire officiel"],
+          bonne: 1,
+          explication: "Elle classe le territoire de façon relative ; les hauteurs d'eau exigent un modèle hydraulique."
+        }
+      ]
+    },
+
+    /* ============================================================ */
+    {
+      id: "n8",
+      numero: 8,
+      titre: "Vulnérabilité aux risques naturels majeurs",
+      echelle: "1:1 000",
+      resume: "Méthode multicritère (Reclassification, Superposition pondérée, AHP) appliquée aux feux de forêt, au séisme, au tsunami et aux glissements de terrain, puis carte de synthèse multirisque.",
+      lecons: [
+        {
+          id: "n8-l1",
+          titre: "Aléa, vulnérabilité et analyse multicritère",
+          duree: "40 min",
+          objectifs: [
+            "Distinguer aléa, enjeux, vulnérabilité et risque",
+            "Normaliser des critères avec Reclassification",
+            "Combiner des critères avec Superposition pondérée ou Somme pondérée, et justifier les poids"
+          ],
+          contenu: `
+<h3>1. Le vocabulaire</h3>
+<ul>
+  <li><b>Aléa</b> : phénomène possible, avec une intensité et une probabilité (séisme, crue, feu…).</li>
+  <li><b>Enjeux</b> : ce qui peut être touché (population, écoles, routes, forêts, réseaux).</li>
+  <li><b>Vulnérabilité</b> : sensibilité des enjeux à l'aléa (bâti fragile, absence d'accès…).</li>
+  <li><b>Risque = aléa × vulnérabilité des enjeux</b>. Sans enjeu, pas de risque.</li>
+</ul>
+<p>En Algérie, la <b>loi 04-20 du 25 décembre 2004</b> relative à la prévention des risques majeurs liste notamment les séismes et risques géologiques, les inondations, les risques climatiques, les feux de forêts et les risques industriels. Elle prévoit des plans généraux de prévention par risque, où la cartographie SIG est centrale.</p>
+<h3>2. Étape 1 : normaliser avec Reclassification</h3>
+<p>Une pente en degrés et une distance en mètres ne s'additionnent pas. <b>Reclassification</b> (<i>Reclassify</i>) ramène chaque critère sur la même échelle, ici de 1 (peu favorable à l'aléa) à 5 (très favorable). Utilisez <i>Classer</i> pour saisir les bornes, puis vérifiez la table <code>Ancienne valeur → Nouvelle valeur</code>. Pour les données vectorielles, passez d'abord par <b>Distance euclidienne</b> ou <b>Polygone vers raster</b>.</p>
+<h3>3. Étape 2 : pondérer et combiner</h3>
+<table class="tab">
+  <tr><th>Outil</th><th>Entrées</th><th>Particularités</th></tr>
+  <tr><td><b>Superposition pondérée</b> (<i>Weighted Overlay</i>)</td><td>rasters entiers</td><td>% d'influence = 100, échelle commune (1 à 5), valeur <i>Restreint</i> pour exclure une zone ; sortie entière</td></tr>
+  <tr><td><b>Somme pondérée</b> (<i>Weighted Sum</i>)</td><td>rasters entiers ou réels</td><td>poids libres, sortie réelle : on garde les nuances, puis on classe</td></tr>
+  <tr><td>Calculatrice raster</td><td>tous</td><td><code>0.35 * "c_dist" + 0.25 * "c_pente" + …</code> : transparent et reproductible</td></tr>
+</table>
+<h3>4. Justifier les poids : la méthode AHP</h3>
+<p>Dans l'<b>AHP</b> de Saaty, on compare les critères deux à deux (1 = aussi important, 3 = un peu plus, 5 = nettement plus, 9 = extrêmement plus). Le vecteur propre de la matrice donne les poids, et le <b>ratio de cohérence</b> CR = CI / RI doit rester inférieur à 0,10 (CI = (λmax − n) / (n − 1), RI = 1,12 pour 5 critères). Les poids proposés dans <code>poids_multicritere.xlsx</code> sont un point de départ à discuter en classe.</p>
+<h3>5. Valider</h3>
+<p>Une carte de susceptibilité se valide avec des <b>événements observés</b> (foyers d'incendie, glissements, laisses de crue) : on calcule la part des événements tombant en classes fortes. La fonction <code>valider()</code> du fichier <code>outils_risques.py</code> fait ce calcul automatiquement.</p>`,
+          exercice: `<ol>
+  <li>Ouvrez <code>Tables\\poids_multicritere.xlsx</code>. Vérifiez que chaque feuille totalise 100 %.</li>
+  <li>Construisez une matrice AHP 3 × 3 (distance à l'oued, pente, occupation du sol) dans Excel et calculez les poids par la moyenne géométrique des lignes.</li>
+  <li>Ouvrez l'outil <b>Superposition pondérée</b> et repérez : l'échelle d'évaluation, la colonne % d'influence, la valeur <i>Restreint</i>.</li>
+</ol>`
+        },
+        {
+          id: "n8-l2",
+          titre: "Carte de risque de feux de forêt",
+          duree: "40 min",
+          objectifs: [
+            "Choisir et préparer les facteurs d'éclosion et de propagation",
+            "Reclasser l'exposition des versants",
+            "Valider la carte avec l'historique des foyers"
+          ],
+          contenu: `
+<p>Les forêts de la wilaya de Tlemcen (Hafir, Zarifet…) brûlent surtout en été, sous l'effet du sirocco. La quasi-totalité des feux sont d'origine humaine : la proximité des routes et des habitations compte autant que la végétation.</p>
+<table class="tab">
+  <tr><th>Facteur</th><th>Donnée</th><th>Note 5 si…</th><th>Poids</th></tr>
+  <tr><td>Combustible (occupation du sol)</td><td>Occupation_sol (CODE_OS)</td><td>Forêt ; Parcours = 4</td><td>35 %</td></tr>
+  <tr><td>Pente</td><td>Pente du MNT</td><td>&gt; 30° (le feu monte vite)</td><td>20 %</td></tr>
+  <tr><td>Exposition</td><td><b>Exposition</b> (<i>Aspect</i>)</td><td>Sud (157,5–202,5°), plus chaud et sec</td><td>15 %</td></tr>
+  <tr><td>Distance aux routes</td><td>Distance euclidienne de Routes</td><td>&lt; 100 m</td><td>15 %</td></tr>
+  <tr><td>Distance aux lieux habités</td><td>Distance euclidienne de Ecoles (approximation)</td><td>&lt; 200 m</td><td>15 %</td></tr>
+</table>
+<h3>Reclasser l'exposition</h3>
+<p>L'outil <b>Exposition</b> renvoie un angle de 0 à 360° depuis le nord, et −1 pour les zones plates. Dans <b>Reclassification</b> : −1 → 1, N (0–22,5 et 337,5–360) → 1, NE et NO → 2, E et O → 3, SE et SO → 4, S → 5.</p>
+<pre><code>expo = Aspect(mnt)
+c_expo = Reclassify(expo, "VALUE", RemapRange([[-1, 0, 1], [0, 22.5, 1],
+    [22.5, 67.5, 2], [67.5, 112.5, 3], [112.5, 157.5, 4], [157.5, 202.5, 5],
+    [202.5, 247.5, 4], [247.5, 292.5, 3], [292.5, 337.5, 2], [337.5, 360, 1]]))</code></pre>
+<h3>Valider</h3>
+<p><code>Risques\\Foyers_incendies.shp</code> contient 45 départs de feu (champs ANNEE, SURF_HA, OCCUP, CAUSE). Extrayez la classe de risque sous chaque foyer et calculez la part en classes 4–5. Une <b>Densité de noyau</b> des foyers pondérée par <code>SURF_HA</code> donne aussi une belle carte des secteurs les plus touchés.</p>`,
+          exercice: `<ol>
+  <li>Préparez les cinq critères notés de 1 à 5 et combinez-les avec <b>Superposition pondérée</b>.</li>
+  <li>Validez avec les foyers d'incendie. Les feux de « Forêt » tombent-ils mieux que ceux de « Parcours » ?</li>
+  <li>Proposez l'emplacement de deux postes de vigie : sommets avec vue sur le plus de cellules en classe 5 (outil <b>Visibilité</b>, <i>Viewshed</i>).</li>
+  <li>Comparez avec <code>08_risque_feux.py</code>.</li>
+</ol>`
+        },
+        {
+          id: "n8-l3",
+          titre: "Vulnérabilité sismique",
+          duree: "40 min",
+          objectifs: [
+            "Situer la zone d'étude dans le zonage du RPA 99 version 2003",
+            "Cartographier la densité d'épicentres et la proximité des failles actives",
+            "Tenir compte de l'effet de site (amplification par les sols meubles)"
+          ],
+          contenu: `
+<p>Le nord de l'Algérie est sismiquement actif (El Asnam 1980, Aïn Témouchent 1999, Boumerdès 2003). Le règlement parasismique <b>RPA 99 version 2003</b> divise le pays en zones 0 (négligeable), I (faible), IIa et IIb (moyenne) et III (élevée). La wilaya de Tlemcen est classée en <b>zone I</b> : le risque n'y est pas nul, et le zonage reste national. Une carte locale sert à aller plus loin : microzonage, choix de sites pour des équipements, priorités de renforcement. Les catalogues réels de séismes sont publiés par le CRAAG.</p>
+<table class="tab">
+  <tr><th>Critère</th><th>Méthode</th><th>Poids</th></tr>
+  <tr><td>Distance aux failles actives</td><td>Couche filtrée <code>"ACTIVE" = 'Oui'</code> puis Distance euclidienne ; note 5 à moins de 500 m</td><td>40 %</td></tr>
+  <tr><td>Densité d'épicentres</td><td><b>Densité de noyau</b>, rayon 3 km, puis <i>Slice</i> (boîte Reclassement) en 5 classes de même surface</td><td>25 %</td></tr>
+  <tr><td>Effet de site</td><td>Champ <code>AMPLIF</code> de Lithologie : alluvions 1,8 et argiles 1,5 &gt; calcaires 1,0</td><td>25 %</td></tr>
+  <tr><td>Pente (instabilités induites)</td><td>Pente en degrés</td><td>10 %</td></tr>
+</table>
+<p>Pondérer la densité par la magnitude est tentant, mais la magnitude est logarithmique : un séisme de M5 libère environ 32 fois plus d'énergie qu'un M4. Utilisez plutôt un champ calculé <code>10 ^ (1.5 * MAG)</code>, ou gardez la densité simple.</p>
+<pre><code>arcpy.MakeFeatureLayer_management("Failles.shp", "actives", "\\"ACTIVE\\" = 'Oui'")
+dens = KernelDensity("Epicentres.shp", "NONE", 50, 3000, "SQUARE_KILOMETERS")
+c_dens = Slice(dens, 5, "EQUAL_AREA")</code></pre>
+<div class="astuce"><b>Vulnérabilité :</b> pour passer de l'aléa au risque, croisez la carte avec le bâti (âge, type de construction, nombre d'étages) : c'est l'objet des études de vulnérabilité du bâti menées après Boumerdès.</div>`,
+          exercice: `<ol>
+  <li>Affichez les épicentres en symboles proportionnels à la magnitude et les failles actives en rouge.</li>
+  <li>Calculez la densité de noyau avec des rayons de 2, 3 et 5 km : comment le rayon change-t-il la carte ?</li>
+  <li>Combinez les quatre critères et repérez les écoles en classe forte.</li>
+  <li>Comparez avec <code>09_risque_sismique.py</code>.</li>
+</ol>`
+        },
+        {
+          id: "n8-l4",
+          titre: "Tsunami et submersion marine",
+          duree: "35 min",
+          objectifs: [
+            "Isoler la partie terrestre d'un MNT côtier",
+            "Cartographier la vulnérabilité à la submersion selon l'altitude et la distance à la côte",
+            "Simuler un scénario simple de vague et lister les enjeux touchés"
+          ],
+          contenu: `
+<p>Le séisme de Boumerdès du 21 mai 2003 (Mw 6,8) a provoqué un tsunami qui a endommagé des ports des îles Baléares. La côte algérienne n'est donc pas à l'abri. Le TP utilise une côte fictive inspirée du littoral de Ghazaouet (<code>TP\\Risques_cote</code>) : MNT de 25 m avec la mer en altitudes négatives, trait de côte, route côtière et 12 enjeux (port, écoles, centre de santé, station de dessalement…).</p>
+<h3>1. Garder la terre</h3>
+<pre><code>terre = Con(Raster("mnt_cote.tif") &gt; 0, Raster("mnt_cote.tif"))</code></pre>
+<h3>2. Vulnérabilité à la submersion</h3>
+<table class="tab">
+  <tr><th>Critère</th><th>Note 5 si…</th><th>Poids</th></tr>
+  <tr><td>Altitude</td><td>&lt; 2 m</td><td>50 %</td></tr>
+  <tr><td>Distance au trait de côte</td><td>&lt; 100 m</td><td>35 %</td></tr>
+  <tr><td>Pente</td><td>&lt; 2° (l'eau pénètre loin)</td><td>15 %</td></tr>
+</table>
+<h3>3. Scénario de vague</h3>
+<p>Un scénario simple : vague de 5 m qui pénètre jusqu'à 1 km. Les cellules à la fois sous 5 m et à moins de 1 km de la côte sont submergées :</p>
+<pre><code>dist = EucDistance("Trait_de_cote.shp")
+Con((terre &lt;= 5) &amp; (dist &lt;= 1000), 1).save("submersion_5m.tif")</code></pre>
+<p>Cette méthode « baignoire » ignore la dynamique de la vague et les obstacles. Elle reste utile pour repérer les enjeux à évacuer en priorité et tracer des itinéraires vers des zones refuges au-dessus de 10 m.</p>`,
+          exercice: `<ol>
+  <li>Importez <code>MNT_cote_25m.asc</code> et isolez la terre. Quelle surface se trouve sous 5 m d'altitude ?</li>
+  <li>Construisez la carte de vulnérabilité à trois critères.</li>
+  <li>Testez des vagues de 3, 5 et 8 m : combien d'enjeux sont touchés à chaque fois ?</li>
+  <li>Avec <b>Distance euclidienne</b> depuis les zones au-dessus de 10 m, indiquez la distance d'évacuation pour chaque enjeu. Comparez avec <code>10_tsunami.py</code>.</li>
+</ol>`
+        },
+        {
+          id: "n8-l5",
+          titre: "Susceptibilité aux glissements de terrain",
+          duree: "35 min",
+          objectifs: [
+            "Combiner lithologie, pente et facteurs aggravants",
+            "Utiliser un champ attributaire déjà noté comme critère",
+            "Évaluer la carte avec un inventaire de glissements"
+          ],
+          contenu: `
+<p>Les glissements touchent surtout les versants marneux et argileux, après de fortes pluies ou à la suite de terrassements routiers. Constantine est l'exemple algérien le plus étudié. Dans le TP, la couche <code>Lithologie</code> contient déjà une note de susceptibilité <code>SUSC_GLIS</code> : calcaires 1, grès 2, alluvions 3, marnes 4, argiles 5.</p>
+<table class="tab">
+  <tr><th>Critère</th><th>Note 5 si…</th><th>Poids</th></tr>
+  <tr><td>Lithologie (SUSC_GLIS)</td><td>argiles</td><td>35 %</td></tr>
+  <tr><td>Pente</td><td>&gt; 30°</td><td>30 %</td></tr>
+  <tr><td>Distance aux oueds (sapement des berges)</td><td>&lt; 100 m</td><td>15 %</td></tr>
+  <tr><td>Occupation du sol</td><td>sol nu</td><td>10 %</td></tr>
+  <tr><td>Distance aux routes (talus)</td><td>&lt; 50 m</td><td>10 %</td></tr>
+</table>
+<p>Avec <b>Polygone vers raster</b> sur le champ <code>SUSC_GLIS</code>, le raster obtenu est directement un critère noté de 1 à 5 : pas besoin de le reclasser.</p>
+<h3>Évaluer la carte</h3>
+<p>L'inventaire <code>Glissements.shp</code> (32 points, champs TYPE, ACTIF, LITHO) sert à la validation. Pour un travail rigoureux, on sépare l'inventaire en deux : une moitié pour régler les poids, l'autre pour valider. Avec <b>Sélectionner selon les attributs</b> (<code>"ACTIF" = 'Oui'</code>), vérifiez aussi que les glissements actifs tombent dans les classes les plus fortes.</p>`,
+          exercice: `<ol>
+  <li>Construisez la carte de susceptibilité et validez-la avec l'inventaire.</li>
+  <li>Calculez le pourcentage de la surface de chaque classe (table attributaire du raster) et comparez au pourcentage de glissements par classe. Une bonne carte concentre beaucoup de glissements dans peu de surface.</li>
+  <li>Quels tronçons de route traversent la classe 5 ? (<b>Extraire par masque</b> puis <b>Intersecter</b>, ou script.)</li>
+  <li>Comparez avec <code>11_glissements.py</code>.</li>
+</ol>`
+        },
+        {
+          id: "n8-l6",
+          titre: "Synthèse multirisque et carte finale",
+          duree: "45 min",
+          objectifs: [
+            "Combiner plusieurs cartes d'aléa en une synthèse multirisque",
+            "Produire un bilan chiffré par commune",
+            "Mettre en page une carte de risque honnête et lisible"
+          ],
+          contenu: `
+<h3>1. Deux façons de synthétiser</h3>
+<ul>
+  <li><b>Aléa maximal</b> : <b>Statistiques de cellules</b> (<i>Cell Statistics</i>), statistique MAXIMUM. Chaque cellule prend la classe la plus forte parmi tous les aléas.</li>
+  <li><b>Cumul des aléas forts</b> : on compte combien d'aléas sont en classe 4 ou 5 dans chaque cellule (0 à 4). Une école exposée à la fois à l'inondation et au glissement est prioritaire.</li>
+</ul>
+<pre><code>noms = ["inondation_classes.tif", "feux_classes.tif", "seisme_classes.tif", "glissements_classes.tif"]
+rasters = [Raster(n) for n in noms]
+CellStatistics(rasters, "MAXIMUM", "DATA").save("multirisque_max.tif")
+cumul = sum(Con(r &gt;= 4, 1, 0) for r in rasters)</code></pre>
+<h3>2. Bilan par commune</h3>
+<p><b>Statistiques zonales (table)</b> (<i>Zonal Statistics as Table</i>) avec <code>Communes.shp</code> comme zones et le cumul comme valeur donne, pour chaque commune, le nombre moyen d'aléas forts. Joignez la table aux communes et faites une carte choroplèthe, complétée par un diagramme (<i>Affichage &gt; Graphiques</i>).</p>
+<h3>3. Mise en page</h3>
+<ul>
+  <li>Couleurs ordonnées du jaune pâle au rouge foncé ; jamais d'arc-en-ciel pour une échelle de risque.</li>
+  <li>Légende avec des libellés en clair (« très faible » à « très fort ») plutôt que les valeurs 1 à 5.</li>
+  <li>Cartouche : méthode, critères et poids, source et date des données, système de coordonnées.</li>
+  <li>Mention obligatoire pour ce TP : <i>données fictives à usage pédagogique</i>.</li>
+</ul>
+<h3>4. Automatiser</h3>
+<p>Les scripts <code>06</code> à <code>12</code> enchaînent tout le niveau 7 et le niveau 8. Exécutez-les dans l'ordre (06 avant 07 et 11, car ils utilisent le réseau hydrographique). Pour en faire un outil de boîte à outils (niveau 6), remplacez les poids écrits dans le code par des <code>arcpy.GetParameter()</code> : vos collègues pourront tester d'autres pondérations sans ouvrir Python.</p>`,
+          exercice: `<ol>
+  <li>Produisez les cartes d'aléa maximal et de cumul.</li>
+  <li>Classez les communes par nombre moyen d'aléas forts et cartographiez le résultat.</li>
+  <li>Réalisez une planche A3 de synthèse : carte multirisque, carte par commune, tableau des écoles exposées, cartouche complet.</li>
+  <li>Rédigez dix lignes de recommandations pour la commune la plus exposée.</li>
+</ol>`
+        }
+      ],
+      quiz: [
+        {
+          question: "Dans une zone sans aucun enjeu, un aléa fort donne un risque :",
+          choix: ["Très fort", "Moyen", "Nul ou négligeable", "Impossible à calculer"],
+          bonne: 2,
+          explication: "Risque = aléa × vulnérabilité des enjeux : sans enjeu, pas de risque."
+        },
+        {
+          question: "Pourquoi reclasse-t-on chaque critère de 1 à 5 avant de les combiner ?",
+          choix: ["Pour réduire la taille des rasters", "Pour mettre des grandeurs différentes sur une échelle commune", "Pour changer de projection", "Parce que Superposition pondérée refuse les décimales dans les poids"],
+          bonne: 1,
+          explication: "On ne peut pas additionner des degrés et des mètres : la normalisation les rend comparables."
+        },
+        {
+          question: "Dans l'outil Superposition pondérée, la somme des % d'influence doit être :",
+          choix: ["1", "10", "100", "Libre"],
+          bonne: 2,
+          explication: "Les pourcentages d'influence doivent totaliser 100."
+        },
+        {
+          question: "Dans la méthode AHP, les poids sont acceptables si le ratio de cohérence CR est :",
+          choix: ["Supérieur à 0,5", "Inférieur à 0,10", "Égal à 1", "Négatif"],
+          bonne: 1,
+          explication: "Au-delà de 0,10, les comparaisons par paires sont jugées incohérentes."
+        },
+        {
+          question: "Quelle exposition reçoit la note la plus forte pour le risque de feu de forêt ?",
+          choix: ["Nord", "Est", "Sud", "Zones plates"],
+          bonne: 2,
+          explication: "Les versants sud sont plus ensoleillés, donc plus chauds et plus secs."
+        },
+        {
+          question: "Dans quelle zone du RPA 99 version 2003 est classée la wilaya de Tlemcen ?",
+          choix: ["Zone 0", "Zone I", "Zone IIb", "Zone III"],
+          bonne: 1,
+          explication: "Tlemcen est en zone I (sismicité faible) ; Alger et Boumerdès sont en zone III."
+        },
+        {
+          question: "Pourquoi des alluvions reçoivent-elles une note sismique plus forte que des calcaires ?",
+          choix: ["Elles sont plus proches des failles", "Les sols meubles amplifient les ondes sismiques", "Elles sont plus anciennes", "Elles sont plus perméables"],
+          bonne: 1,
+          explication: "C'est l'effet de site : les sols meubles amplifient et allongent les secousses."
+        },
+        {
+          question: "Quel outil donne, pour chaque cellule, la classe la plus forte parmi plusieurs cartes d'aléa ?",
+          choix: ["Statistiques zonales", "Statistiques de cellules, MAXIMUM", "Mosaïque", "Combiner"],
+          bonne: 1,
+          explication: "Cell Statistics calcule la statistique demandée cellule par cellule sur plusieurs rasters."
         }
       ]
     }

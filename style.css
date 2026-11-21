@@ -245,3 +245,4 @@ footer .wrap { padding-block: 18px; display: flex; justify-content: space-betwee
   .meter .bar { width: 70px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+.files.off .btn { opacity: .45; pointer-events: none; }
