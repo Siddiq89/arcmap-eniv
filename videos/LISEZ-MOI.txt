@@ -1,15 +1,6 @@
-Placez ici les vidéos de la formation, avec leur nom d'origine
-(téléchargez le dossier « FORMATION ARCGIS » depuis Google Drive) :
+Dossier facultatif pour des vidéos locales (.mp4).
 
-  1-L'Interface ARCGIS.mp4
-  2-PROJECTION.mp4
-  3-CALAGE.mp4
-  4-CREATION DE BASE DE DONNEE.mp4
-  5-1numérisation point.mp4
-  5-2numérisation polyline.mp4
-  5-3numérisation polygon.mp4
-  RASTER TO VECTEUR + CLIP.mp4
-  VECTEUR TO RASTER.mp4
-
-Ne renommez pas les fichiers : le site les cherche sous ces noms exacts.
-Vous pouvez ajouter d'autres .mp4 depuis la page « Administration ».
+Le site utilise par défaut des vidéos YouTube en français et en arabe
+(liste dans donnees/videos.js). Pour ajouter une vidéo locale : copiez le
+.mp4 ici, puis ajoutez-la depuis la page « Administration » du site en
+indiquant videos/nom_du_fichier.mp4.
