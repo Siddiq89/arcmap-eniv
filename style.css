@@ -69,7 +69,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .brand svg { flex: none; }
 .brand b { font-family: var(--font-display); font-size: 1.3rem; letter-spacing: .01em; }
 .brand small { display: block; color: var(--muted); font-size: .75rem; line-height: 1.2; }
-.topnav { display: flex; gap: 4px; margin-left: auto; flex-wrap: wrap; }
+.topnav { display: flex; gap: 4px; margin-inline-start: auto; flex-wrap: wrap; }
 .topnav a {
   text-decoration: none; color: var(--muted); padding: 6px 10px; border-radius: var(--radius);
   font-size: .92rem; font-weight: 500;
@@ -165,14 +165,14 @@ article.lesson h2 { font-size: 1.9rem; margin-bottom: 6px; }
 .lesson .body { max-width: 72ch; }
 .lesson .body p, .lesson .body li { margin-block: 6px; }
 .objectifs { background: var(--water-soft); border-radius: var(--radius); padding: 12px 16px; max-width: 72ch; }
-.objectifs ul { margin: 6px 0 0; padding-left: 20px; }
+.objectifs ul { margin: 6px 0 0; padding-inline-start: 20px; }
 .objectifs b { font-family: var(--font-display); font-size: 1.05rem; }
-.astuce { border-left: 3px solid var(--contour); background: var(--contour-soft); padding: 10px 14px; border-radius: 0 var(--radius) var(--radius) 0; margin: 14px 0; }
+.astuce { border-inline-start: 3px solid var(--contour); background: var(--contour-soft); padding: 10px 14px; border-start-start-radius: 0; border-end-start-radius: 0; border-start-end-radius: var(--radius); border-end-end-radius: var(--radius); margin: 14px 0; }
 .exercice { border: 1px dashed var(--veg); background: var(--veg-soft); border-radius: var(--radius); padding: 12px 18px; max-width: 72ch; }
-.exercice ol { padding-left: 20px; margin: 6px 0; }
+.exercice ol { padding-inline-start: 20px; margin: 6px 0; }
 .tab-wrap, .lesson .body table { display: block; overflow-x: auto; }
 table.tab { border-collapse: collapse; font-size: .92rem; margin: 10px 0; min-width: 100%; }
-table.tab th, table.tab td { border: 1px solid var(--line); padding: 7px 10px; text-align: left; vertical-align: top; }
+table.tab th, table.tab td { border: 1px solid var(--line); padding: 7px 10px; text-align: start; vertical-align: top; }
 table.tab th { background: var(--surface-2); font-family: var(--font-display); font-size: 1rem; }
 pre { position: relative; background: var(--code-bg); color: var(--code-fg); padding: 16px; border-radius: var(--radius); overflow-x: auto; font-size: .86rem; line-height: 1.5; max-width: 100%; }
 pre code { background: none; padding: 0; color: inherit; font-size: inherit; }
@@ -204,7 +204,7 @@ pre .copy { position: absolute; top: 8px; right: 8px; background: transparent; b
 @media (max-width: 520px) { .file { grid-template-columns: 48px minmax(0, 1fr); } .file .btn { grid-column: 2; justify-self: start; } }
 
 /* ---------- Quiz ---------- */
-.quiz ol.qs { padding-left: 0; list-style: none; display: grid; gap: 18px; counter-reset: q; }
+.quiz ol.qs { padding-inline-start: 0; list-style: none; display: grid; gap: 18px; counter-reset: q; }
 .quiz .q { border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; counter-increment: q; }
 .quiz .q > p { margin: 0 0 8px; font-weight: 600; }
 .quiz .q > p::before { content: "Q" counter(q) " · "; font-family: var(--font-mono); color: var(--contour); font-weight: 500; }
@@ -227,7 +227,7 @@ pre .copy { position: absolute; top: 8px; right: 8px; background: transparent; b
 textarea.export { width: 100%; min-height: 220px; font-family: var(--font-mono); font-size: .8rem; padding: 10px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); }
 .table-scroll { overflow-x: auto; }
 table.list { border-collapse: collapse; width: 100%; font-size: .9rem; }
-table.list th, table.list td { border-bottom: 1px solid var(--line); padding: 8px; text-align: left; vertical-align: top; }
+table.list th, table.list td { border-bottom: 1px solid var(--line); padding: 8px; text-align: start; vertical-align: top; }
 table.list th { font-family: var(--font-display); font-size: .98rem; color: var(--muted); font-weight: 600; }
 table.list td.url { font-family: var(--font-mono); font-size: .78rem; word-break: break-all; max-width: 260px; }
 .notice { padding: 10px 14px; border-radius: var(--radius); background: var(--veg-soft); color: var(--ink); margin-top: 10px; }
@@ -261,3 +261,28 @@ main > .logiciels { margin-bottom: 14px; }
 .hero .vitrine h1 { max-width: 20ch; }
 .hero .vitrine .sous-titre { margin: 0; max-width: 62ch; font-size: 1.15rem; color: var(--ink, inherit); }
 .hero h2.accroche { font-size: clamp(1.4rem, 3vw, 2rem); margin: 0; max-width: 30ch; }
+
+/* ---------- Langues : sélecteur, arabe de droite à gauche ---------- */
+.langue { font: inherit; font-size: .85rem; padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); cursor: pointer; }
+.note-videos { margin: 0 0 10px; font-size: .9rem; color: var(--muted); }
+[dir="rtl"] {
+  --font-body: "IBM Plex Sans Arabic", "IBM Plex Sans", system-ui, sans-serif;
+  --font-display: "IBM Plex Sans Arabic", "Barlow Semi Condensed", system-ui, sans-serif;
+}
+[dir="rtl"] body { line-height: 1.75; }
+[dir="rtl"] .eyebrow, [dir="rtl"] .side .label { letter-spacing: 0; text-transform: none; font-family: var(--font-body); font-size: .85rem; }
+[dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3 { line-height: 1.35; }
+[dir="rtl"] pre, [dir="rtl"] code, [dir="rtl"] .mono, [dir="rtl"] td.url, [dir="rtl"] .scale { direction: ltr; unicode-bidi: isolate; }
+[dir="rtl"] pre { text-align: left; }
+[dir="rtl"] .quiz .q > p::before { content: "س" counter(q) " · "; }
+
+/* ---------- Observations et livre d'or ---------- */
+.observation { margin-top: 28px; padding: 16px; border: 1px dashed var(--line); border-radius: var(--radius); background: var(--surface); }
+.observation h3 { margin-bottom: 4px; }
+.observation .aide { margin: 0 0 10px; color: var(--muted); font-size: .92rem; }
+.observation textarea { width: 100%; font: inherit; padding: 10px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); color: var(--ink); resize: vertical; }
+.observation .row { margin-top: 8px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.piege { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+:not(pre) > code { overflow-wrap: anywhere; }
+.quiz label span { overflow-wrap: anywhere; min-width: 0; }
