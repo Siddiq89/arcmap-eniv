@@ -246,3 +246,4 @@ footer .wrap { padding-block: 18px; display: flex; justify-content: space-betwee
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 .files.off .btn { opacity: .45; pointer-events: none; }
+.hero .enseignant { margin: 0 0 18px; font-size: .95rem; letter-spacing: .02em; }

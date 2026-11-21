@@ -192,6 +192,7 @@
       '<span class="eyebrow">ArcGIS Desktop 10.8 · ' + NIVEAUX.length + ' niveaux · ' + nbLecons + ' leçons</span>' +
       '<h1>De la première carte à la cartographie des risques</h1>' +
       '<p class="lead">Un parcours progressif pour apprendre ArcMap avec les boîtes à outils : interface, données, symbologie, géotraitement avec ArcToolbox, ModelBuilder, programmation Python, puis hydrologie à partir du MNT et cartes de vulnérabilité aux risques naturels (inondation, feux de forêt, séisme, tsunami, glissements). Chaque leçon propose un exercice, des vidéos et un quiz de fin de niveau.</p>' +
+      '<p class="enseignant">Enseignant : <b>BOUHAFSI SIDDIQ</b></p>' +
       '<div class="actions">' +
       (suite ? '<a class="btn primary" href="#' + suite.hash + '">' + (pctGlobal() ? "Reprendre : " : "Commencer : ") + esc(suite.label) + ' →</a>'
              : '<a class="btn done" href="#' + NIVEAUX[NIVEAUX.length - 1].id + '">Parcours terminé ✓</a>') +
