@@ -475,3 +475,104 @@ B["q9-l4"] = { titre: "Tarrayin yelhan, tilisa d tɣellist", objectifs: ["Ṭṭ
   <li>Suter deg Claude takarḍa n yisawen ugar n 15° syen senqed agmuḍ s Raster Calculator (aswir 4).</li>
   <li>Aru deg 5 n yizirigen lfayda d yiɣṛisen n tegi tazzayant i tnedbalt n tezrawin SIG.</li>
 </ol>` };
+
+B["q2-l4"] = { titre: "Tikarḍiwin tiqburin: asedgel d usenfel ɣer umḍan", objectifs: ["Fren tinqiḍin n usenqed yelhan ɣef tkarḍa taqburt", "Fren asnifel i iwulmen i tkarḍa yettwabeddlen", "Snefel-d iferdisen iqburen syen ktal ibeddilen"],
+  contenu: `
+<p>Tikarḍiwin tiqburin (tikarḍiwin tiṭubugrafiyin, iɣawasen n temdinin, tikarḍiwin n lɛesker) sskanent-d tamnaḍt n zik: abrid aqbur n wasif, timɣuri n temdint, tizgwa yeffɣen. Mi ara ttwasedglent, ad qqiment ɣef yisefka n tura u ad k-ǧǧent ad <b>tektleḍ ibeddilen</b>.</p>
+<h3>1. Heggi asekkan (scan)</h3>
+<ul>
+  <li>Sekken s 300 dpi neɣ ugar, s TIFF, war ma tgezmeḍ tamagit neɣ aẓeṭṭa.</li>
+  <li>Aru azwel, taskala, aseggas d unagraw n tkoordunin yettwarun deg yidis.</li>
+</ul>
+<h3>2. Fren tinqiḍin n usenqed</h3>
+<ul>
+  <li><b>Ma yella uẓeṭṭa yesɛa imḍanen</b>, seqdec timsagrin-is syen aru tikoordunin s unagraw n tkarḍa: d tarrayt i yugaren deg tseḥḥa.</li>
+  <li><b>Ma ulac</b>, sedgel-itt ɣef tkarḍa n tura (OpenStreetMap, tugna n usatellit) s EPSG:32630: timsagrin n yiberdan iqburen, tiqenṭrin, imecṭaṛ, tiɣmar n yizeṭṭa iqburen.</li>
+  <li>Ǧǧ tiftilin n wasif d yiri n yilel: ttembiwlen. Fren seg 10 ar 20 n tinqiḍin ɣef tkarḍa akk, ula d tiɣmar.</li>
+</ul>
+<h3>3. Fren asnifel</h3>
+<table class="tab">
+  <tr><th>Asnifel</th><th>Melmi ara t-tesqedceḍ</th></tr>
+  <tr><td>Polynomial 1 (affine)</td><td>Takarḍa d tamagnut, aẓeṭṭa yettwassen; 4 n tinqiḍin ma drus</td></tr>
+  <tr><td>Polynomial 2</td><td>Abeddel afessas n lkaɣeḍ; 6 n tinqiḍin ma drus</td></tr>
+  <tr><td>Thin Plate Spline</td><td>Takarḍa tettwaḍfes, tettwabeddel neɣ tettwasuneɣ s ufus; aṭas n tinqiḍin yettwazerwen akken iwata</td></tr>
+</table>
+<p>Deg Georeferencer, ɣer tagejdit n <b>residuals</b>: kkes neɣ seɣti tinqiḍin s tuccḍa meqqren aṭas ɣef tiyaḍ. Seqdec asenfel <i>Nearest neighbour</i> akken ad ḥerzeḍ initen n tazwara.</p>
+<h3>4. Snefel syen serwes</h3>
+<ol>
+  <li>Deg GeoPackage, snulfu-d tissiyin <code>bati_ancien</code>, <code>routes_anciennes</code>, <code>oued_ancien</code> s wurtiyen <code>SOURCE</code> d <code>ANNEE</code>.</li>
+  <li>Snefel s snapping yermed d tkarḍa taqburt s 50 % n tafrawant.</li>
+  <li>Serwes d tissiyin n tura: <i>Difference</i> gar yizeṭṭa n tura d yiqburen i timɣuri n temdint, ameccaq gar ubrid aqbur d umaynut n wasif.</li>
+</ol>`,
+  exercice: `
+<ol>
+  <li>Sedgel takarḍa taqburt i d-yefka umesselmad s sin n yisnifal syen serwes residuals.</li>
+  <li>Snefel izeṭṭa iqburen d uẓeṭṭa n yisaffen.</li>
+  <li>Siḍen tiddi n timɣuri n temdint syen sken-d agmuḍ deg layout.</li>
+</ol>` };
+
+/* ---------- Aswir 10 ---------- */
+B.q10 = { titre: "Google Earth Engine deg QGIS", resume: "Kcem baṭel ɣer tugniwin n usatellit n umaḍal akk seg QGIS: NDVI Sentinel-2 d uɣummu n wakal deg tama n Tlemsan s usiɣzef Google Earth Engine.",
+  quiz: [
+    { question: "Anda i ttwaxedmen yimsiḍen deg Google Earth Engine?", choix: ["Deg uselkim-ik", "Deg yiqeddacen n Google", "Deg GRASS", "Deg yiminig kan"], explication: "D agmuḍ kan i yettawḍen ɣer QGIS." },
+    { question: "D acu i tesriḍ akken ad tesqedceḍ GEE baṭel deg uɣerbaz?", choix: ["Turagt n ArcGIS", "Asenfar Cloud yettwajerden i useqdec ur nelli d anmetti", "Takarḍa n lbanka s wudem amɣaṛ", "Ulac kra"], explication: "Aswir Community d baṭel i uselmed, war asefru." },
+    { question: "Anwi ibanden n Sentinel-2 i yettwasqedcen i NDVI?", choix: ["B2 d B3", "B8 d B4", "B11 d B12", "B1 d B9"], explication: "NDVI = (B8 − B4) / (B8 + B4): infrarouge aqerruy d uzeggaɣ." },
+    { question: "Acuɣer ara tesifḍeḍ tissi n Earth Engine s GeoTIFF?", choix: ["Akken ad tecbeḥ", "Akken ad tt-tesleḍ s yifecka n QGIS", "Ilaq akken ad d-tban", "Akken ad tbeddleḍ amiḍan"], explication: "Tissiyin i d-yettbanen ttawḍent-d s streaming; asifeḍ yettak-d raster adigan n tidet." }
+  ] };
+B["q10-l1"] = { titre: "Anekcum baṭel ɣer Earth Engine d usebded n usiɣzef", objectifs: ["Fhem ayen i d-yettak Google Earth Engine", "Snulfu-d asenfar Cloud baṭel ur nelli d anmetti", "Sebded syen kcem s usiɣzef Google Earth Engine deg QGIS"],
+  contenu: `
+<p><b>Google Earth Engine</b> (GEE) d tiɣerɣert n Google i yesdukkulen akatalug meqqren n tugniwin d yisefka (Sentinel-2, Landsat, SRTM, aɣummu n wakal, asezmar…) u txeddem imsiḍen ɣef yiqeddacen-is. Ihi ulac ayen ara tessadreḍ uqbel tasleḍt: d agmuḍ kan i yettawḍen ɣer QGIS.</p>
+<h3>Anekcum baṭel i uselmed</h3>
+<ol>
+  <li>S umiḍan Google, ldi <code>console.cloud.google.com/earth-engine</code> syen snulfu-d <b>asenfar Cloud</b>.</li>
+  <li>Jerred-it i <b>useqdec ur nelli d anmetti</b> (aselmed, tizrawin, anadi) syen ččar tasestant n tseddart. Ur tesriḍ ara takarḍa n lbanka i uswir baṭel.</li>
+  <li>Aswir <i>Community</i> yettak-d tafsut n umsiḍen baṭel yal ayyur (150 n yisragen EECU deg wayyur deg 2026), yugar ayen ilaqen i yimahilen. Taseddart tettwasenqad yal aseggas.</li>
+  <li>Amesselmad yezmer ad yesnulfu-d yiwen n usenfar syen ad as-yernu inelmaden.</li>
+</ol>
+<h3>Sebded asiɣzef</h3>
+<ol>
+  <li>Lqem n tura n usiɣzef yessuter <b>QGIS 3.44 neɣ ugar</b>.</li>
+  <li><i>Plugins &gt; Manage and Install Plugins</i>, nadi « Google Earth Engine » syen sebded-it.</li>
+  <li>Deg tazwara, sit ɣef OK: yeldi-d yiwen n yiccer deg yiminig, fren amiḍan-ik Google syen sireg anekcum. Isalan n tuqqna ttwaskelsen deg uselkim.</li>
+  <li>Deg usfaylu <i>Select Earth Engine project</i>, sers isem n usenfar-ik Cloud (yettban deg Earth Engine Code Editor, umuɣ n umiḍan &gt; <i>Project Info</i>).</li>
+</ol>
+<p>Asekyed amezwaru deg Python Console (Ctrl+Alt+P): assaɣ SRTM deg tlemmast n Tlemsan.</p>
+<!--code:0-->
+<div class="astuce"><b>Ilaq ad teẓreḍ:</b> tissiyin n Earth Engine ttawḍent-d s <b>streaming</b> am tkarḍa n deffir. Akken ad tent-tesleḍ s yifecka n QGIS, ilaq ad tent-tesifḍeḍ s GeoTIFF (tamsirt i d-iteddun). Afecku yella daɣen deg Processing Toolbox, agraw <i>Google Earth Engine</i>.</div>`,
+  exercice: `
+<ol>
+  <li>Snulfu-d asenfar-ik Cloud ur nelli d anmetti syen sebded asiɣzef.</li>
+  <li>Sken-d SRTM ɣef Tlemsan syen serwes-it s tmuɣli d <code>MNT_50m.asc</code>.</li>
+</ol>` };
+B["q10-l2"] = { titre: "NDVI Sentinel-2 deg tama n Tlemsan", objectifs: ["Bnu tugna Sentinel-2 war asigna", "Siḍen syen sekken NDVI deg tkarḍa", "Sifeḍ agmuḍ s GeoTIFF syen sleḍ-it deg QGIS"],
+  contenu: `
+<p><b>NDVI</b> (amatar n umgired yettwasnernen n temɣa) yegda <code>(NIR − Azeggaɣ) / (NIR + Azeggaɣ)</code>. S Sentinel-2, infrarouge aqerruy d abanḍ <code>B8</code> u azeggaɣ d abanḍ <code>B4</code>. Yettili seg −1 ar 1: aman d wakal aqeḥwan ddaw 0,2, tamɣa tazurant nnig 0,5.</p>
+<!--code:0-->
+<p><b>Cloud Score+</b> yeffer ipiksilen s usigna (talast 0,6) u <b>tanammast</b> n tegnit tettak-d tugna tazedgant.</p>
+<h3>Sifeḍ syen sleḍ deg QGIS</h3>
+<ol>
+  <li>Processing Toolbox &gt; <i>Google Earth Engine &gt; Export GeoTIFF</i>: tissi NDVI, taseddi 10 m, SCR EPSG:32630, tamnaḍt n uɣṛis.</li>
+  <li><b>Reclassify by table</b>: &lt; 0,2 akal aqeḥwan neɣ yebnan, 0,2 ar 0,5 tamɣa tafessast, &gt; 0,5 tamɣa tazurant.</li>
+  <li><i>Raster layer unique values report</i>: tiddi n yal taggayt.</li>
+</ol>`,
+  exercice: `
+<ol>
+  <li>Siḍen NDVI n tefsut d unebdu 2025 syen serwes tikarḍiwin-nni.</li>
+  <li>Sifeḍ NDVI n tefsut syen siḍen tiddi n tmɣa tazurant.</li>
+  <li>Af-d tamnaḍt n teẓgi yeɣɣan deg tama n Tlemsan syen serwes NDVI uqbel d deffir tmes.</li>
+</ol>` };
+B["q10-l3"] = { titre: "Aɣummu n wakal: ESA WorldCover d Dynamic World", objectifs: ["Seqdec tikarḍiwin timaḍalanin n uɣummu n wakal s 10 m", "Sekcem isefka n tidet deg tesleḍt s waṭas n yiwtilen"],
+  contenu: `
+<table class="tab">
+  <tr><th>Isefka</th><th>Asulay</th><th>Agbur</th></tr>
+  <tr><td>ESA WorldCover</td><td><code>ESA/WorldCover/v200</code></td><td>Takarḍa tamaḍalant n 2021, 10 m, 11 n taggayin (abanḍ <code>Map</code>)</td></tr>
+  <tr><td>Dynamic World</td><td><code>GOOGLE/DYNAMICWORLD/V1</code></td><td>Taggayt i yugaren deg yal tugna Sentinel-2 seg 2015, 9 n taggayin (abanḍ <code>label</code>)</td></tr>
+</table>
+<!--code:0-->
+<p>Sifeḍ WorldCover s GeoTIFF (10 m, EPSG:32630), syen <b>Reclassify by table</b> akken ad tefkeḍ i yal taggayt tazmilt seg 1 ar 5 i uɣilif n tmes n tizgwa (taẓgi d yimɣan = 5, tikerza = 3, yebnan d waman = 1). Tissi-a n tidet tezmer ad teṭṭef amkan n uɣummu n wakal asugan n uswir 8.</p>
+<div class="astuce"><b>Tannumi yelhan:</b> ini yal tikkelt aɣbalu d useggas n yisefka (md. « ESA WorldCover 2021 ») deg layout.</div>`,
+  exercice: `
+<ol>
+  <li>Sken-d WorldCover d Dynamic World ɣef Tlemsan syen aru imgerraden.</li>
+  <li>Sifeḍ WorldCover, ales-as asmizzwer i uɣilif n tmes syen ales takarḍa n uɣilif n uswir 8 s tissi-a.</li>
+</ol>` };

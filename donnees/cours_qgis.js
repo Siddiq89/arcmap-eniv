@@ -152,6 +152,48 @@ window.COURS_QGIS = {
   <li>Numérisez 3 parcelles jointives avec l'accrochage activé.</li>
   <li>Calez une carte scannée et notez l'erreur moyenne.</li>
 </ol>`
+        },
+        {
+          id: "q2-l4",
+          titre: "Cartes anciennes : géoréférencer et numériser",
+          duree: "45 min",
+          objectifs: [
+            "Choisir de bons points de calage sur une carte ancienne",
+            "Choisir la transformation adaptée à une carte déformée",
+            "Numériser les éléments anciens et mesurer les changements"
+          ],
+          contenu: `
+<p>Les cartes anciennes (cartes topographiques, plans de ville, cartes d'état-major) montrent le territoire d'hier : ancien tracé d'un oued, extension d'une ville, forêts disparues. Une fois calées, elles se superposent aux données actuelles et permettent de <b>mesurer les changements</b>.</p>
+<h3>1. Préparer le scan</h3>
+<ul>
+  <li>Scannez à 300 dpi au moins, en TIFF, sans recadrer le cadre ni le quadrillage.</li>
+  <li>Notez le titre, l'échelle, l'année et le système de coordonnées imprimé dans la marge.</li>
+</ul>
+<h3>2. Choisir les points de calage</h3>
+<ul>
+  <li><b>Si le quadrillage est chiffré</b>, utilisez ses croisements et saisissez les coordonnées dans le système de la carte : c'est la méthode la plus précise.</li>
+  <li><b>Sinon</b>, calez sur un fond actuel (OpenStreetMap, image satellite) en EPSG:32630 : carrefours anciens, ponts, monuments, angles de bâtiments anciens.</li>
+  <li>Évitez les berges d'oued et le trait de côte : ils bougent. Répartissez 10 à 20 points sur toute la feuille, y compris dans les coins.</li>
+</ul>
+<h3>3. Choisir la transformation</h3>
+<table class="tab">
+  <tr><th>Transformation</th><th>Quand l'utiliser</th></tr>
+  <tr><td>Polynomial 1 (affine)</td><td>Carte en bon état, quadrillage connu ; 4 points minimum</td></tr>
+  <tr><td>Polynomial 2</td><td>Légère déformation du papier ; 6 points minimum</td></tr>
+  <tr><td>Thin Plate Spline</td><td>Carte pliée, déformée ou dessinée à main levée ; beaucoup de points bien répartis</td></tr>
+</table>
+<p>Dans le Géoréférenceur, surveillez la colonne des <b>résidus</b> : supprimez ou corrigez les points dont l'erreur est très supérieure aux autres. Rééchantillonnage <i>Plus proche voisin</i> pour garder les couleurs d'origine.</p>
+<h3>4. Numériser et comparer</h3>
+<ol>
+  <li>Créez dans un GeoPackage les couches <code>bati_ancien</code>, <code>routes_anciennes</code>, <code>oued_ancien</code> avec les champs <code>SOURCE</code> et <code>ANNEE</code>.</li>
+  <li>Numérisez avec l'accrochage activé et la carte ancienne en transparence à 50 %.</li>
+  <li>Comparez avec les couches actuelles : <i>Différence</i> entre bâti actuel et bâti ancien pour l'extension urbaine, distance entre l'ancien et le nouveau tracé de l'oued.</li>
+</ol>`,
+          exercice: `<ol>
+  <li>Calez la carte ancienne fournie par l'enseignant avec deux transformations et comparez les résidus.</li>
+  <li>Numérisez le bâti et le réseau d'oueds anciens.</li>
+  <li>Calculez la surface de l'extension urbaine et présentez le résultat dans une mise en page.</li>
+</ol>`
         }
       ],
       quiz: [
@@ -758,6 +800,140 @@ QgsLayoutExporter.exportToPdf(atlas, r"C:\\ENIV\\TP\\Sorties\\atlas.pdf",
         { question: "Comment rendre une analyse faite avec l'IA reproductible ?", choix: ["Relancer la même conversation", "Demander le script PyQGIS ou construire un modèle", "Faire une capture d'écran", "Ce n'est pas possible"], bonne: 1, explication: "Un script ou un modèle se rejoue à l'identique, pas une conversation." },
         { question: "Quelle solution fonctionne sans abonnement et sans Internet pendant le TP ?", choix: ["Claude Desktop", "LM Studio ou Ollama avec un modèle local", "Le géoréférencement", "Aucune"], bonne: 1, explication: "Un modèle local tourne sur le poste ; Internet ne sert qu'à le télécharger une fois." }
       ]
+    },
+    /* ============================================================ */
+    {
+      id: "q10",
+      numero: 10,
+      titre: "Google Earth Engine dans QGIS",
+      echelle: "1:10 000",
+      resume: "Accéder gratuitement aux images satellites du monde entier depuis QGIS : NDVI Sentinel-2 et occupation du sol autour de Tlemcen avec l'extension Google Earth Engine.",
+      lecons: [
+        {
+          id: "q10-l1",
+          titre: "Accès gratuit à Earth Engine et installation de l'extension",
+          duree: "30 min",
+          objectifs: [
+            "Comprendre ce qu'apporte Google Earth Engine",
+            "Créer un projet Cloud non commercial gratuit",
+            "Installer et authentifier l'extension Google Earth Engine dans QGIS"
+          ],
+          contenu: `
+<p><b>Google Earth Engine</b> (GEE) est une plateforme de Google qui réunit un immense catalogue d'images et de données (Sentinel-2, Landsat, SRTM, occupation du sol, climat…) et qui fait les calculs sur ses propres serveurs. On n'a donc rien à télécharger avant d'analyser : seul le résultat arrive dans QGIS.</p>
+<h3>Accès gratuit pour l'enseignement</h3>
+<ol>
+  <li>Avec un compte Google, ouvrez <code>console.cloud.google.com/earth-engine</code> et créez un <b>projet Cloud</b>.</li>
+  <li>Enregistrez-le pour un <b>usage non commercial</b> (enseignement, études, recherche) et remplissez le questionnaire d'éligibilité. Aucune carte bancaire n'est demandée pour le niveau gratuit.</li>
+  <li>Le niveau <i>Community</i> donne un quota mensuel gratuit de calcul (150 heures EECU par mois en 2026), largement suffisant pour les TP. L'éligibilité est revérifiée chaque année.</li>
+  <li>L'enseignant peut créer un seul projet et y ajouter ses élèves.</li>
+</ol>
+<h3>Installer l'extension</h3>
+<ol>
+  <li>Il faut <b>QGIS 3.44 ou plus récent</b> pour la version actuelle de l'extension.</li>
+  <li><i>Extensions &gt; Installer/Gérer les extensions</i>, cherchez « Google Earth Engine » et installez-la.</li>
+  <li>Au premier lancement, cliquez sur OK : un onglet du navigateur s'ouvre, choisissez votre compte Google et autorisez l'accès. Les identifiants sont enregistrés sur l'ordinateur.</li>
+  <li>Dans la fenêtre <i>Select Earth Engine project</i>, collez le nom de votre projet Cloud (visible dans l'éditeur de code Earth Engine, menu du compte &gt; <i>Project Info</i>).</li>
+</ol>
+<p>Premier test dans la console Python (Ctrl+Alt+P) : le relief SRTM centré sur Tlemcen.</p>
+<pre><code>import ee
+from ee_plugin import Map
+
+mnt = ee.Image("USGS/SRTMGL1_003")
+Map.addLayer(mnt, {"min": 0, "max": 1800,
+                   "palette": ["006633", "E5FFCC", "662A00", "D8D8D8"]}, "SRTM")
+Map.setCenter(-1.32, 34.88, 10)</code></pre>
+<div class="astuce"><b>À savoir :</b> les couches Earth Engine sont <b>diffusées</b> comme un fond de carte. Pour les analyser avec les outils de QGIS, il faut les exporter en GeoTIFF (leçon suivante). L'outil se trouve aussi dans la boîte à outils de traitements, groupe <i>Google Earth Engine</i>.</div>`,
+          exercice: `<ol>
+  <li>Créez votre projet Cloud non commercial et installez l'extension.</li>
+  <li>Affichez le SRTM sur Tlemcen et comparez-le visuellement avec <code>MNT_50m.asc</code>.</li>
+</ol>`
+        },
+        {
+          id: "q10-l2",
+          titre: "NDVI Sentinel-2 autour de Tlemcen",
+          duree: "40 min",
+          objectifs: [
+            "Construire une image Sentinel-2 sans nuages",
+            "Calculer et cartographier le NDVI",
+            "Exporter le résultat en GeoTIFF et l'analyser dans QGIS"
+          ],
+          contenu: `
+<p>Le <b>NDVI</b> (indice de végétation par différence normalisée) vaut <code>(PIR − Rouge) / (PIR + Rouge)</code>. Avec Sentinel-2, le proche infrarouge est la bande <code>B8</code> et le rouge la bande <code>B4</code>. Il va de −1 à 1 : eau et sols nus sous 0,2, végétation dense au-dessus de 0,5.</p>
+<pre><code>import ee
+from ee_plugin import Map
+
+zone = ee.Geometry.Rectangle([-1.55, 34.70, -1.10, 35.00])   # Tlemcen et ses monts
+cs = ee.ImageCollection("GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED")
+
+s2 = (ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED")
+      .filterBounds(zone)
+      .filterDate("2025-03-01", "2025-05-31")          # printemps
+      .linkCollection(cs, ["cs_cdf"])
+      .map(lambda img: img.updateMask(img.select("cs_cdf").gte(0.6)))
+      .median()
+      .clip(zone))
+
+ndvi = s2.normalizedDifference(["B8", "B4"]).rename("NDVI")
+
+Map.addLayer(s2, {"bands": ["B4", "B3", "B2"], "min": 0, "max": 3000}, "Sentinel-2 couleurs naturelles")
+Map.addLayer(ndvi, {"min": 0, "max": 0.8, "palette": ["8c510a", "f6e8c3", "5ab4ac", "01665e"]}, "NDVI printemps 2025")
+Map.centerObject(zone, 11)</code></pre>
+<p><b>Cloud Score+</b> masque les pixels nuageux (seuil 0,6) et la <b>médiane</b> de la saison donne une image propre.</p>
+<h3>Exporter et analyser dans QGIS</h3>
+<ol>
+  <li>Boîte à outils de traitements &gt; <i>Google Earth Engine &gt; Export GeoTIFF</i> : couche NDVI, résolution 10 m, SCR EPSG:32630, emprise de la zone.</li>
+  <li><b>Reclassifier par table</b> : &lt; 0,2 sol nu ou bâti, 0,2 à 0,5 végétation clairsemée, &gt; 0,5 végétation dense.</li>
+  <li><i>Rapport sur les valeurs uniques de la couche raster</i> : surface de chaque classe.</li>
+</ol>`,
+          exercice: `<ol>
+  <li>Calculez le NDVI du printemps et de l'été 2025 et comparez les deux cartes.</li>
+  <li>Exportez le NDVI du printemps et calculez la surface de végétation dense.</li>
+  <li>Trouvez une zone forestière brûlée autour de Tlemcen et comparez le NDVI avant et après l'incendie.</li>
+</ol>`
+        },
+        {
+          id: "q10-l3",
+          titre: "Occupation du sol : ESA WorldCover et Dynamic World",
+          duree: "35 min",
+          objectifs: [
+            "Utiliser des cartes d'occupation du sol mondiales à 10 m",
+            "Intégrer une donnée réelle dans l'analyse multicritère"
+          ],
+          contenu: `
+<table class="tab">
+  <tr><th>Jeu de données</th><th>Identifiant</th><th>Contenu</th></tr>
+  <tr><td>ESA WorldCover</td><td><code>ESA/WorldCover/v200</code></td><td>Carte mondiale 2021, 10 m, 11 classes (bande <code>Map</code>)</td></tr>
+  <tr><td>Dynamic World</td><td><code>GOOGLE/DYNAMICWORLD/V1</code></td><td>Classe la plus probable de chaque image Sentinel-2 depuis 2015, 9 classes (bande <code>label</code>)</td></tr>
+</table>
+<pre><code>import ee
+from ee_plugin import Map
+
+zone = ee.Geometry.Rectangle([-1.55, 34.70, -1.10, 35.00])
+
+wc = ee.ImageCollection("ESA/WorldCover/v200").first().clip(zone)
+Map.addLayer(wc, {"bands": ["Map"]}, "WorldCover 2021")
+
+dw = (ee.ImageCollection("GOOGLE/DYNAMICWORLD/V1")
+      .filterBounds(zone).filterDate("2025-01-01", "2025-12-31")
+      .select("label").mode().clip(zone))
+Map.addLayer(dw, {"min": 0, "max": 8, "palette": ["419bdf", "397d49", "88b053", "7a87c6",
+              "e49635", "dfc35a", "c4281b", "a59b8f", "b39fe1"]}, "Dynamic World 2025")
+Map.centerObject(zone, 11)</code></pre>
+<p>Exportez WorldCover en GeoTIFF (10 m, EPSG:32630), puis <b>Reclassifier par table</b> pour noter chaque classe de 1 à 5 selon le risque de feux (forêts et maquis = 5, cultures = 3, bâti et eau = 1). Cette couche réelle peut remplacer l'occupation du sol fictive du niveau 8.</p>
+<div class="astuce"><b>Bon réflexe :</b> citez toujours la source et l'année des données (ex. « ESA WorldCover 2021 ») dans la mise en page.</div>`,
+          exercice: `<ol>
+  <li>Affichez WorldCover et Dynamic World sur Tlemcen et notez les différences.</li>
+  <li>Exportez WorldCover, reclassez-le pour le risque de feux et refaites la carte de risque du niveau 8 avec cette couche.</li>
+</ol>`
+        }
+      ],
+      quiz: [
+        { question: "Où se font les calculs dans Google Earth Engine ?", choix: ["Sur votre ordinateur", "Sur les serveurs de Google", "Dans GRASS", "Dans le navigateur uniquement"], bonne: 1, explication: "Seul le résultat est envoyé à QGIS." },
+        { question: "Que faut-il pour utiliser GEE gratuitement en cours ?", choix: ["Une licence ArcGIS", "Un projet Cloud enregistré en usage non commercial", "Une carte bancaire obligatoire", "Rien du tout"], bonne: 1, explication: "Le niveau Community est gratuit pour l'enseignement, sans facturation." },
+        { question: "Quelles bandes Sentinel-2 servent au NDVI ?", choix: ["B2 et B3", "B8 et B4", "B11 et B12", "B1 et B9"], bonne: 1, explication: "NDVI = (B8 − B4) / (B8 + B4) : proche infrarouge et rouge." },
+        { question: "Pourquoi exporter une couche Earth Engine en GeoTIFF ?", choix: ["Pour la rendre plus jolie", "Pour l'analyser avec les outils de QGIS", "C'est obligatoire pour l'afficher", "Pour changer de compte"], bonne: 1, explication: "Les couches affichées sont diffusées ; l'export donne un vrai raster local." }
+      ]
+
     }
   ]
 };

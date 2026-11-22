@@ -536,6 +536,36 @@
     app.innerHTML = h;
   }
 
+  /* ---------------- Ressources gratuites et glossaire ---------------- */
+  function vueRessources() {
+    var R = window.RESSOURCES || { logiciels: [], donnees: [], apprendre: [], glossaire: [] };
+    function liste(t) {
+      return '<ul class="ressources">' + t.map(function (x) {
+        var d = (x.desc && (x.desc[window.LANGUE] || x.desc.fr)) || "";
+        return '<li><a href="' + esc(x.url) + '" target="_blank" rel="noopener"><bdi>' + esc(x.nom) + '</bdi> ↗</a><span>' + esc(d) + '</span></li>';
+      }).join("") + '</ul>';
+    }
+    var h = '<main class="wrap"><div class="level-head"><span class="eyebrow">' + T("res.eyebrow") + '</span><h1>' + T("res.titre") + '</h1><p>' + T("res.p") + '</p></div>' +
+      '<div class="section-title"><h2>' + T("res.logiciels") + '</h2></div>' + liste(R.logiciels) +
+      '<div class="section-title"><h2>' + T("res.donnees") + '</h2></div>' + liste(R.donnees) +
+      '<div class="section-title"><h2>' + T("res.apprendre") + '</h2></div>' + liste(R.apprendre) +
+      '<div class="section-title"><h2>' + T("res.glossaire") + '</h2><p>' + T("res.glossaire.p", R.glossaire.length) + '</p></div>' +
+      '<div class="panel"><label for="g-cherche" class="sr">' + T("res.chercher") + '</label><input id="g-cherche" type="search" class="g-cherche" placeholder="' + esc(T("res.chercher")) + '">' +
+      '<div class="tab-wrap"><table class="tab glossaire"><thead><tr><th lang="fr">Français</th><th lang="en">English</th><th lang="ar" dir="rtl">العربية</th></tr></thead><tbody>' +
+      R.glossaire.map(function (g) { return '<tr><td lang="fr">' + esc(g[0]) + '</td><td lang="en">' + esc(g[1]) + '</td><td lang="ar" dir="rtl">' + esc(g[2]) + '</td></tr>'; }).join("") +
+      '</tbody></table></div><p id="g-vide" class="tag" hidden>' + T("res.aucun") + '</p></div></main>';
+    app.innerHTML = h;
+    var champ = document.getElementById("g-cherche"), vide = document.getElementById("g-vide");
+    champ.addEventListener("input", function () {
+      var q = champ.value.trim().toLowerCase(), n = 0;
+      app.querySelectorAll("table.glossaire tbody tr").forEach(function (tr) {
+        var ok = !q || tr.textContent.toLowerCase().indexOf(q) >= 0;
+        tr.hidden = !ok; if (ok) n++;
+      });
+      vide.hidden = n > 0;
+    });
+  }
+
   /* ---------------- Administration ---------------- */
   function exporterTexte() {
     var masquees = lire(CLE_MASQUEES, []);
@@ -651,6 +681,7 @@
     else if (h === "telechargements") { vueTelechargements(); nav = "telechargements"; }
     else if (h === "remerciements") { vueRemerciements(); nav = "remerciements"; }
     else if (h === "livre") { vueLivre(); nav = "livre"; }
+    else if (h === "ressources") { vueRessources(); nav = "ressources"; }
     else if (/^[a-z]\d+-quiz$/.test(h) && niveau(h.replace("-quiz", ""))) vueQuiz(niveau(h.replace("-quiz", "")));
     else if (niveau(h)) vueNiveau(niveau(h));
     else if (trouverLecon(h)) vueLecon(trouverLecon(h));

@@ -286,3 +286,16 @@ main > .logiciels { margin-bottom: 14px; }
 .piege { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 :not(pre) > code { overflow-wrap: anywhere; }
 .quiz label span { overflow-wrap: anywhere; min-width: 0; }
+
+/* Ressources et glossaire */
+ul.ressources { list-style: none; padding: 0; margin: 0 0 8px; display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+ul.ressources li { border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; background: var(--surface); display: flex; min-width: 0; flex-direction: column; gap: 4px; }
+ul.ressources li a { font-weight: 600; overflow-wrap: anywhere; }
+ul.ressources li span { font-size: .92rem; color: var(--muted); }
+.g-cherche { width: 100%; max-width: 420px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; font: inherit; margin-bottom: 10px; }
+table.glossaire td[lang="ar"], table.glossaire th[lang="ar"] { font-family: "IBM Plex Sans Arabic", sans-serif; text-align: right; }
+@media (min-width: 721px) and (max-width: 1400px) {
+  .brand small { display: block; max-width: 230px; }
+  .meter .bar { width: 60px; }
+  .topbar .wrap { gap: 12px; }
+}

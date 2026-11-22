@@ -473,3 +473,105 @@ E["q9-l2"] = { titre: "No subscription: a free or local AI", objectifs: ["Know w
   <li>Compare with Claude: requests understood, errors, response time.</li>
 </ol>` };
 E.q9.quiz.push({ question: "Which option works without a subscription and without Internet during the lab?", choix: ["Claude Desktop", "LM Studio or Ollama with a local model", "Georeferencing", "None"], explication: "A local model runs on the computer; Internet is only needed once to download it." });
+
+/* ---------- Level 2, lesson 4 ---------- */
+E["q2-l4"] = { titre: "Old maps: georeference and digitize", objectifs: ["Choose good control points on an old map", "Choose the right transformation for a distorted map", "Digitize old features and measure changes"],
+  contenu: `
+<p>Old maps (topographic maps, town plans, military maps) show yesterday's territory: the former course of a wadi, the growth of a town, vanished forests. Once fitted, they overlay current data and let you <b>measure changes</b>.</p>
+<h3>1. Prepare the scan</h3>
+<ul>
+  <li>Scan at 300 dpi or more, as TIFF, without cropping the frame or the grid.</li>
+  <li>Note the title, scale, year and the coordinate system printed in the margin.</li>
+</ul>
+<h3>2. Choose the control points</h3>
+<ul>
+  <li><b>If the grid is numbered</b>, use its intersections and type the coordinates in the map's own system: this is the most accurate method.</li>
+  <li><b>Otherwise</b>, fit it to a current base map (OpenStreetMap, satellite image) in EPSG:32630: old crossroads, bridges, monuments, corners of old buildings.</li>
+  <li>Avoid wadi banks and the coastline: they move. Spread 10 to 20 points over the whole sheet, corners included.</li>
+</ul>
+<h3>3. Choose the transformation</h3>
+<table class="tab">
+  <tr><th>Transformation</th><th>When to use it</th></tr>
+  <tr><td>Polynomial 1 (affine)</td><td>Map in good condition, known grid; at least 4 points</td></tr>
+  <tr><td>Polynomial 2</td><td>Slight paper distortion; at least 6 points</td></tr>
+  <tr><td>Thin Plate Spline</td><td>Folded, distorted or hand-drawn map; many well-spread points</td></tr>
+</table>
+<p>In the Georeferencer, watch the <b>residuals</b> column: delete or fix points whose error is much larger than the others. Use <i>Nearest neighbour</i> resampling to keep the original colours.</p>
+<h3>4. Digitize and compare</h3>
+<ol>
+  <li>In a GeoPackage, create the layers <code>bati_ancien</code>, <code>routes_anciennes</code>, <code>oued_ancien</code> with the fields <code>SOURCE</code> and <code>ANNEE</code>.</li>
+  <li>Digitize with snapping on and the old map at 50 % transparency.</li>
+  <li>Compare with current layers: <i>Difference</i> between current and old buildings for urban growth, distance between the old and new course of the wadi.</li>
+</ol>`,
+  exercice: `
+<ol>
+  <li>Fit the old map provided by the teacher with two transformations and compare the residuals.</li>
+  <li>Digitize the old buildings and wadi network.</li>
+  <li>Compute the area of urban growth and present the result in a print layout.</li>
+</ol>` };
+
+/* ---------- Level 10 ---------- */
+E.q10 = { titre: "Google Earth Engine in QGIS", resume: "Access satellite imagery of the whole world for free from QGIS: Sentinel-2 NDVI and land cover around Tlemcen with the Google Earth Engine plugin.",
+  quiz: [
+    { question: "Where are computations done in Google Earth Engine?", choix: ["On your computer", "On Google's servers", "In GRASS", "In the browser only"], explication: "Only the result is sent to QGIS." },
+    { question: "What do you need to use GEE for free in class?", choix: ["An ArcGIS licence", "A Cloud project registered for noncommercial use", "A mandatory credit card", "Nothing at all"], explication: "The Community tier is free for teaching, with no billing." },
+    { question: "Which Sentinel-2 bands are used for NDVI?", choix: ["B2 and B3", "B8 and B4", "B11 and B12", "B1 and B9"], explication: "NDVI = (B8 − B4) / (B8 + B4): near infrared and red." },
+    { question: "Why export an Earth Engine layer as GeoTIFF?", choix: ["To make it prettier", "To analyse it with QGIS tools", "It is required to display it", "To change account"], explication: "Displayed layers are streamed; exporting gives a real local raster." }
+  ] };
+E["q10-l1"] = { titre: "Free access to Earth Engine and plugin installation", objectifs: ["Understand what Google Earth Engine offers", "Create a free noncommercial Cloud project", "Install and authenticate the Google Earth Engine plugin in QGIS"],
+  contenu: `
+<p><b>Google Earth Engine</b> (GEE) is a Google platform that gathers a huge catalogue of imagery and data (Sentinel-2, Landsat, SRTM, land cover, climate…) and runs the computations on its own servers. So there is nothing to download before analysing: only the result reaches QGIS.</p>
+<h3>Free access for teaching</h3>
+<ol>
+  <li>With a Google account, open <code>console.cloud.google.com/earth-engine</code> and create a <b>Cloud project</b>.</li>
+  <li>Register it for <b>noncommercial use</b> (teaching, studies, research) and fill in the eligibility questionnaire. No credit card is needed for the free tier.</li>
+  <li>The <i>Community</i> tier gives a free monthly compute quota (150 EECU-hours per month in 2026), more than enough for labs. Eligibility is re-checked every year.</li>
+  <li>The teacher can create a single project and add the students to it.</li>
+</ol>
+<h3>Install the plugin</h3>
+<ol>
+  <li>The current version of the plugin needs <b>QGIS 3.44 or later</b>.</li>
+  <li><i>Plugins &gt; Manage and Install Plugins</i>, search for “Google Earth Engine” and install it.</li>
+  <li>On first launch, click OK: a browser tab opens, choose your Google account and allow access. The credentials are saved on the computer.</li>
+  <li>In the <i>Select Earth Engine project</i> window, paste the name of your Cloud project (shown in the Earth Engine Code Editor, account menu &gt; <i>Project Info</i>).</li>
+</ol>
+<p>First test in the Python Console (Ctrl+Alt+P): SRTM relief centred on Tlemcen.</p>
+<!--code:0-->
+<div class="astuce"><b>Good to know:</b> Earth Engine layers are <b>streamed</b> like a basemap. To analyse them with QGIS tools, you must export them as GeoTIFF (next lesson). The tool is also in the Processing Toolbox, <i>Google Earth Engine</i> group.</div>`,
+  exercice: `
+<ol>
+  <li>Create your noncommercial Cloud project and install the plugin.</li>
+  <li>Display SRTM over Tlemcen and compare it visually with <code>MNT_50m.asc</code>.</li>
+</ol>` };
+E["q10-l2"] = { titre: "Sentinel-2 NDVI around Tlemcen", objectifs: ["Build a cloud-free Sentinel-2 image", "Compute and map NDVI", "Export the result as GeoTIFF and analyse it in QGIS"],
+  contenu: `
+<p><b>NDVI</b> (normalized difference vegetation index) equals <code>(NIR − Red) / (NIR + Red)</code>. With Sentinel-2, near infrared is band <code>B8</code> and red is band <code>B4</code>. It ranges from −1 to 1: water and bare soil below 0.2, dense vegetation above 0.5.</p>
+<!--code:0-->
+<p><b>Cloud Score+</b> masks cloudy pixels (threshold 0.6) and the season's <b>median</b> gives a clean image.</p>
+<h3>Export and analyse in QGIS</h3>
+<ol>
+  <li>Processing Toolbox &gt; <i>Google Earth Engine &gt; Export GeoTIFF</i>: NDVI layer, 10 m resolution, CRS EPSG:32630, extent of the area.</li>
+  <li><b>Reclassify by table</b>: &lt; 0.2 bare soil or built-up, 0.2 to 0.5 sparse vegetation, &gt; 0.5 dense vegetation.</li>
+  <li><i>Raster layer unique values report</i>: area of each class.</li>
+</ol>`,
+  exercice: `
+<ol>
+  <li>Compute spring and summer 2025 NDVI and compare the two maps.</li>
+  <li>Export the spring NDVI and compute the area of dense vegetation.</li>
+  <li>Find a burnt forest area around Tlemcen and compare NDVI before and after the fire.</li>
+</ol>` };
+E["q10-l3"] = { titre: "Land cover: ESA WorldCover and Dynamic World", objectifs: ["Use global 10 m land cover maps", "Bring real data into the multi-criteria analysis"],
+  contenu: `
+<table class="tab">
+  <tr><th>Dataset</th><th>Identifier</th><th>Content</th></tr>
+  <tr><td>ESA WorldCover</td><td><code>ESA/WorldCover/v200</code></td><td>Global map for 2021, 10 m, 11 classes (<code>Map</code> band)</td></tr>
+  <tr><td>Dynamic World</td><td><code>GOOGLE/DYNAMICWORLD/V1</code></td><td>Most likely class of each Sentinel-2 image since 2015, 9 classes (<code>label</code> band)</td></tr>
+</table>
+<!--code:0-->
+<p>Export WorldCover as GeoTIFF (10 m, EPSG:32630), then <b>Reclassify by table</b> to score each class from 1 to 5 for wildfire risk (forest and scrub = 5, crops = 3, built-up and water = 1). This real layer can replace the fictitious land cover of level 8.</p>
+<div class="astuce"><b>Good habit:</b> always cite the source and year of the data (e.g. “ESA WorldCover 2021”) in the layout.</div>`,
+  exercice: `
+<ol>
+  <li>Display WorldCover and Dynamic World over Tlemcen and note the differences.</li>
+  <li>Export WorldCover, reclassify it for wildfire risk and redo the level 8 risk map with this layer.</li>
+</ol>` };
