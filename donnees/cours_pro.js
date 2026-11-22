@@ -711,6 +711,137 @@ with arcpy.da.SearchCursor(communes, ["NOM", "SHAPE@"]) as cur:
         { question: "Quel outil donne la classe la plus forte parmi plusieurs cartes d'aléa ?", choix: ["Statistiques de cellules (MAXIMUM)", "Mosaïque", "Combiner", "Fusionner"], bonne: 0, explication: "Cell Statistics calcule cellule par cellule sur plusieurs rasters." },
         { question: "Pour mieux montrer une zone submergée, ArcGIS Pro permet :", choix: ["Une scène 3D locale", "Un fichier .mxd", "ArcScene", "Un géoréférencement"], bonne: 0, explication: "Les scènes 3D sont intégrées au projet." }
       ]
+    },
+    /* ============================================================ */
+    {
+      id: "p9",
+      numero: 9,
+      titre: "L'IA dans ArcGIS Pro avec MCP",
+      echelle: "1:500",
+      resume: "Connecter Claude à ArcGIS Pro par le protocole MCP, piloter un projet en langage naturel sur les données de Tlemcen, et garder la maîtrise des résultats.",
+      lecons: [
+        {
+          id: "p9-l1",
+          titre: "Comprendre MCP et connecter ArcGIS Pro",
+          duree: "40 min",
+          objectifs: [
+            "Comprendre le rôle du client, du serveur MCP et du pont dans ArcGIS Pro",
+            "Installer MCP-ArcGISPro et le relier à Claude Desktop",
+            "Démarrer le pont à chaque séance"
+          ],
+          contenu: `
+<p>Le <b>MCP</b> (<i>Model Context Protocol</i>) est un protocole ouvert qui permet à un assistant IA d'utiliser des <b>outils</b> fournis par un logiciel. L'assistant ne se contente plus d'expliquer : il peut demander à ArcGIS Pro d'ajouter une couche, de lancer un outil de géotraitement ou d'exporter une mise en page.</p>
+<table class="tab">
+  <tr><th>Élément</th><th>Rôle</th></tr>
+  <tr><td><b>Client MCP</b></td><td><b>Claude Desktop</b>, où vous écrivez vos demandes.</td></tr>
+  <tr><td><b>Serveur MCP</b></td><td>Programme Python lancé par Claude Desktop, qui décrit les outils disponibles.</td></tr>
+  <tr><td><b>Pont ArcGIS Pro</b></td><td>Boîte à outils lancée dans ArcGIS Pro : elle exécute les commandes avec arcpy dans le projet ouvert.</td></tr>
+</table>
+<p>Nous utilisons le projet libre <b>MCP-ArcGISPro</b> (github.com/geo2004/MCP-ArcGISPro, licence MIT), testé par son auteur sur ArcGIS Pro 3.6. C'est un projet communautaire, ni officiel Esri ni officiel Anthropic. ArcMap 10.8 (Python 2.7) n'a pas de serveur MCP : ce niveau se fait dans ArcGIS Pro ou dans QGIS.</p>
+<h3>Installation</h3>
+<ol>
+  <li>Installez <b>Claude Desktop</b> (claude.ai/download) et connectez-vous.</li>
+  <li>Installez le gestionnaire <b>uv</b>. Dans PowerShell :<br><code>powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"</code></li>
+  <li>Sur la page GitHub du projet, <i>Code &gt; Download ZIP</i>, puis décompressez dans <code>C:\\ENIV\\mcp\\MCP-ArcGISPro</code>.</li>
+  <li>Dans Claude Desktop : <i>Paramètres &gt; Développeur &gt; Modifier la configuration</i>. Collez ce bloc dans <code>claude_desktop_config.json</code> en remplaçant <code>VOTRE_NOM</code> (fichier <code>mcp_arcgispro_config.json</code> dans les Téléchargements) :</li>
+</ol>
+<pre><code>{
+  "mcpServers": {
+    "arcgis-pro": {
+      "command": "C:/Users/VOTRE_NOM/.local/bin/uv.exe",
+      "args": [
+        "--directory",
+        "C:/ENIV/mcp/MCP-ArcGISPro",
+        "run",
+        "arcgis_mcp_server.py"
+      ]
+    }
+  }
+}</code></pre>
+<h3>À chaque séance</h3>
+<ol>
+  <li>Ouvrez ArcGIS Pro, le projet <code>TP_ENIV.aprx</code> et une carte.</li>
+  <li>Panneau <i>Catalogue &gt; Boîtes à outils &gt; Ajouter une boîte à outils</i> : <code>C:\\ENIV\\mcp\\MCP-ArcGISPro\\MCP_Bridge.pyt</code>, puis lancez <b>Start MCP Bridge</b>.</li>
+  <li>Redémarrez Claude Desktop (la première fois) et écrivez : « Vérifie la connexion avec ArcGIS Pro (ping) et donne-moi le nom de la carte active. »</li>
+</ol>`,
+          exercice: `<ol>
+  <li>Installez Claude Desktop, uv et MCP-ArcGISPro.</li>
+  <li>Démarrez le pont dans ArcGIS Pro et faites le test « ping ».</li>
+  <li>Demandez à Claude la liste des cartes et des mises en page du projet.</li>
+</ol>`
+        },
+        {
+          id: "p9-l2",
+          titre: "TP : piloter ArcGIS Pro en langage naturel",
+          duree: "45 min",
+          objectifs: [
+            "Connaître les outils exposés par MCP-ArcGISPro",
+            "Réaliser une analyse complète sur les données de Tlemcen par des demandes écrites",
+            "Contrôler chaque résultat dans ArcGIS Pro"
+          ],
+          contenu: `
+<p>MCP-ArcGISPro propose 32 outils. Claude choisit l'outil adapté et Claude Desktop vous demande l'autorisation avant chaque utilisation.</p>
+<table class="tab">
+  <tr><th>Famille</th><th>Outils</th></tr>
+  <tr><td>Projet et cartes</td><td><code>get_project_info</code>, <code>save_project</code>, <code>get_active_map_name</code>, <code>create_map</code></td></tr>
+  <tr><td>Couches</td><td><code>list_layers</code>, <code>add_vector_layer</code>, <code>add_raster_layer</code>, <code>remove_layer</code>, <code>zoom_to_layer</code>, <code>set_layer_visibility</code></td></tr>
+  <tr><td>Données</td><td><code>describe_data</code>, <code>list_fields</code>, <code>get_layer_features</code>, <code>get_unique_values</code>, <code>set_workspace</code>, <code>list_feature_classes</code>, <code>list_rasters</code></td></tr>
+  <tr><td>Sélection et édition</td><td><code>select_by_attribute</code>, <code>count_features</code>, <code>clear_selection</code>, <code>update_features</code></td></tr>
+  <tr><td>Géotraitement</td><td><code>run_geoprocessing</code> : n'importe quel outil arcpy (<code>analysis.Buffer</code>, <code>sa.Slope</code>…)</td></tr>
+  <tr><td>Mises en page</td><td><code>list_layouts</code>, <code>create_layout</code>, <code>export_layout</code></td></tr>
+</table>
+<h3>Scénario du TP (données de Tlemcen)</h3>
+<ol>
+  <li>« Définis l'espace de travail sur <code>C:/ENIV/TP/Shapefiles</code> et liste les classes d'entités. »</li>
+  <li>« Ajoute Communes et Forages à la carte. Quel est le système de coordonnées de chacune ? »</li>
+  <li>« Sélectionne les forages dont ETAT vaut Exploité et compte-les. »</li>
+  <li>« Crée une zone tampon de 200 m autour des forages, avec fusion de toutes les entités, dans <code>TP_ENIV.gdb</code>. »</li>
+  <li>« Compte les forages par commune (Summarize Within). »</li>
+  <li>« Calcule la pente du MNT <code>C:/ENIV/TP/MNT/MNT_50m.asc</code> en degrés. » (extension Spatial Analyst nécessaire)</li>
+  <li>« Crée une mise en page A4 avec la carte et exporte-la en PNG dans <code>C:/ENIV/TP/Sorties/forages_ia.png</code>. »</li>
+  <li>« Donne-moi le script arcpy qui refait ces étapes. » Comparez-le avec vos scripts du niveau 6.</li>
+</ol>
+<div class="astuce"><b>Contrôle :</b> ouvrez la table attributaire des résultats, vérifiez le système (WGS 1984 UTM 30N) et les unités, et refaites une étape à la main pour comparer.</div>`,
+          exercice: `<ol>
+  <li>Réalisez le scénario complet et joignez la carte PNG à votre compte rendu.</li>
+  <li>Notez les demandes mal comprises et reformulez-les.</li>
+  <li>Faites le même TP dans QGIS (niveau 9 du parcours QGIS) et comparez.</li>
+</ol>`
+        },
+        {
+          id: "p9-l3",
+          titre: "Variante sans interface, limites et sécurité",
+          duree: "30 min",
+          objectifs: [
+            "Connaître une variante qui travaille sans ouvrir ArcGIS Pro",
+            "Garder le contrôle sur ce que l'assistant exécute"
+          ],
+          contenu: `
+<h3>Variante : arcgis-mcp-bridge</h3>
+<p>Le projet <b>arcgis-mcp-bridge</b> (PyPI, licence Apache-2.0, Windows, ArcGIS Pro sous licence) lance arcpy en arrière-plan, sans interface. Il propose une centaine d'outils de géotraitement. Installation : <code>py -m pip install --upgrade arcgis-mcp-bridge</code>, puis <code>py -m arcgis_mcp.setup_env</code> qui crée un environnement Python dédié. Dans la configuration de Claude Desktop, limitez les dossiers accessibles avec <code>"ARCGIS_MCP_ALLOWED_ROOTS": "C:\\\\ENIV\\\\TP"</code>. Les outils destructeurs (supprimer un jeu de données, calculer un champ…) exigent une confirmation explicite.</p>
+<h3>Bonnes pratiques</h3>
+<ul>
+  <li><b>Autorisations</b> : lisez chaque demande d'outil dans Claude Desktop et préférez « Autoriser une fois ».</li>
+  <li><b>Code Python</b> : l'outil <code>execute_python</code> de MCP-ArcGISPro est désactivé par défaut. Laissez-le désactivé en salle de TP.</li>
+  <li><b>Données</b> : ce que Claude lit est envoyé au service d'IA. Utilisez les données fictives du TP, jamais de données confidentielles ou personnelles.</li>
+  <li><b>Vérification</b> : l'IA peut se tromper avec assurance (mauvaise couche, unités, système de coordonnées). Contrôlez chaque résultat.</li>
+  <li><b>Reproductibilité</b> : demandez le script arcpy ou construisez un modèle ModelBuilder (niveau 5).</li>
+  <li><b>Copie de travail</b> : travaillez sur une copie de <code>C:\\ENIV\\TP</code> et enregistrez le projet avant chaque demande importante.</li>
+</ul>
+<p>L'IA accélère les étapes répétitives, mais le choix des critères, des poids et l'interprétation d'une carte de risque restent votre travail d'ingénieur.</p>`,
+          exercice: `<ol>
+  <li>Demandez à Claude de reclasser la pente en 5 classes et vérifiez les bornes dans la symbologie.</li>
+  <li>Rédigez en 5 lignes les avantages et les risques de l'IA pour un bureau d'études SIG.</li>
+</ol>`
+        }
+      ],
+      quiz: [
+        { question: "Avec MCP-ArcGISPro, que faut-il lancer dans ArcGIS Pro à chaque séance ?", choix: ["Rien", "L'outil Start MCP Bridge de MCP_Bridge.pyt", "ArcCatalog", "La fenêtre Python seule"], bonne: 1, explication: "Le pont reçoit les commandes de Claude et les exécute dans le projet ouvert." },
+        { question: "Quel outil permet de lancer n'importe quel outil arcpy ?", choix: ["list_layers", "run_geoprocessing", "zoom_to_layer", "save_project"], bonne: 1, explication: "run_geoprocessing prend le nom de l'outil (analysis.Buffer…) et ses paramètres." },
+        { question: "Pourquoi utiliser les données fictives du TP avec un assistant IA ?", choix: ["Elles sont plus rapides", "Ce que l'IA lit est envoyé au service d'IA", "ArcGIS Pro l'exige", "Pour éviter les erreurs de projection"], bonne: 1, explication: "On n'envoie jamais de données confidentielles ou personnelles à un service externe." },
+        { question: "Pourquoi ce niveau n'existe-t-il pas pour ArcMap 10.8 ?", choix: ["ArcMap n'a pas de cartes", "Il n'existe pas de serveur MCP pour ArcMap (Python 2.7)", "ArcMap est payant", "Claude refuse ArcMap"], bonne: 1, explication: "Les serveurs MCP visent ArcGIS Pro et son Python 3." }
+      ]
+
     }
   ]
 };

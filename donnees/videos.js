@@ -834,5 +834,21 @@ window.VIDEOS = [
     "url": "https://www.youtube.com/watch?v=4_aeR3nwQH0",
     "duree": "",
     "description": "Chaîne YouTube : QGIS pour les Piou Piou."
+  },
+  {
+    "niveau": "q9",
+    "lecon": "q9-l1",
+    "titre": "Connecter Claude IA à Qgis",
+    "url": "https://www.youtube.com/watch?v=82S_84J_sqg",
+    "duree": "",
+    "description": "Chaîne YouTube : LeLaboservice."
+  },
+  {
+    "niveau": "q9",
+    "lecon": "q9-l2",
+    "titre": "Claude dans QGIS : interagir avec un projet SIG en langage naturel",
+    "url": "https://www.youtube.com/watch?v=2DzZxwvG1Lw",
+    "duree": "",
+    "description": "Chaîne YouTube : Dalila AMIAR (GEOMA-SIG)."
   }
 ];

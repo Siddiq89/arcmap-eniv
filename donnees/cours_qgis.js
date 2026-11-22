@@ -591,6 +591,135 @@ QgsLayoutExporter.exportToPdf(atlas, r"C:\\ENIV\\TP\\Sorties\\atlas.pdf",
         { question: "Que faut-il vérifier avant une somme pondérée dans la calculatrice raster ?", choix: ["Les couleurs", "Même emprise et même taille de cellule", "Le nom des fichiers", "Le format .asc"], bonne: 1, explication: "Sinon les cellules ne se superposent pas exactement." },
         { question: "Quel outil donne l'aléa le plus fort par cellule ?", choix: ["Statistiques de cellules (Maximum)", "Statistiques zonales", "Fusionner des couches", "Reclassifier"], bonne: 0, explication: "Il compare les rasters cellule par cellule." }
       ]
+    },
+    /* ============================================================ */
+    {
+      id: "q9",
+      numero: 9,
+      titre: "L'IA dans QGIS avec MCP",
+      echelle: "1:500",
+      resume: "Connecter Claude à QGIS par le protocole MCP, piloter un projet en langage naturel sur les données de Tlemcen, et garder la maîtrise des résultats.",
+      lecons: [
+        {
+          id: "q9-l1",
+          titre: "Comprendre MCP et installer QGIS MCP",
+          duree: "40 min",
+          objectifs: [
+            "Comprendre le rôle du client, du serveur MCP et de l'extension QGIS",
+            "Installer QGIS MCP et le relier à Claude Desktop",
+            "Vérifier la connexion avec un premier test"
+          ],
+          contenu: `
+<p>Le <b>MCP</b> (<i>Model Context Protocol</i>) est un protocole ouvert qui permet à un assistant IA d'utiliser des <b>outils</b> fournis par un logiciel. Au lieu de seulement répondre par du texte, l'assistant peut demander à QGIS de charger une couche, de lancer un algorithme ou de produire une carte.</p>
+<table class="tab">
+  <tr><th>Élément</th><th>Rôle</th></tr>
+  <tr><td><b>Client MCP</b></td><td>L'application de discussion : ici <b>Claude Desktop</b>. C'est là que vous écrivez vos demandes.</td></tr>
+  <tr><td><b>Serveur MCP</b></td><td>Petit programme Python lancé par Claude Desktop. Il décrit les outils disponibles (charger une couche, lancer un traitement…).</td></tr>
+  <tr><td><b>Extension QGIS</b></td><td>Ouvre une connexion locale dans QGIS et exécute réellement les commandes reçues.</td></tr>
+</table>
+<p>Nous utilisons le projet libre <b>QGIS MCP</b> de J. J. Santos (github.com/jjsantos01/qgis_mcp). C'est un projet communautaire, ni officiel QGIS ni officiel Anthropic. L'auteur l'a testé sur QGIS 3.22 : vérifiez-le sur votre version avant la séance.</p>
+<h3>Installation</h3>
+<ol>
+  <li>Installez <b>Claude Desktop</b> (claude.ai/download) et connectez-vous avec votre compte.</li>
+  <li>Installez <b>Python 3.10</b> ou plus récent, puis le gestionnaire <b>uv</b>. Dans PowerShell :<br><code>powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"</code></li>
+  <li>Sur la page GitHub du projet, cliquez sur <i>Code &gt; Download ZIP</i> et décompressez dans <code>C:\\ENIV\\mcp\\qgis_mcp</code>.</li>
+  <li>Copiez le dossier <code>qgis_mcp_plugin</code> dans le dossier des extensions de votre profil QGIS. Pour le trouver : <i>Préférences &gt; Profils utilisateurs &gt; Ouvrir le dossier du profil actif</i>, puis <code>python\\plugins</code>.</li>
+  <li>Redémarrez QGIS. Dans <i>Extensions &gt; Installer/Gérer les extensions</i>, onglet <i>Toutes</i>, cherchez « QGIS MCP » et cochez-la.</li>
+  <li>Lancez <i>Extensions &gt; QGIS MCP &gt; QGIS MCP</i> et cliquez sur <b>Start Server</b>.</li>
+  <li>Dans Claude Desktop : <i>Paramètres &gt; Développeur &gt; Modifier la configuration</i>. Collez ce bloc dans <code>claude_desktop_config.json</code> (fichier <code>mcp_qgis_config.json</code> dans les Téléchargements) :</li>
+</ol>
+<pre><code>{
+  "mcpServers": {
+    "qgis": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "C:/ENIV/mcp/qgis_mcp/src/qgis_mcp",
+        "run",
+        "qgis_mcp_server.py"
+      ]
+    }
+  }
+}</code></pre>
+<p>Redémarrez Claude Desktop. L'icône des outils doit afficher le serveur <b>qgis</b>. Premier test : écrivez « Vérifie la connexion avec QGIS (ping) puis donne-moi la version de QGIS ».</p>
+<div class="astuce"><b>À ne pas confondre :</b> le dépôt officiel des extensions QGIS propose aussi une extension « QGIS MCP » (N. Karasiak). Elle fonctionne avec son propre serveur <code>qgis-mcp</code> et une autre configuration. Ne mélangez pas les deux projets.</div>`,
+          exercice: `<ol>
+  <li>Installez Claude Desktop, uv et l'extension QGIS MCP.</li>
+  <li>Démarrez le serveur dans QGIS et ajoutez la configuration dans Claude Desktop.</li>
+  <li>Faites le test « ping » et notez la version de QGIS renvoyée par Claude.</li>
+</ol>`
+        },
+        {
+          id: "q9-l2",
+          titre: "TP : piloter QGIS en langage naturel",
+          duree: "45 min",
+          objectifs: [
+            "Connaître les outils exposés par QGIS MCP",
+            "Réaliser une analyse complète sur les données de Tlemcen par des demandes écrites",
+            "Contrôler chaque résultat dans QGIS"
+          ],
+          contenu: `
+<p>QGIS MCP propose 15 outils. Claude choisit lui-même l'outil adapté à votre demande, et Claude Desktop vous demande l'autorisation avant chaque utilisation.</p>
+<table class="tab">
+  <tr><th>Outil</th><th>Ce qu'il fait</th></tr>
+  <tr><td><code>ping</code>, <code>get_qgis_info</code></td><td>Tester la connexion, version de QGIS</td></tr>
+  <tr><td><code>create_new_project</code>, <code>load_project</code>, <code>get_project_info</code>, <code>save_project</code></td><td>Gérer le projet .qgz</td></tr>
+  <tr><td><code>add_vector_layer</code>, <code>add_raster_layer</code>, <code>get_layers</code>, <code>remove_layer</code>, <code>zoom_to_layer</code></td><td>Gérer les couches</td></tr>
+  <tr><td><code>get_layer_features</code></td><td>Lire les entités et leurs attributs</td></tr>
+  <tr><td><code>execute_processing</code></td><td>Lancer un algorithme de la boîte à outils de traitements</td></tr>
+  <tr><td><code>render_map</code></td><td>Exporter la vue de la carte en image</td></tr>
+  <tr><td><code>execute_code</code></td><td>Exécuter du code PyQGIS (à surveiller, voir leçon suivante)</td></tr>
+</table>
+<h3>Scénario du TP (données de Tlemcen)</h3>
+<p>Écrivez les demandes une par une et vérifiez le résultat dans QGIS après chacune :</p>
+<ol>
+  <li>« Crée un nouveau projet QGIS et enregistre-le dans <code>C:/ENIV/Projets/TP_IA.qgz</code>. »</li>
+  <li>« Ajoute les couches <code>Communes.shp</code> et <code>Forages.shp</code> du dossier <code>C:/ENIV/TP/Shapefiles</code>, puis le raster <code>C:/ENIV/TP/MNT/MNT_50m.asc</code>. Quel est le SCR de chaque couche ? »</li>
+  <li>« Combien de forages sont à l'état Exploité ? Donne le débit moyen (champ DEBIT_LS). »</li>
+  <li>« Crée une zone tampon regroupée de 200 m autour des forages. »</li>
+  <li>« Compte le nombre de forages dans chaque commune. »</li>
+  <li>« Applique un style gradué en 5 classes sur ce nombre, puis exporte la carte en PNG dans <code>C:/ENIV/TP/Sorties/forages_ia.png</code>. »</li>
+  <li>« Donne-moi le script PyQGIS qui refait toutes ces étapes. » Enregistrez-le dans <code>C:\\ENIV\\TP\\Scripts</code>.</li>
+</ol>
+<div class="astuce"><b>Contrôle :</b> ouvrez la table attributaire, vérifiez le SCR (EPSG:32630) et les unités. Comparez le nombre de forages par commune avec le résultat de l'algorithme <i>Compter les points dans les polygones</i> lancé à la main (niveau 4).</div>`,
+          exercice: `<ol>
+  <li>Réalisez le scénario complet et joignez la carte PNG à votre compte rendu.</li>
+  <li>Notez les demandes que Claude a mal comprises et reformulez-les.</li>
+  <li>Comparez le script PyQGIS obtenu avec <code>qgis_01_bases.py</code>.</li>
+</ol>`
+        },
+        {
+          id: "q9-l3",
+          titre: "Bonnes pratiques, limites et sécurité",
+          duree: "25 min",
+          objectifs: [
+            "Garder le contrôle sur ce que l'assistant exécute",
+            "Protéger les données et vérifier les résultats"
+          ],
+          contenu: `
+<ul>
+  <li><b>Autorisations</b> : Claude Desktop demande votre accord avant chaque outil. Lisez la demande et préférez « Autoriser une fois ».</li>
+  <li><b>execute_code</b> exécute n'importe quel code Python dans QGIS. Lisez toujours le code proposé avant d'accepter : il peut supprimer ou écraser des fichiers.</li>
+  <li><b>Données</b> : le contenu des couches lues par Claude est envoyé au service d'IA. Utilisez les données fictives du TP, jamais de données confidentielles ou personnelles.</li>
+  <li><b>Vérification</b> : l'IA peut se tromper (mauvaise couche, mauvaise unité, SCR oublié) tout en répondant avec assurance. Contrôlez chaque résultat comme vous le feriez pour le travail d'un camarade.</li>
+  <li><b>Reproductibilité</b> : une conversation ne se rejoue pas à l'identique. Demandez le script PyQGIS ou construisez un modèle (niveau 5) pour garder une méthode stable.</li>
+  <li><b>Travaillez sur une copie</b> du dossier <code>C:\\ENIV\\TP</code> et enregistrez le projet avant chaque demande importante.</li>
+  <li>Il faut une connexion Internet et un compte Claude. Sans connexion, revenez aux outils classiques : ils restent indispensables.</li>
+</ul>
+<p>L'IA ne remplace pas la méthode : c'est vous qui choisissez les critères, les poids et l'interprétation d'une carte de risque. Elle aide à aller plus vite sur les étapes répétitives.</p>`,
+          exercice: `<ol>
+  <li>Demandez à Claude une carte de pentes supérieures à 15° et vérifiez le résultat avec la calculatrice raster (niveau 4).</li>
+  <li>Rédigez en 5 lignes les avantages et les risques de l'IA pour un bureau d'études SIG.</li>
+</ol>`
+        }
+      ],
+      quiz: [
+        { question: "Dans QGIS MCP, quel est le rôle de Claude Desktop ?", choix: ["Le serveur MCP", "Le client MCP", "Une extension QGIS", "Un format de données"], bonne: 1, explication: "Claude Desktop est le client : il lance le serveur MCP et appelle ses outils." },
+        { question: "Que faut-il faire dans QGIS avant d'écrire à Claude ?", choix: ["Rien", "Cliquer sur Start Server dans l'extension QGIS MCP", "Ouvrir la console Python", "Installer GRASS"], bonne: 1, explication: "L'extension doit être démarrée pour recevoir les commandes." },
+        { question: "Quel outil demande le plus de prudence ?", choix: ["ping", "get_layers", "execute_code", "zoom_to_layer"], bonne: 2, explication: "execute_code exécute n'importe quel code Python : lisez-le avant d'accepter." },
+        { question: "Comment rendre une analyse faite avec l'IA reproductible ?", choix: ["Relancer la même conversation", "Demander le script PyQGIS ou construire un modèle", "Faire une capture d'écran", "Ce n'est pas possible"], bonne: 1, explication: "Un script ou un modèle se rejoue à l'identique, pas une conversation." }
+      ]
+
     }
   ]
 };

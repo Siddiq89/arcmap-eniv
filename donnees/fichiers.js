@@ -757,5 +757,21 @@ window.FICHIERS = [
     "titre": "Script PyQGIS 03 : risque de feux",
     "taille": "5 Ko",
     "description": "Rastérisation, proximité, reclassification, somme pondérée, validation."
+  },
+  {
+    "niveau": "q9",
+    "lecon": "q9-l1",
+    "fichier": "fichiers/mcp_qgis_config.json",
+    "titre": "Configuration Claude Desktop pour QGIS MCP",
+    "taille": "1 Ko",
+    "description": "Bloc à coller dans claude_desktop_config.json (serveur décompressé dans C:\\ENIV\\mcp\\qgis_mcp)."
+  },
+  {
+    "niveau": "p9",
+    "lecon": "p9-l1",
+    "fichier": "fichiers/mcp_arcgispro_config.json",
+    "titre": "Configuration Claude Desktop pour MCP-ArcGISPro",
+    "taille": "1 Ko",
+    "description": "Bloc à coller dans claude_desktop_config.json. Remplacez VOTRE_NOM par votre nom d'utilisateur Windows."
   }
 ];

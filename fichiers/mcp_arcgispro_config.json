@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "arcgis-pro": {
+      "command": "C:/Users/VOTRE_NOM/.local/bin/uv.exe",
+      "args": [
+        "--directory",
+        "C:/ENIV/mcp/MCP-ArcGISPro",
+        "run",
+        "arcgis_mcp_server.py"
+      ]
+    }
+  }
+}

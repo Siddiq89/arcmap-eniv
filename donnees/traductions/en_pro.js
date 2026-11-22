@@ -420,3 +420,91 @@ E["p8-l3"] = { titre: "Multi-hazard summary and dashboard", objectifs: ["Combine
   <li>Produce the maximum-hazard and count maps.</li>
   <li>Create a bar chart per municipality and insert it into an A3 layout.</li>
 </ol>` };
+
+/* ---------- Level 9 ---------- */
+E.p9 = { titre: "AI in ArcGIS Pro with MCP", resume: "Connect Claude to ArcGIS Pro through the MCP protocol, drive a project in plain language on the Tlemcen data, and stay in control of the results.",
+  quiz: [
+    { question: "With MCP-ArcGISPro, what must you start in ArcGIS Pro at each session?", choix: ["Nothing", "The Start MCP Bridge tool from MCP_Bridge.pyt", "ArcCatalog", "The Python window alone"], explication: "The bridge receives Claude's commands and runs them in the open project." },
+    { question: "Which tool runs any arcpy tool?", choix: ["list_layers", "run_geoprocessing", "zoom_to_layer", "save_project"], explication: "run_geoprocessing takes the tool name (analysis.Buffer…) and its parameters." },
+    { question: "Why use the fictitious lab data with an AI assistant?", choix: ["It is faster", "What the AI reads is sent to the AI service", "ArcGIS Pro requires it", "To avoid projection errors"], explication: "Never send confidential or personal data to an external service." },
+    { question: "Why does this level not exist for ArcMap 10.8?", choix: ["ArcMap has no maps", "There is no MCP server for ArcMap (Python 2.7)", "ArcMap is paid software", "Claude refuses ArcMap"], explication: "MCP servers target ArcGIS Pro and its Python 3." }
+  ] };
+E["p9-l1"] = { titre: "Understand MCP and connect ArcGIS Pro", objectifs: ["Understand the roles of the client, the MCP server and the bridge in ArcGIS Pro", "Install MCP-ArcGISPro and connect it to Claude Desktop", "Start the bridge at each session"],
+  contenu: `
+<p><b>MCP</b> (<i>Model Context Protocol</i>) is an open protocol that lets an AI assistant use <b>tools</b> provided by a piece of software. The assistant no longer just explains: it can ask ArcGIS Pro to add a layer, run a geoprocessing tool or export a layout.</p>
+<table class="tab">
+  <tr><th>Component</th><th>Role</th></tr>
+  <tr><td><b>MCP client</b></td><td><b>Claude Desktop</b>, where you type your requests.</td></tr>
+  <tr><td><b>MCP server</b></td><td>A Python program started by Claude Desktop, describing the available tools.</td></tr>
+  <tr><td><b>ArcGIS Pro bridge</b></td><td>A toolbox run inside ArcGIS Pro: it executes the commands with arcpy in the open project.</td></tr>
+</table>
+<p>We use the open-source <b>MCP-ArcGISPro</b> project (github.com/geo2004/MCP-ArcGISPro, MIT licence), tested by its author on ArcGIS Pro 3.6. It is a community project, not official from Esri or Anthropic. ArcMap 10.8 (Python 2.7) has no MCP server: this level is done in ArcGIS Pro or in QGIS.</p>
+<h3>Installation</h3>
+<ol>
+  <li>Install <b>Claude Desktop</b> (claude.ai/download) and sign in.</li>
+  <li>Install the <b>uv</b> package manager. In PowerShell:<br><code>powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"</code></li>
+  <li>On the project's GitHub page, <i>Code &gt; Download ZIP</i>, then unzip it to <code>C:\\ENIV\\mcp\\MCP-ArcGISPro</code>.</li>
+  <li>In Claude Desktop: <i>Settings &gt; Developer &gt; Edit Config</i>. Paste this block into <code>claude_desktop_config.json</code>, replacing <code>VOTRE_NOM</code> with your Windows user name (file <code>mcp_arcgispro_config.json</code> in Downloads):</li>
+</ol>
+<!--code:0-->
+<h3>At each session</h3>
+<ol>
+  <li>Open ArcGIS Pro, the <code>TP_ENIV.aprx</code> project and a map.</li>
+  <li><i>Catalog</i> pane &gt; <i>Toolboxes &gt; Add Toolbox</i>: <code>C:\\ENIV\\mcp\\MCP-ArcGISPro\\MCP_Bridge.pyt</code>, then run <b>Start MCP Bridge</b>.</li>
+  <li>Restart Claude Desktop (the first time) and type: “Check the connection with ArcGIS Pro (ping) and give me the name of the active map.”</li>
+</ol>`,
+  exercice: `
+<ol>
+  <li>Install Claude Desktop, uv and MCP-ArcGISPro.</li>
+  <li>Start the bridge in ArcGIS Pro and run the “ping” test.</li>
+  <li>Ask Claude for the list of maps and layouts in the project.</li>
+</ol>` };
+E["p9-l2"] = { titre: "Lab: drive ArcGIS Pro in plain language", objectifs: ["Know the tools exposed by MCP-ArcGISPro", "Carry out a full analysis on the Tlemcen data through written requests", "Check every result in ArcGIS Pro"],
+  contenu: `
+<p>MCP-ArcGISPro offers 32 tools. Claude picks the right tool and Claude Desktop asks for your permission before each use.</p>
+<table class="tab">
+  <tr><th>Group</th><th>Tools</th></tr>
+  <tr><td>Project and maps</td><td><code>get_project_info</code>, <code>save_project</code>, <code>get_active_map_name</code>, <code>create_map</code></td></tr>
+  <tr><td>Layers</td><td><code>list_layers</code>, <code>add_vector_layer</code>, <code>add_raster_layer</code>, <code>remove_layer</code>, <code>zoom_to_layer</code>, <code>set_layer_visibility</code></td></tr>
+  <tr><td>Data</td><td><code>describe_data</code>, <code>list_fields</code>, <code>get_layer_features</code>, <code>get_unique_values</code>, <code>set_workspace</code>, <code>list_feature_classes</code>, <code>list_rasters</code></td></tr>
+  <tr><td>Selection and editing</td><td><code>select_by_attribute</code>, <code>count_features</code>, <code>clear_selection</code>, <code>update_features</code></td></tr>
+  <tr><td>Geoprocessing</td><td><code>run_geoprocessing</code>: any arcpy tool (<code>analysis.Buffer</code>, <code>sa.Slope</code>…)</td></tr>
+  <tr><td>Layouts</td><td><code>list_layouts</code>, <code>create_layout</code>, <code>export_layout</code></td></tr>
+</table>
+<h3>Lab scenario (Tlemcen data)</h3>
+<ol>
+  <li>“Set the workspace to <code>C:/ENIV/TP/Shapefiles</code> and list the feature classes.”</li>
+  <li>“Add Communes and Forages to the map. What is the coordinate system of each one?”</li>
+  <li>“Select the boreholes whose ETAT is Exploité and count them.”</li>
+  <li>“Create a 200 m buffer around the boreholes, dissolving all features, in <code>TP_ENIV.gdb</code>.”</li>
+  <li>“Count the boreholes per commune (Summarize Within).”</li>
+  <li>“Compute the slope of the DEM <code>C:/ENIV/TP/MNT/MNT_50m.asc</code> in degrees.” (Spatial Analyst extension required)</li>
+  <li>“Create an A4 layout with the map and export it as PNG to <code>C:/ENIV/TP/Sorties/forages_ia.png</code>.”</li>
+  <li>“Give me the arcpy script that redoes these steps.” Compare it with your level 6 scripts.</li>
+</ol>
+<div class="astuce"><b>Check:</b> open the attribute table of the results, check the coordinate system (WGS 1984 UTM 30N) and the units, and redo one step by hand to compare.</div>`,
+  exercice: `
+<ol>
+  <li>Carry out the full scenario and attach the PNG map to your report.</li>
+  <li>Note the misunderstood requests and rephrase them.</li>
+  <li>Do the same lab in QGIS (level 9 of the QGIS course) and compare.</li>
+</ol>` };
+E["p9-l3"] = { titre: "Headless variant, limits and security", objectifs: ["Know a variant that works without opening ArcGIS Pro", "Stay in control of what the assistant runs"],
+  contenu: `
+<h3>Variant: arcgis-mcp-bridge</h3>
+<p>The <b>arcgis-mcp-bridge</b> project (PyPI, Apache-2.0 licence, Windows, licensed ArcGIS Pro) runs arcpy in the background, with no interface. It offers about a hundred geoprocessing tools. Installation: <code>py -m pip install --upgrade arcgis-mcp-bridge</code>, then <code>py -m arcgis_mcp.setup_env</code>, which creates a dedicated Python environment. In the Claude Desktop configuration, limit the accessible folders with <code>"ARCGIS_MCP_ALLOWED_ROOTS": "C:\\\\ENIV\\\\TP"</code>. Destructive tools (deleting a dataset, calculating a field…) require explicit confirmation.</p>
+<h3>Good practice</h3>
+<ul>
+  <li><b>Permissions</b>: read each tool request in Claude Desktop and prefer “Allow once”.</li>
+  <li><b>Python code</b>: the <code>execute_python</code> tool of MCP-ArcGISPro is disabled by default. Keep it disabled in the lab.</li>
+  <li><b>Data</b>: what Claude reads is sent to the AI service. Use the fictitious lab data, never confidential or personal data.</li>
+  <li><b>Checking</b>: the AI can be confidently wrong (wrong layer, units, coordinate system). Check every result.</li>
+  <li><b>Reproducibility</b>: ask for the arcpy script or build a ModelBuilder model (level 5).</li>
+  <li><b>Working copy</b>: work on a copy of <code>C:\\ENIV\\TP</code> and save the project before each important request.</li>
+</ul>
+<p>AI speeds up repetitive steps, but choosing the criteria and weights and interpreting a hazard map remain your work as an engineer.</p>`,
+  exercice: `
+<ol>
+  <li>Ask Claude to reclassify the slope into 5 classes and check the class breaks in the symbology.</li>
+  <li>Write 5 lines on the benefits and risks of AI for a GIS consultancy.</li>
+</ol>` };

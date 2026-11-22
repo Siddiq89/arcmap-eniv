@@ -420,3 +420,91 @@ A["p8-l3"] = { titre: "التركيب متعدد المخاطر ولوحة ال�
   <li>أنتج خريطتي الخطر الأقصى والتراكم.</li>
   <li>أنشئ مخططًا بالأعمدة حسب البلدية وأدرجه في إخراج A3.</li>
 </ol>` };
+
+/* ---------- المستوى 9 ---------- */
+A.p9 = { titre: "الذكاء الاصطناعي في ArcGIS Pro عبر MCP", resume: "ربط Claude بـ ArcGIS Pro عبر بروتوكول MCP، وقيادة مشروع باللغة الطبيعية على بيانات تلمسان، مع التحكم في النتائج.",
+  quiz: [
+    { question: "مع MCP-ArcGISPro، ماذا يجب تشغيله في ArcGIS Pro في كل حصة؟", choix: ["لا شيء", "الأداة Start MCP Bridge من MCP_Bridge.pyt", "ArcCatalog", "نافذة Python وحدها"], explication: "يستقبل الجسر أوامر Claude وينفّذها في المشروع المفتوح." },
+    { question: "أي أداة تشغّل أي أداة arcpy؟", choix: ["list_layers", "run_geoprocessing", "zoom_to_layer", "save_project"], explication: "تأخذ run_geoprocessing اسم الأداة (analysis.Buffer…) ومعاملاتها." },
+    { question: "لماذا نستعمل البيانات الوهمية للأعمال التطبيقية مع مساعد ذكاء اصطناعي؟", choix: ["لأنها أسرع", "لأن ما يقرؤه الذكاء الاصطناعي يُرسَل إلى خدمته", "لأن ArcGIS Pro يشترط ذلك", "لتفادي أخطاء الإسقاط"], explication: "لا نرسل أبدًا بيانات سرية أو شخصية إلى خدمة خارجية." },
+    { question: "لماذا لا يوجد هذا المستوى في ArcMap 10.8؟", choix: ["ArcMap بلا خرائط", "لا يوجد خادم MCP لـ ArcMap (Python 2.7)", "ArcMap برنامج مدفوع", "Claude يرفض ArcMap"], explication: "تستهدف خوادم MCP برنامج ArcGIS Pro وPython 3 الخاص به." }
+  ] };
+A["p9-l1"] = { titre: "فهم MCP وربط ArcGIS Pro", objectifs: ["فهم دور العميل وخادم MCP والجسر في ArcGIS Pro", "تثبيت MCP-ArcGISPro وربطه بـ Claude Desktop", "تشغيل الجسر في كل حصة"],
+  contenu: `
+<p>‏<b>MCP</b> (<i>Model Context Protocol</i>) بروتوكول مفتوح يتيح لمساعد ذكاء اصطناعي استعمال <b>أدوات</b> يوفرها برنامج ما. لم يعد المساعد يكتفي بالشرح: يمكنه أن يطلب من ArcGIS Pro إضافة طبقة أو تشغيل أداة معالجة جغرافية أو تصدير إخراج.</p>
+<table class="tab">
+  <tr><th>العنصر</th><th>الدور</th></tr>
+  <tr><td><b>عميل MCP</b></td><td><b>Claude Desktop</b>، حيث تكتب طلباتك.</td></tr>
+  <tr><td><b>خادم MCP</b></td><td>برنامج Python يشغّله Claude Desktop ويصف الأدوات المتاحة.</td></tr>
+  <tr><td><b>جسر ArcGIS Pro</b></td><td>صندوق أدوات يُشغَّل داخل ArcGIS Pro: ينفّذ الأوامر بـ arcpy في المشروع المفتوح.</td></tr>
+</table>
+<p>نستعمل المشروع الحر <b>MCP-ArcGISPro</b> ‏(github.com/geo2004/MCP-ArcGISPro، رخصة MIT) الذي اختبره صاحبه على ArcGIS Pro 3.6. وهو مشروع مجتمعي، ليس رسميًا من Esri ولا من Anthropic. لا يملك ArcMap 10.8 ‏(Python 2.7) خادم MCP: يُنجز هذا المستوى في ArcGIS Pro أو في QGIS.</p>
+<h3>التثبيت</h3>
+<ol>
+  <li>ثبّت <b>Claude Desktop</b> ‏(claude.ai/download) وسجّل الدخول.</li>
+  <li>ثبّت مدير الحزم <b>uv</b>. في PowerShell:<br><code>powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"</code></li>
+  <li>في صفحة المشروع على GitHub، ‏<i>Code &gt; Download ZIP</i>، ثم فك الضغط في <code>C:\\ENIV\\mcp\\MCP-ArcGISPro</code>.</li>
+  <li>في Claude Desktop: ‏<i>Settings &gt; Developer &gt; Edit Config</i>. الصق هذه الكتلة في <code>claude_desktop_config.json</code> مع تعويض <code>VOTRE_NOM</code> باسم مستخدم Windows (الملف <code>mcp_arcgispro_config.json</code> في التنزيلات):</li>
+</ol>
+<!--code:0-->
+<h3>في كل حصة</h3>
+<ol>
+  <li>افتح ArcGIS Pro والمشروع <code>TP_ENIV.aprx</code> وخريطة.</li>
+  <li>لوحة <i>Catalog &gt; Toolboxes &gt; Add Toolbox</i>: ‏<code>C:\\ENIV\\mcp\\MCP-ArcGISPro\\MCP_Bridge.pyt</code>، ثم شغّل <b>Start MCP Bridge</b>.</li>
+  <li>أعد تشغيل Claude Desktop (في المرة الأولى) واكتب: «تحقق من الاتصال بـ ArcGIS Pro ‏(ping) وأعطني اسم الخريطة النشطة.»</li>
+</ol>`,
+  exercice: `
+<ol>
+  <li>ثبّت Claude Desktop وuv وMCP-ArcGISPro.</li>
+  <li>شغّل الجسر في ArcGIS Pro وأنجز اختبار «ping».</li>
+  <li>اطلب من Claude قائمة الخرائط والإخراجات في المشروع.</li>
+</ol>` };
+A["p9-l2"] = { titre: "عمل تطبيقي: قيادة ArcGIS Pro باللغة الطبيعية", objectifs: ["معرفة الأدوات التي يوفرها MCP-ArcGISPro", "إنجاز تحليل كامل على بيانات تلمسان بطلبات مكتوبة", "التحقق من كل نتيجة في ArcGIS Pro"],
+  contenu: `
+<p>يوفر MCP-ArcGISPro اثنتين وثلاثين أداة. يختار Claude الأداة المناسبة ويطلب Claude Desktop إذنك قبل كل استعمال.</p>
+<table class="tab">
+  <tr><th>المجموعة</th><th>الأدوات</th></tr>
+  <tr><td>المشروع والخرائط</td><td><code>get_project_info</code>، <code>save_project</code>، <code>get_active_map_name</code>، <code>create_map</code></td></tr>
+  <tr><td>الطبقات</td><td><code>list_layers</code>، <code>add_vector_layer</code>، <code>add_raster_layer</code>، <code>remove_layer</code>، <code>zoom_to_layer</code>، <code>set_layer_visibility</code></td></tr>
+  <tr><td>البيانات</td><td><code>describe_data</code>، <code>list_fields</code>، <code>get_layer_features</code>، <code>get_unique_values</code>، <code>set_workspace</code>، <code>list_feature_classes</code>، <code>list_rasters</code></td></tr>
+  <tr><td>الاختيار والتحرير</td><td><code>select_by_attribute</code>، <code>count_features</code>، <code>clear_selection</code>، <code>update_features</code></td></tr>
+  <tr><td>المعالجة الجغرافية</td><td><code>run_geoprocessing</code>: أي أداة arcpy ‏(<code>analysis.Buffer</code>، <code>sa.Slope</code>…)</td></tr>
+  <tr><td>الإخراجات</td><td><code>list_layouts</code>، <code>create_layout</code>، <code>export_layout</code></td></tr>
+</table>
+<h3>سيناريو العمل التطبيقي (بيانات تلمسان)</h3>
+<ol>
+  <li>«اضبط مساحة العمل على <code>C:/ENIV/TP/Shapefiles</code> واسرد أصناف الكيانات.»</li>
+  <li>«أضف Communes وForages إلى الخريطة. ما نظام إحداثيات كل منهما؟»</li>
+  <li>«اختر الأثقاب التي قيمة ETAT فيها Exploité واحسب عددها.»</li>
+  <li>«أنشئ نطاقًا عازلًا بـ 200 م حول الأثقاب مع دمج كل الكيانات، في <code>TP_ENIV.gdb</code>.»</li>
+  <li>«احسب عدد الأثقاب في كل بلدية (Summarize Within).»</li>
+  <li>«احسب انحدار MNT ‏<code>C:/ENIV/TP/MNT/MNT_50m.asc</code> بالدرجات.» (يلزم الامتداد Spatial Analyst)</li>
+  <li>«أنشئ إخراج A4 بالخريطة وصدّره PNG إلى <code>C:/ENIV/TP/Sorties/forages_ia.png</code>.»</li>
+  <li>«أعطني سكربت arcpy الذي يعيد هذه الخطوات.» قارنه بسكربتاتك في المستوى 6.</li>
+</ol>
+<div class="astuce"><b>التحقق:</b> افتح جدول سمات النتائج، وتحقق من نظام الإحداثيات (WGS 1984 UTM 30N) والوحدات، وأعد خطوة يدويًا للمقارنة.</div>`,
+  exercice: `
+<ol>
+  <li>أنجز السيناريو كاملًا وأرفق خريطة PNG بتقريرك.</li>
+  <li>دوّن الطلبات التي أُسيء فهمها وأعد صياغتها.</li>
+  <li>أنجز العمل نفسه في QGIS (المستوى 9 من مسار QGIS) وقارن.</li>
+</ol>` };
+A["p9-l3"] = { titre: "بديل دون واجهة، الحدود والأمان", objectifs: ["معرفة بديل يعمل دون فتح ArcGIS Pro", "البقاء متحكمًا فيما ينفّذه المساعد"],
+  contenu: `
+<h3>البديل: arcgis-mcp-bridge</h3>
+<p>يشغّل مشروع <b>arcgis-mcp-bridge</b> ‏(PyPI، رخصة Apache-2.0، نظام Windows، ‏ArcGIS Pro مرخّص) مكتبة arcpy في الخلفية دون واجهة، ويقترح نحو مئة أداة معالجة جغرافية. التثبيت: <code>py -m pip install --upgrade arcgis-mcp-bridge</code>، ثم <code>py -m arcgis_mcp.setup_env</code> الذي ينشئ بيئة Python مخصصة. في إعدادات Claude Desktop، حدّد المجلدات المسموح بها بـ <code>"ARCGIS_MCP_ALLOWED_ROOTS": "C:\\\\ENIV\\\\TP"</code>. تتطلب الأدوات الهدّامة (حذف مجموعة بيانات، حساب حقل…) تأكيدًا صريحًا.</p>
+<h3>الممارسات الجيدة</h3>
+<ul>
+  <li><b>الأذونات</b>: اقرأ كل طلب أداة في Claude Desktop وفضّل «Allow once».</li>
+  <li><b>شيفرة Python</b>: الأداة <code>execute_python</code> في MCP-ArcGISPro معطّلة افتراضيًا. اتركها معطّلة في قاعة الأعمال التطبيقية.</li>
+  <li><b>البيانات</b>: ما يقرؤه Claude يُرسَل إلى خدمة الذكاء الاصطناعي. استعمل البيانات الوهمية للأعمال التطبيقية، ولا تستعمل أبدًا بيانات سرية أو شخصية.</li>
+  <li><b>التحقق</b>: قد يخطئ الذكاء الاصطناعي بثقة (طبقة، وحدات، نظام إحداثيات). تحقق من كل نتيجة.</li>
+  <li><b>قابلية إعادة الإنتاج</b>: اطلب سكربت arcpy أو ابنِ نموذج ModelBuilder (المستوى 5).</li>
+  <li><b>نسخة عمل</b>: اعمل على نسخة من <code>C:\\ENIV\\TP</code> واحفظ المشروع قبل كل طلب مهم.</li>
+</ul>
+<p>يسرّع الذكاء الاصطناعي الخطوات المتكررة، لكن اختيار المعايير والأوزان وتفسير خريطة الخطر يبقيان عملك بصفتك مهندسًا.</p>`,
+  exercice: `
+<ol>
+  <li>اطلب من Claude إعادة تصنيف الانحدار في 5 فئات وتحقق من الحدود في الترميز.</li>
+  <li>اكتب في 5 أسطر مزايا الذكاء الاصطناعي ومخاطره لمكتب دراسات في نظم المعلومات الجغرافية.</li>
+</ol>` };

@@ -355,3 +355,89 @@ E["q8-l3"] = { titre: "Multi-hazard summary and communes atlas", objectifs: ["Co
   <li>Produce the maximum hazard and cumulative maps.</li>
   <li>Generate a multi-hazard atlas of the 9 communes as PDF.</li>
 </ol>` };
+
+/* ---------- Level 9 ---------- */
+E.q9 = { titre: "AI in QGIS with MCP", resume: "Connect Claude to QGIS through the MCP protocol, drive a project in plain language on the Tlemcen data, and stay in control of the results.",
+  quiz: [
+    { question: "In QGIS MCP, what is the role of Claude Desktop?", choix: ["The MCP server", "The MCP client", "A QGIS plugin", "A data format"], explication: "Claude Desktop is the client: it starts the MCP server and calls its tools." },
+    { question: "What must you do in QGIS before writing to Claude?", choix: ["Nothing", "Click Start Server in the QGIS MCP plugin", "Open the Python Console", "Install GRASS"], explication: "The plugin must be running to receive commands." },
+    { question: "Which tool calls for the most caution?", choix: ["ping", "get_layers", "execute_code", "zoom_to_layer"], explication: "execute_code runs any Python code: read it before accepting." },
+    { question: "How do you make an AI-driven analysis reproducible?", choix: ["Replay the same conversation", "Ask for the PyQGIS script or build a model", "Take a screenshot", "It is not possible"], explication: "A script or a model replays identically; a conversation does not." }
+  ] };
+E["q9-l1"] = { titre: "Understand MCP and install QGIS MCP", objectifs: ["Understand the roles of the client, the MCP server and the QGIS plugin", "Install QGIS MCP and connect it to Claude Desktop", "Check the connection with a first test"],
+  contenu: `
+<p><b>MCP</b> (<i>Model Context Protocol</i>) is an open protocol that lets an AI assistant use <b>tools</b> provided by a piece of software. Instead of only answering with text, the assistant can ask QGIS to load a layer, run an algorithm or produce a map.</p>
+<table class="tab">
+  <tr><th>Component</th><th>Role</th></tr>
+  <tr><td><b>MCP client</b></td><td>The chat application: here <b>Claude Desktop</b>. This is where you type your requests.</td></tr>
+  <tr><td><b>MCP server</b></td><td>A small Python program started by Claude Desktop. It describes the available tools (load a layer, run a process…).</td></tr>
+  <tr><td><b>QGIS plugin</b></td><td>Opens a local connection inside QGIS and actually runs the commands it receives.</td></tr>
+</table>
+<p>We use the open-source <b>QGIS MCP</b> project by J. J. Santos (github.com/jjsantos01/qgis_mcp). It is a community project, not official from QGIS or Anthropic. The author tested it on QGIS 3.22: check it on your version before the session.</p>
+<h3>Installation</h3>
+<ol>
+  <li>Install <b>Claude Desktop</b> (claude.ai/download) and sign in with your account.</li>
+  <li>Install <b>Python 3.10</b> or later, then the <b>uv</b> package manager. In PowerShell:<br><code>powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"</code></li>
+  <li>On the project's GitHub page, click <i>Code &gt; Download ZIP</i> and unzip it to <code>C:\\ENIV\\mcp\\qgis_mcp</code>.</li>
+  <li>Copy the <code>qgis_mcp_plugin</code> folder into the plugins folder of your QGIS profile. To find it: <i>Settings &gt; User Profiles &gt; Open Active Profile Folder</i>, then <code>python\\plugins</code>.</li>
+  <li>Restart QGIS. In <i>Plugins &gt; Manage and Install Plugins</i>, <i>All</i> tab, search for “QGIS MCP” and tick it.</li>
+  <li>Run <i>Plugins &gt; QGIS MCP &gt; QGIS MCP</i> and click <b>Start Server</b>.</li>
+  <li>In Claude Desktop: <i>Settings &gt; Developer &gt; Edit Config</i>. Paste this block into <code>claude_desktop_config.json</code> (file <code>mcp_qgis_config.json</code> in Downloads):</li>
+</ol>
+<!--code:0-->
+<p>Restart Claude Desktop. The tools icon should show the <b>qgis</b> server. First test: type “Check the connection with QGIS (ping), then tell me the QGIS version”.</p>
+<div class="astuce"><b>Do not confuse:</b> the official QGIS plugin repository also offers a “QGIS MCP” plugin (N. Karasiak). It works with its own <code>qgis-mcp</code> server and a different configuration. Do not mix the two projects.</div>`,
+  exercice: `
+<ol>
+  <li>Install Claude Desktop, uv and the QGIS MCP plugin.</li>
+  <li>Start the server in QGIS and add the configuration to Claude Desktop.</li>
+  <li>Run the “ping” test and note the QGIS version returned by Claude.</li>
+</ol>` };
+E["q9-l2"] = { titre: "Lab: drive QGIS in plain language", objectifs: ["Know the tools exposed by QGIS MCP", "Carry out a full analysis on the Tlemcen data through written requests", "Check every result in QGIS"],
+  contenu: `
+<p>QGIS MCP offers 15 tools. Claude picks the right tool for your request, and Claude Desktop asks for your permission before each use.</p>
+<table class="tab">
+  <tr><th>Tool</th><th>What it does</th></tr>
+  <tr><td><code>ping</code>, <code>get_qgis_info</code></td><td>Test the connection, QGIS version</td></tr>
+  <tr><td><code>create_new_project</code>, <code>load_project</code>, <code>get_project_info</code>, <code>save_project</code></td><td>Manage the .qgz project</td></tr>
+  <tr><td><code>add_vector_layer</code>, <code>add_raster_layer</code>, <code>get_layers</code>, <code>remove_layer</code>, <code>zoom_to_layer</code></td><td>Manage layers</td></tr>
+  <tr><td><code>get_layer_features</code></td><td>Read features and their attributes</td></tr>
+  <tr><td><code>execute_processing</code></td><td>Run an algorithm from the Processing Toolbox</td></tr>
+  <tr><td><code>render_map</code></td><td>Export the map view as an image</td></tr>
+  <tr><td><code>execute_code</code></td><td>Run PyQGIS code (watch it closely, see next lesson)</td></tr>
+</table>
+<h3>Lab scenario (Tlemcen data)</h3>
+<p>Type the requests one at a time and check the result in QGIS after each one:</p>
+<ol>
+  <li>“Create a new QGIS project and save it as <code>C:/ENIV/Projets/TP_IA.qgz</code>.”</li>
+  <li>“Add the layers <code>Communes.shp</code> and <code>Forages.shp</code> from the folder <code>C:/ENIV/TP/Shapefiles</code>, then the raster <code>C:/ENIV/TP/MNT/MNT_50m.asc</code>. What is the CRS of each layer?”</li>
+  <li>“How many boreholes have the state Exploité? Give the mean flow rate (DEBIT_LS field).”</li>
+  <li>“Create a dissolved 200 m buffer around the boreholes.”</li>
+  <li>“Count the boreholes in each commune.”</li>
+  <li>“Apply a 5-class graduated style on that count, then export the map as PNG to <code>C:/ENIV/TP/Sorties/forages_ia.png</code>.”</li>
+  <li>“Give me the PyQGIS script that redoes all these steps.” Save it in <code>C:\\ENIV\\TP\\Scripts</code>.</li>
+</ol>
+<div class="astuce"><b>Check:</b> open the attribute table, check the CRS (EPSG:32630) and the units. Compare the number of boreholes per commune with the result of the <i>Count points in polygon</i> algorithm run by hand (level 4).</div>`,
+  exercice: `
+<ol>
+  <li>Carry out the full scenario and attach the PNG map to your report.</li>
+  <li>Note the requests Claude misunderstood and rephrase them.</li>
+  <li>Compare the PyQGIS script you got with <code>qgis_01_bases.py</code>.</li>
+</ol>` };
+E["q9-l3"] = { titre: "Good practice, limits and security", objectifs: ["Stay in control of what the assistant runs", "Protect data and check results"],
+  contenu: `
+<ul>
+  <li><b>Permissions</b>: Claude Desktop asks for your approval before each tool. Read the request and prefer “Allow once”.</li>
+  <li><b>execute_code</b> runs any Python code inside QGIS. Always read the proposed code before accepting: it can delete or overwrite files.</li>
+  <li><b>Data</b>: the content of the layers Claude reads is sent to the AI service. Use the fictitious lab data, never confidential or personal data.</li>
+  <li><b>Checking</b>: the AI can be wrong (wrong layer, wrong unit, forgotten CRS) while answering confidently. Check each result as you would a classmate's work.</li>
+  <li><b>Reproducibility</b>: a conversation cannot be replayed identically. Ask for the PyQGIS script or build a model (level 5) to keep a stable method.</li>
+  <li><b>Work on a copy</b> of the <code>C:\\ENIV\\TP</code> folder and save the project before each important request.</li>
+  <li>You need an Internet connection and a Claude account. Without a connection, go back to the classic tools: they remain essential.</li>
+</ul>
+<p>AI does not replace method: you choose the criteria, the weights and the interpretation of a hazard map. It helps you go faster on repetitive steps.</p>`,
+  exercice: `
+<ol>
+  <li>Ask Claude for a map of slopes above 15° and check the result with the Raster Calculator (level 4).</li>
+  <li>Write 5 lines on the benefits and risks of AI for a GIS consultancy.</li>
+</ol>` };

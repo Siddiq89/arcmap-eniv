@@ -355,3 +355,89 @@ A["q8-l3"] = { titre: "التوليف متعدد المخاطر وأطلس ال�
   <li>أنتج خريطتي الخطر الأقصى والتراكم.</li>
   <li>أنشئ أطلسًا متعدد المخاطر للبلديات التسع بصيغة PDF.</li>
 </ol>` };
+
+/* ---------- المستوى 9 ---------- */
+A.q9 = { titre: "الذكاء الاصطناعي في QGIS عبر MCP", resume: "ربط Claude بـ QGIS عبر بروتوكول MCP، وقيادة مشروع باللغة الطبيعية على بيانات تلمسان، مع التحكم في النتائج.",
+  quiz: [
+    { question: "في QGIS MCP، ما دور Claude Desktop؟", choix: ["خادم MCP", "عميل MCP", "إضافة QGIS", "صيغة بيانات"], explication: "‏Claude Desktop هو العميل: يشغّل خادم MCP ويستدعي أدواته." },
+    { question: "ماذا يجب فعله في QGIS قبل الكتابة إلى Claude؟", choix: ["لا شيء", "النقر على Start Server في إضافة QGIS MCP", "فتح وحدة Python", "تثبيت GRASS"], explication: "يجب تشغيل الإضافة لتستقبل الأوامر." },
+    { question: "أي أداة تتطلب أكبر قدر من الحذر؟", choix: ["ping", "get_layers", "execute_code", "zoom_to_layer"], explication: "تنفّذ execute_code أي شيفرة Python: اقرأها قبل القبول." },
+    { question: "كيف نجعل تحليلًا منجزًا بالذكاء الاصطناعي قابلًا لإعادة الإنتاج؟", choix: ["بإعادة المحادثة نفسها", "بطلب سكربت PyQGIS أو بناء نموذج", "بلقطة شاشة", "غير ممكن"], explication: "السكربت أو النموذج يُعاد تشغيله بشكل مطابق، أما المحادثة فلا." }
+  ] };
+A["q9-l1"] = { titre: "فهم MCP وتثبيت QGIS MCP", objectifs: ["فهم دور العميل وخادم MCP وإضافة QGIS", "تثبيت QGIS MCP وربطه بـ Claude Desktop", "التحقق من الاتصال باختبار أول"],
+  contenu: `
+<p>‏<b>MCP</b> (<i>Model Context Protocol</i>) بروتوكول مفتوح يتيح لمساعد ذكاء اصطناعي استعمال <b>أدوات</b> يوفرها برنامج ما. فبدل الاكتفاء بالرد نصًّا، يستطيع المساعد أن يطلب من QGIS تحميل طبقة أو تشغيل خوارزمية أو إنتاج خريطة.</p>
+<table class="tab">
+  <tr><th>العنصر</th><th>الدور</th></tr>
+  <tr><td><b>عميل MCP</b></td><td>تطبيق المحادثة، وهو هنا <b>Claude Desktop</b>: فيه تكتب طلباتك.</td></tr>
+  <tr><td><b>خادم MCP</b></td><td>برنامج Python صغير يشغّله Claude Desktop، ويصف الأدوات المتاحة (تحميل طبقة، تشغيل معالجة…).</td></tr>
+  <tr><td><b>إضافة QGIS</b></td><td>تفتح اتصالًا محليًا داخل QGIS وتنفّذ فعليًا الأوامر الواردة.</td></tr>
+</table>
+<p>نستعمل المشروع الحر <b>QGIS MCP</b> لصاحبه J. J. Santos ‏(github.com/jjsantos01/qgis_mcp). وهو مشروع مجتمعي، ليس رسميًا من QGIS ولا من Anthropic. اختبره صاحبه على QGIS 3.22: تحقق منه على إصدارك قبل الحصة.</p>
+<h3>التثبيت</h3>
+<ol>
+  <li>ثبّت <b>Claude Desktop</b> ‏(claude.ai/download) وسجّل الدخول بحسابك.</li>
+  <li>ثبّت <b>Python 3.10</b> أو أحدث، ثم مدير الحزم <b>uv</b>. في PowerShell:<br><code>powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"</code></li>
+  <li>في صفحة المشروع على GitHub انقر <i>Code &gt; Download ZIP</i> وفك الضغط في <code>C:\\ENIV\\mcp\\qgis_mcp</code>.</li>
+  <li>انسخ المجلد <code>qgis_mcp_plugin</code> إلى مجلد إضافات ملف تعريف QGIS. لإيجاده: <i>Settings &gt; User Profiles &gt; Open Active Profile Folder</i>، ثم <code>python\\plugins</code>.</li>
+  <li>أعد تشغيل QGIS. في <i>Plugins &gt; Manage and Install Plugins</i>، تبويب <i>All</i>، ابحث عن «QGIS MCP» وفعّلها.</li>
+  <li>شغّل <i>Plugins &gt; QGIS MCP &gt; QGIS MCP</i> وانقر <b>Start Server</b>.</li>
+  <li>في Claude Desktop: ‏<i>Settings &gt; Developer &gt; Edit Config</i>. الصق هذه الكتلة في <code>claude_desktop_config.json</code> (الملف <code>mcp_qgis_config.json</code> في التنزيلات):</li>
+</ol>
+<!--code:0-->
+<p>أعد تشغيل Claude Desktop. يجب أن تُظهر أيقونة الأدوات الخادم <b>qgis</b>. الاختبار الأول: اكتب «تحقق من الاتصال بـ QGIS ‏(ping) ثم أعطني إصدار QGIS».</p>
+<div class="astuce"><b>لا تخلط:</b> يقترح المستودع الرسمي لإضافات QGIS أيضًا إضافة «QGIS MCP» ‏(N. Karasiak). تعمل مع خادمها الخاص <code>qgis-mcp</code> وبإعدادات مختلفة. لا تخلط بين المشروعين.</div>`,
+  exercice: `
+<ol>
+  <li>ثبّت Claude Desktop وuv وإضافة QGIS MCP.</li>
+  <li>شغّل الخادم في QGIS وأضف الإعدادات إلى Claude Desktop.</li>
+  <li>أنجز اختبار «ping» ودوّن إصدار QGIS الذي يعيده Claude.</li>
+</ol>` };
+A["q9-l2"] = { titre: "عمل تطبيقي: قيادة QGIS باللغة الطبيعية", objectifs: ["معرفة الأدوات التي يوفرها QGIS MCP", "إنجاز تحليل كامل على بيانات تلمسان بطلبات مكتوبة", "التحقق من كل نتيجة في QGIS"],
+  contenu: `
+<p>يوفر QGIS MCP خمس عشرة أداة. يختار Claude الأداة المناسبة لطلبك، ويطلب Claude Desktop إذنك قبل كل استعمال.</p>
+<table class="tab">
+  <tr><th>الأداة</th><th>وظيفتها</th></tr>
+  <tr><td><code>ping</code>، <code>get_qgis_info</code></td><td>اختبار الاتصال، إصدار QGIS</td></tr>
+  <tr><td><code>create_new_project</code>، <code>load_project</code>، <code>get_project_info</code>، <code>save_project</code></td><td>تسيير مشروع ‎.qgz</td></tr>
+  <tr><td><code>add_vector_layer</code>، <code>add_raster_layer</code>، <code>get_layers</code>، <code>remove_layer</code>، <code>zoom_to_layer</code></td><td>تسيير الطبقات</td></tr>
+  <tr><td><code>get_layer_features</code></td><td>قراءة الكيانات وسماتها</td></tr>
+  <tr><td><code>execute_processing</code></td><td>تشغيل خوارزمية من صندوق أدوات المعالجة</td></tr>
+  <tr><td><code>render_map</code></td><td>تصدير عرض الخريطة صورةً</td></tr>
+  <tr><td><code>execute_code</code></td><td>تنفيذ شيفرة PyQGIS (تحت المراقبة، انظر الدرس التالي)</td></tr>
+</table>
+<h3>سيناريو العمل التطبيقي (بيانات تلمسان)</h3>
+<p>اكتب الطلبات واحدًا تلو الآخر وتحقق من النتيجة في QGIS بعد كل طلب:</p>
+<ol>
+  <li>«أنشئ مشروع QGIS جديدًا واحفظه في <code>C:/ENIV/Projets/TP_IA.qgz</code>.»</li>
+  <li>«أضف الطبقتين <code>Communes.shp</code> و<code>Forages.shp</code> من المجلد <code>C:/ENIV/TP/Shapefiles</code>، ثم النقطية <code>C:/ENIV/TP/MNT/MNT_50m.asc</code>. ما نظام إحداثيات كل طبقة؟»</li>
+  <li>«كم عدد الأثقاب في حالة Exploité؟ أعطني متوسط الصبيب (الحقل DEBIT_LS).»</li>
+  <li>«أنشئ نطاقًا عازلًا مدموجًا بـ 200 م حول الأثقاب.»</li>
+  <li>«احسب عدد الأثقاب في كل بلدية.»</li>
+  <li>«طبّق نمطًا متدرجًا من 5 فئات على هذا العدد، ثم صدّر الخريطة PNG إلى <code>C:/ENIV/TP/Sorties/forages_ia.png</code>.»</li>
+  <li>«أعطني سكربت PyQGIS الذي يعيد كل هذه الخطوات.» احفظه في <code>C:\\ENIV\\TP\\Scripts</code>.</li>
+</ol>
+<div class="astuce"><b>التحقق:</b> افتح جدول السمات، وتحقق من نظام الإحداثيات (EPSG:32630) والوحدات. قارن عدد الأثقاب في كل بلدية بنتيجة خوارزمية <i>Count points in polygon</i> المشغّلة يدويًا (المستوى 4).</div>`,
+  exercice: `
+<ol>
+  <li>أنجز السيناريو كاملًا وأرفق خريطة PNG بتقريرك.</li>
+  <li>دوّن الطلبات التي أساء Claude فهمها وأعد صياغتها.</li>
+  <li>قارن سكربت PyQGIS المحصّل بالملف <code>qgis_01_bases.py</code>.</li>
+</ol>` };
+A["q9-l3"] = { titre: "الممارسات الجيدة والحدود والأمان", objectifs: ["البقاء متحكمًا فيما ينفّذه المساعد", "حماية البيانات والتحقق من النتائج"],
+  contenu: `
+<ul>
+  <li><b>الأذونات</b>: يطلب Claude Desktop موافقتك قبل كل أداة. اقرأ الطلب وفضّل «Allow once» (السماح مرة واحدة).</li>
+  <li><b>execute_code</b> تنفّذ أي شيفرة Python داخل QGIS. اقرأ دائمًا الشيفرة المقترحة قبل القبول: قد تحذف ملفات أو تستبدلها.</li>
+  <li><b>البيانات</b>: محتوى الطبقات التي يقرؤها Claude يُرسَل إلى خدمة الذكاء الاصطناعي. استعمل البيانات الوهمية للأعمال التطبيقية، ولا تستعمل أبدًا بيانات سرية أو شخصية.</li>
+  <li><b>التحقق</b>: قد يخطئ الذكاء الاصطناعي (طبقة خاطئة، وحدة خاطئة، نظام إحداثيات منسيّ) مع إجابة واثقة. تحقق من كل نتيجة كما تتحقق من عمل زميل.</li>
+  <li><b>قابلية إعادة الإنتاج</b>: لا تُعاد المحادثة بشكل مطابق. اطلب سكربت PyQGIS أو ابنِ نموذجًا (المستوى 5) لتحافظ على طريقة ثابتة.</li>
+  <li><b>اعمل على نسخة</b> من المجلد <code>C:\\ENIV\\TP</code> واحفظ المشروع قبل كل طلب مهم.</li>
+  <li>يلزم اتصال بالإنترنت وحساب Claude. ودون اتصال، عُد إلى الأدوات التقليدية: فهي تبقى ضرورية.</li>
+</ul>
+<p>لا يعوّض الذكاء الاصطناعي المنهجية: أنت من يختار المعايير والأوزان ويفسّر خريطة الخطر. إنه يساعد على الإسراع في الخطوات المتكررة.</p>`,
+  exercice: `
+<ol>
+  <li>اطلب من Claude خريطة للانحدارات التي تفوق 15° وتحقق من النتيجة بحاسبة النقطيات (المستوى 4).</li>
+  <li>اكتب في 5 أسطر مزايا الذكاء الاصطناعي ومخاطره لمكتب دراسات في نظم المعلومات الجغرافية.</li>
+</ol>` };
