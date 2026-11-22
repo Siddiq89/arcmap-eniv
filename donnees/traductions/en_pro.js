@@ -459,7 +459,7 @@ E["p9-l1"] = { titre: "Understand MCP and connect ArcGIS Pro", objectifs: ["Unde
   <li>Start the bridge in ArcGIS Pro and run the “ping” test.</li>
   <li>Ask Claude for the list of maps and layouts in the project.</li>
 </ol>` };
-E["p9-l2"] = { titre: "Lab: drive ArcGIS Pro in plain language", objectifs: ["Know the tools exposed by MCP-ArcGISPro", "Carry out a full analysis on the Tlemcen data through written requests", "Check every result in ArcGIS Pro"],
+E["p9-l3"] = { titre: "Lab: drive ArcGIS Pro in plain language", objectifs: ["Know the tools exposed by MCP-ArcGISPro", "Carry out a full analysis on the Tlemcen data through written requests", "Check every result in ArcGIS Pro"],
   contenu: `
 <p>MCP-ArcGISPro offers 32 tools. Claude picks the right tool and Claude Desktop asks for your permission before each use.</p>
 <table class="tab">
@@ -489,7 +489,7 @@ E["p9-l2"] = { titre: "Lab: drive ArcGIS Pro in plain language", objectifs: ["Kn
   <li>Note the misunderstood requests and rephrase them.</li>
   <li>Do the same lab in QGIS (level 9 of the QGIS course) and compare.</li>
 </ol>` };
-E["p9-l3"] = { titre: "Headless variant, limits and security", objectifs: ["Know a variant that works without opening ArcGIS Pro", "Stay in control of what the assistant runs"],
+E["p9-l4"] = { titre: "Headless variant, limits and security", objectifs: ["Know a variant that works without opening ArcGIS Pro", "Stay in control of what the assistant runs"],
   contenu: `
 <h3>Variant: arcgis-mcp-bridge</h3>
 <p>The <b>arcgis-mcp-bridge</b> project (PyPI, Apache-2.0 licence, Windows, licensed ArcGIS Pro) runs arcpy in the background, with no interface. It offers about a hundred geoprocessing tools. Installation: <code>py -m pip install --upgrade arcgis-mcp-bridge</code>, then <code>py -m arcgis_mcp.setup_env</code>, which creates a dedicated Python environment. In the Claude Desktop configuration, limit the accessible folders with <code>"ARCGIS_MCP_ALLOWED_ROOTS": "C:\\\\ENIV\\\\TP"</code>. Destructive tools (deleting a dataset, calculating a field…) require explicit confirmation.</p>
@@ -508,3 +508,35 @@ E["p9-l3"] = { titre: "Headless variant, limits and security", objectifs: ["Know
   <li>Ask Claude to reclassify the slope into 5 classes and check the class breaks in the symbology.</li>
   <li>Write 5 lines on the benefits and risks of AI for a GIS consultancy.</li>
 </ol>` };
+
+E["p9-l2"] = { titre: "No subscription: a free or local AI", objectifs: ["Know what Claude's free plan allows", "Connect ArcGIS Pro to a free local AI model (LM Studio or Ollama)", "Adapt your requests to a small model"],
+  contenu: `
+<p>Claude is available in Algeria with a free account. The free plan, however, has <b>message limits</b> that can interrupt a lab, and it needs an Internet connection. If your students have no subscription, or the lab has no Internet, use a <b>local AI model</b>: it runs on the computer, for free, and the same MCP server works with it.</p>
+<table class="tab">
+  <tr><th>Option</th><th>Cost</th><th>Internet</th><th>Note</th></tr>
+  <tr><td>Claude Desktop, free plan</td><td>Free</td><td>Yes</td><td>Simplest, but limited number of messages</td></tr>
+  <tr><td>Claude Desktop, subscription</td><td>Paid</td><td>Yes</td><td>Most reliable for long labs</td></tr>
+  <tr><td><b>LM Studio</b> + local model</td><td>Free</td><td>Only to download the model</td><td>Graphical interface, recommended in the lab</td></tr>
+  <tr><td><b>Ollama</b> + ollmcp</td><td>Free, open source</td><td>Only to download the model</td><td>Command line</td></tr>
+</table>
+<h3>Option 1: LM Studio</h3>
+<ol>
+  <li>Install <b>LM Studio</b> (lmstudio.ai), version 0.3.17 or later: MCP support starts with that version.</li>
+  <li>Download a model able to use tools (<i>tool use</i>), for example <b>Qwen3 8B</b> or <b>Qwen2.5 7B Instruct</b>.</li>
+  <li>Right-hand panel, <i>Program</i> tab &gt; <i>Install &gt; Edit mcp.json</i>. Paste the same <code>mcpServers</code> block as for Claude Desktop (file <code>mcp_arcgispro_config.json</code>), then save.</li>
+  <li>Start the server in ArcGIS Pro (Start MCP Bridge tool), open a chat with the model and test “ping”.</li>
+</ol>
+<h3>Option 2: Ollama and ollmcp</h3>
+<ol>
+  <li>Install <b>Ollama</b> (ollama.com), then in a terminal: <code>ollama pull qwen2.5:7b</code>.</li>
+  <li>Install the open-source MCP client <b>ollmcp</b> (Python 3.11 or later): <code>uv tool install ollmcp</code>.</li>
+  <li>Start it with the site's configuration: <code>ollmcp --servers-json C:\\ENIV\\mcp\\mcp_arcgispro_config.json --model qwen2.5:7b</code>.</li>
+</ol>
+<div class="astuce"><b>Hardware and method:</b> plan for at least 16 GB of memory for a 7 to 8 billion parameter model; a graphics card speeds things up a lot. A small model makes mistakes more often than a large one: write one request per step, name layers and fields precisely, and check every result. Benefit: the data never leave the computer.</div>`,
+  exercice: `
+<ol>
+  <li>Install LM Studio or Ollama and connect it to the ArcGIS Pro MCP server.</li>
+  <li>Redo steps 1 to 4 of the next lesson's lab with the local model.</li>
+  <li>Compare with Claude: requests understood, errors, response time.</li>
+</ol>` };
+E.p9.quiz.push({ question: "Which option works without a subscription and without Internet during the lab?", choix: ["Claude Desktop", "LM Studio or Ollama with a local model", "Georeferencing", "None"], explication: "A local model runs on the computer; Internet is only needed once to download it." });

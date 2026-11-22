@@ -393,7 +393,7 @@ E["q9-l1"] = { titre: "Understand MCP and install QGIS MCP", objectifs: ["Unders
   <li>Start the server in QGIS and add the configuration to Claude Desktop.</li>
   <li>Run the “ping” test and note the QGIS version returned by Claude.</li>
 </ol>` };
-E["q9-l2"] = { titre: "Lab: drive QGIS in plain language", objectifs: ["Know the tools exposed by QGIS MCP", "Carry out a full analysis on the Tlemcen data through written requests", "Check every result in QGIS"],
+E["q9-l3"] = { titre: "Lab: drive QGIS in plain language", objectifs: ["Know the tools exposed by QGIS MCP", "Carry out a full analysis on the Tlemcen data through written requests", "Check every result in QGIS"],
   contenu: `
 <p>QGIS MCP offers 15 tools. Claude picks the right tool for your request, and Claude Desktop asks for your permission before each use.</p>
 <table class="tab">
@@ -424,7 +424,7 @@ E["q9-l2"] = { titre: "Lab: drive QGIS in plain language", objectifs: ["Know the
   <li>Note the requests Claude misunderstood and rephrase them.</li>
   <li>Compare the PyQGIS script you got with <code>qgis_01_bases.py</code>.</li>
 </ol>` };
-E["q9-l3"] = { titre: "Good practice, limits and security", objectifs: ["Stay in control of what the assistant runs", "Protect data and check results"],
+E["q9-l4"] = { titre: "Good practice, limits and security", objectifs: ["Stay in control of what the assistant runs", "Protect data and check results"],
   contenu: `
 <ul>
   <li><b>Permissions</b>: Claude Desktop asks for your approval before each tool. Read the request and prefer “Allow once”.</li>
@@ -433,7 +433,7 @@ E["q9-l3"] = { titre: "Good practice, limits and security", objectifs: ["Stay in
   <li><b>Checking</b>: the AI can be wrong (wrong layer, wrong unit, forgotten CRS) while answering confidently. Check each result as you would a classmate's work.</li>
   <li><b>Reproducibility</b>: a conversation cannot be replayed identically. Ask for the PyQGIS script or build a model (level 5) to keep a stable method.</li>
   <li><b>Work on a copy</b> of the <code>C:\\ENIV\\TP</code> folder and save the project before each important request.</li>
-  <li>You need an Internet connection and a Claude account. Without a connection, go back to the classic tools: they remain essential.</li>
+  <li>With Claude, you need an Internet connection and an account. Without a subscription or a connection, use a local model (lesson 2), and keep mastering the classic tools: they remain essential.</li>
 </ul>
 <p>AI does not replace method: you choose the criteria, the weights and the interpretation of a hazard map. It helps you go faster on repetitive steps.</p>`,
   exercice: `
@@ -441,3 +441,35 @@ E["q9-l3"] = { titre: "Good practice, limits and security", objectifs: ["Stay in
   <li>Ask Claude for a map of slopes above 15° and check the result with the Raster Calculator (level 4).</li>
   <li>Write 5 lines on the benefits and risks of AI for a GIS consultancy.</li>
 </ol>` };
+
+E["q9-l2"] = { titre: "No subscription: a free or local AI", objectifs: ["Know what Claude's free plan allows", "Connect QGIS to a free local AI model (LM Studio or Ollama)", "Adapt your requests to a small model"],
+  contenu: `
+<p>Claude is available in Algeria with a free account. The free plan, however, has <b>message limits</b> that can interrupt a lab, and it needs an Internet connection. If your students have no subscription, or the lab has no Internet, use a <b>local AI model</b>: it runs on the computer, for free, and the same MCP server works with it.</p>
+<table class="tab">
+  <tr><th>Option</th><th>Cost</th><th>Internet</th><th>Note</th></tr>
+  <tr><td>Claude Desktop, free plan</td><td>Free</td><td>Yes</td><td>Simplest, but limited number of messages</td></tr>
+  <tr><td>Claude Desktop, subscription</td><td>Paid</td><td>Yes</td><td>Most reliable for long labs</td></tr>
+  <tr><td><b>LM Studio</b> + local model</td><td>Free</td><td>Only to download the model</td><td>Graphical interface, recommended in the lab</td></tr>
+  <tr><td><b>Ollama</b> + ollmcp</td><td>Free, open source</td><td>Only to download the model</td><td>Command line</td></tr>
+</table>
+<h3>Option 1: LM Studio</h3>
+<ol>
+  <li>Install <b>LM Studio</b> (lmstudio.ai), version 0.3.17 or later: MCP support starts with that version.</li>
+  <li>Download a model able to use tools (<i>tool use</i>), for example <b>Qwen3 8B</b> or <b>Qwen2.5 7B Instruct</b>.</li>
+  <li>Right-hand panel, <i>Program</i> tab &gt; <i>Install &gt; Edit mcp.json</i>. Paste the same <code>mcpServers</code> block as for Claude Desktop (file <code>mcp_qgis_config.json</code>), then save.</li>
+  <li>Start the server in QGIS (Start Server button), open a chat with the model and test “ping”.</li>
+</ol>
+<h3>Option 2: Ollama and ollmcp</h3>
+<ol>
+  <li>Install <b>Ollama</b> (ollama.com), then in a terminal: <code>ollama pull qwen2.5:7b</code>.</li>
+  <li>Install the open-source MCP client <b>ollmcp</b> (Python 3.11 or later): <code>uv tool install ollmcp</code>.</li>
+  <li>Start it with the site's configuration: <code>ollmcp --servers-json C:\\ENIV\\mcp\\mcp_qgis_config.json --model qwen2.5:7b</code>.</li>
+</ol>
+<div class="astuce"><b>Hardware and method:</b> plan for at least 16 GB of memory for a 7 to 8 billion parameter model; a graphics card speeds things up a lot. A small model makes mistakes more often than a large one: write one request per step, name layers and fields precisely, and check every result. Benefit: the data never leave the computer.</div>`,
+  exercice: `
+<ol>
+  <li>Install LM Studio or Ollama and connect it to the QGIS MCP server.</li>
+  <li>Redo steps 1 to 4 of the next lesson's lab with the local model.</li>
+  <li>Compare with Claude: requests understood, errors, response time.</li>
+</ol>` };
+E.q9.quiz.push({ question: "Which option works without a subscription and without Internet during the lab?", choix: ["Claude Desktop", "LM Studio or Ollama with a local model", "Georeferencing", "None"], explication: "A local model runs on the computer; Internet is only needed once to download it." });

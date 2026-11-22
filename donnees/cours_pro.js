@@ -772,6 +772,44 @@ with arcpy.da.SearchCursor(communes, ["NOM", "SHAPE@"]) as cur:
         },
         {
           id: "p9-l2",
+          titre: "Sans abonnement : une IA gratuite ou locale",
+          duree: "35 min",
+          objectifs: [
+            "Savoir ce que permet l'offre gratuite de Claude",
+            "Connecter ArcGIS Pro à un modèle d'IA local et gratuit (LM Studio ou Ollama)",
+            "Adapter ses demandes à un petit modèle"
+          ],
+          contenu: `
+<p>Claude est accessible en Algérie, avec un compte gratuit. L'offre gratuite a cependant des <b>limites de messages</b> qui peuvent interrompre un TP, et elle demande une connexion Internet. Si vos élèves n'ont pas d'abonnement, ou si la salle n'a pas Internet, utilisez un <b>modèle d'IA local</b> : il tourne sur le poste, gratuitement, et le même serveur MCP fonctionne avec lui.</p>
+<table class="tab">
+  <tr><th>Solution</th><th>Coût</th><th>Internet</th><th>Remarque</th></tr>
+  <tr><td>Claude Desktop, offre gratuite</td><td>Gratuit</td><td>Oui</td><td>Le plus simple, mais nombre de messages limité</td></tr>
+  <tr><td>Claude Desktop, abonnement</td><td>Payant</td><td>Oui</td><td>Le plus fiable pour les TP longs</td></tr>
+  <tr><td><b>LM Studio</b> + modèle local</td><td>Gratuit</td><td>Seulement pour télécharger le modèle</td><td>Interface graphique, conseillé en salle</td></tr>
+  <tr><td><b>Ollama</b> + ollmcp</td><td>Gratuit, libre</td><td>Seulement pour télécharger le modèle</td><td>En ligne de commande</td></tr>
+</table>
+<h3>Option 1 : LM Studio</h3>
+<ol>
+  <li>Installez <b>LM Studio</b> (lmstudio.ai), version 0.3.17 ou plus récente : c'est à partir de cette version qu'il gère MCP.</li>
+  <li>Téléchargez un modèle capable d'utiliser des outils (<i>tool use</i>), par exemple <b>Qwen3 8B</b> ou <b>Qwen2.5 7B Instruct</b>.</li>
+  <li>Panneau de droite, onglet <i>Program</i> &gt; <i>Install &gt; Edit mcp.json</i>. Collez le même bloc <code>mcpServers</code> que pour Claude Desktop (fichier <code>mcp_arcgispro_config.json</code>), puis enregistrez.</li>
+  <li>Démarrez le serveur dans ArcGIS Pro (outil Start MCP Bridge), ouvrez une discussion avec le modèle et testez « ping ».</li>
+</ol>
+<h3>Option 2 : Ollama et ollmcp</h3>
+<ol>
+  <li>Installez <b>Ollama</b> (ollama.com), puis dans un terminal : <code>ollama pull qwen2.5:7b</code>.</li>
+  <li>Installez le client MCP libre <b>ollmcp</b> (Python 3.11 ou plus) : <code>uv tool install ollmcp</code>.</li>
+  <li>Lancez-le avec la configuration du site : <code>ollmcp --servers-json C:\\ENIV\\mcp\\mcp_arcgispro_config.json --model qwen2.5:7b</code>.</li>
+</ol>
+<div class="astuce"><b>Matériel et méthode :</b> comptez au moins 16 Go de mémoire pour un modèle de 7 à 8 milliards de paramètres ; une carte graphique accélère beaucoup. Un petit modèle se trompe plus souvent qu'un grand : écrivez une demande par étape, nommez précisément les couches et les champs, et vérifiez chaque résultat. Avantage : les données ne quittent pas le poste.</div>`,
+          exercice: `<ol>
+  <li>Installez LM Studio ou Ollama et connectez-le au serveur MCP de ArcGIS Pro.</li>
+  <li>Refaites les étapes 1 à 4 du TP de la leçon suivante avec le modèle local.</li>
+  <li>Comparez avec Claude : demandes comprises, erreurs, temps de réponse.</li>
+</ol>`
+        },
+        {
+          id: "p9-l3",
           titre: "TP : piloter ArcGIS Pro en langage naturel",
           duree: "45 min",
           objectifs: [
@@ -809,7 +847,7 @@ with arcpy.da.SearchCursor(communes, ["NOM", "SHAPE@"]) as cur:
 </ol>`
         },
         {
-          id: "p9-l3",
+          id: "p9-l4",
           titre: "Variante sans interface, limites et sécurité",
           duree: "30 min",
           objectifs: [
@@ -839,9 +877,9 @@ with arcpy.da.SearchCursor(communes, ["NOM", "SHAPE@"]) as cur:
         { question: "Avec MCP-ArcGISPro, que faut-il lancer dans ArcGIS Pro à chaque séance ?", choix: ["Rien", "L'outil Start MCP Bridge de MCP_Bridge.pyt", "ArcCatalog", "La fenêtre Python seule"], bonne: 1, explication: "Le pont reçoit les commandes de Claude et les exécute dans le projet ouvert." },
         { question: "Quel outil permet de lancer n'importe quel outil arcpy ?", choix: ["list_layers", "run_geoprocessing", "zoom_to_layer", "save_project"], bonne: 1, explication: "run_geoprocessing prend le nom de l'outil (analysis.Buffer…) et ses paramètres." },
         { question: "Pourquoi utiliser les données fictives du TP avec un assistant IA ?", choix: ["Elles sont plus rapides", "Ce que l'IA lit est envoyé au service d'IA", "ArcGIS Pro l'exige", "Pour éviter les erreurs de projection"], bonne: 1, explication: "On n'envoie jamais de données confidentielles ou personnelles à un service externe." },
-        { question: "Pourquoi ce niveau n'existe-t-il pas pour ArcMap 10.8 ?", choix: ["ArcMap n'a pas de cartes", "Il n'existe pas de serveur MCP pour ArcMap (Python 2.7)", "ArcMap est payant", "Claude refuse ArcMap"], bonne: 1, explication: "Les serveurs MCP visent ArcGIS Pro et son Python 3." }
+        { question: "Pourquoi ce niveau n'existe-t-il pas pour ArcMap 10.8 ?", choix: ["ArcMap n'a pas de cartes", "Il n'existe pas de serveur MCP pour ArcMap (Python 2.7)", "ArcMap est payant", "Claude refuse ArcMap"], bonne: 1, explication: "Les serveurs MCP visent ArcGIS Pro et son Python 3." },
+        { question: "Quelle solution fonctionne sans abonnement et sans Internet pendant le TP ?", choix: ["Claude Desktop", "LM Studio ou Ollama avec un modèle local", "Le géoréférencement", "Aucune"], bonne: 1, explication: "Un modèle local tourne sur le poste ; Internet ne sert qu'à le télécharger une fois." }
       ]
-
     }
   ]
 };

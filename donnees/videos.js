@@ -845,7 +845,7 @@ window.VIDEOS = [
   },
   {
     "niveau": "q9",
-    "lecon": "q9-l2",
+    "lecon": "q9-l3",
     "titre": "Claude dans QGIS : interagir avec un projet SIG en langage naturel",
     "url": "https://www.youtube.com/watch?v=2DzZxwvG1Lw",
     "duree": "",
