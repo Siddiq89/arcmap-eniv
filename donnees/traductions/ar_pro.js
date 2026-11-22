@@ -422,7 +422,7 @@ A["p8-l3"] = { titre: "التركيب متعدد المخاطر ولوحة ال�
 </ol>` };
 
 /* ---------- المستوى 9 ---------- */
-A.p9 = { titre: "الذكاء الاصطناعي في ArcGIS Pro عبر MCP", resume: "ربط Claude بـ ArcGIS Pro عبر بروتوكول MCP، وقيادة مشروع باللغة الطبيعية على بيانات تلمسان، مع التحكم في النتائج.",
+A.p9 = { titre: "ربط الذكاء الاصطناعي ببرنامج ArcGIS Pro", resume: "ربط مساعد ذكاء اصطناعي (Claude) ببرنامج ArcGIS Pro عبر بروتوكول MCP، وقيادة مشروع باللغة الطبيعية على بيانات تلمسان، مع التحكم في النتائج.",
   quiz: [
     { question: "مع MCP-ArcGISPro، ماذا يجب تشغيله في ArcGIS Pro في كل حصة؟", choix: ["لا شيء", "الأداة Start MCP Bridge من MCP_Bridge.pyt", "ArcCatalog", "نافذة Python وحدها"], explication: "يستقبل الجسر أوامر Claude وينفّذها في المشروع المفتوح." },
     { question: "أي أداة تشغّل أي أداة arcpy؟", choix: ["list_layers", "run_geoprocessing", "zoom_to_layer", "save_project"], explication: "تأخذ run_geoprocessing اسم الأداة (analysis.Buffer…) ومعاملاتها." },

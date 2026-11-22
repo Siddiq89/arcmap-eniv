@@ -422,7 +422,7 @@ E["p8-l3"] = { titre: "Multi-hazard summary and dashboard", objectifs: ["Combine
 </ol>` };
 
 /* ---------- Level 9 ---------- */
-E.p9 = { titre: "AI in ArcGIS Pro with MCP", resume: "Connect Claude to ArcGIS Pro through the MCP protocol, drive a project in plain language on the Tlemcen data, and stay in control of the results.",
+E.p9 = { titre: "Connect AI to ArcGIS Pro", resume: "Connect an AI assistant (Claude) to ArcGIS Pro through the MCP protocol, drive a project in plain language on the Tlemcen data, and stay in control of the results.",
   quiz: [
     { question: "With MCP-ArcGISPro, what must you start in ArcGIS Pro at each session?", choix: ["Nothing", "The Start MCP Bridge tool from MCP_Bridge.pyt", "ArcCatalog", "The Python window alone"], explication: "The bridge receives Claude's commands and runs them in the open project." },
     { question: "Which tool runs any arcpy tool?", choix: ["list_layers", "run_geoprocessing", "zoom_to_layer", "save_project"], explication: "run_geoprocessing takes the tool name (analysis.Buffer…) and its parameters." },

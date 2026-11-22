@@ -596,9 +596,9 @@ QgsLayoutExporter.exportToPdf(atlas, r"C:\\ENIV\\TP\\Sorties\\atlas.pdf",
     {
       id: "q9",
       numero: 9,
-      titre: "L'IA dans QGIS avec MCP",
+      titre: "Connecter l'IA à QGIS",
       echelle: "1:500",
-      resume: "Connecter Claude à QGIS par le protocole MCP, piloter un projet en langage naturel sur les données de Tlemcen, et garder la maîtrise des résultats.",
+      resume: "Connecter un assistant IA (Claude) au logiciel QGIS grâce au protocole MCP, piloter un projet en langage naturel sur les données de Tlemcen, et garder la maîtrise des résultats.",
       lecons: [
         {
           id: "q9-l1",

@@ -357,7 +357,7 @@ E["q8-l3"] = { titre: "Multi-hazard summary and communes atlas", objectifs: ["Co
 </ol>` };
 
 /* ---------- Level 9 ---------- */
-E.q9 = { titre: "AI in QGIS with MCP", resume: "Connect Claude to QGIS through the MCP protocol, drive a project in plain language on the Tlemcen data, and stay in control of the results.",
+E.q9 = { titre: "Connect AI to QGIS", resume: "Connect an AI assistant (Claude) to QGIS through the MCP protocol, drive a project in plain language on the Tlemcen data, and stay in control of the results.",
   quiz: [
     { question: "In QGIS MCP, what is the role of Claude Desktop?", choix: ["The MCP server", "The MCP client", "A QGIS plugin", "A data format"], explication: "Claude Desktop is the client: it starts the MCP server and calls its tools." },
     { question: "What must you do in QGIS before writing to Claude?", choix: ["Nothing", "Click Start Server in the QGIS MCP plugin", "Open the Python Console", "Install GRASS"], explication: "The plugin must be running to receive commands." },

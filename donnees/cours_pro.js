@@ -716,9 +716,9 @@ with arcpy.da.SearchCursor(communes, ["NOM", "SHAPE@"]) as cur:
     {
       id: "p9",
       numero: 9,
-      titre: "L'IA dans ArcGIS Pro avec MCP",
+      titre: "Connecter l'IA à ArcGIS Pro",
       echelle: "1:500",
-      resume: "Connecter Claude à ArcGIS Pro par le protocole MCP, piloter un projet en langage naturel sur les données de Tlemcen, et garder la maîtrise des résultats.",
+      resume: "Connecter un assistant IA (Claude) au logiciel ArcGIS Pro grâce au protocole MCP, piloter un projet en langage naturel sur les données de Tlemcen, et garder la maîtrise des résultats.",
       lecons: [
         {
           id: "p9-l1",
