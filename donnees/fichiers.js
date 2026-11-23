@@ -821,5 +821,29 @@ window.FICHIERS = [
     "titre": "Points cotés pour l'interpolation",
     "taille": "6 Ko",
     "description": "250 points X ; Y ; Z (WGS 1984 UTM 30N, séparateur point-virgule) tirés du MNT, pour IDW, Spline et TIN."
+  },
+  {
+    "niveau": "n10",
+    "lecon": "n10-l2",
+    "fichier": "fichiers/registre_risques.csv",
+    "titre": "Registre des risques (fictif)",
+    "taille": "2 Ko",
+    "description": "12 risques fictifs par commune : aléa, probabilité P, impact I, stratégie, mesure, responsable, échéance, statut. Séparateur point-virgule, UTF-8."
+  },
+  {
+    "niveau": "p11",
+    "lecon": "p11-l2",
+    "fichier": "fichiers/registre_risques.csv",
+    "titre": "Registre des risques (fictif)",
+    "taille": "2 Ko",
+    "description": "12 risques fictifs par commune : aléa, probabilité P, impact I, stratégie, mesure, responsable, échéance, statut. Séparateur point-virgule, UTF-8."
+  },
+  {
+    "niveau": "q12",
+    "lecon": "q12-l2",
+    "fichier": "fichiers/registre_risques.csv",
+    "titre": "Registre des risques (fictif)",
+    "taille": "2 Ko",
+    "description": "12 risques fictifs par commune : aléa, probabilité P, impact I, stratégie, mesure, responsable, échéance, statut. Séparateur point-virgule, UTF-8."
   }
 ];

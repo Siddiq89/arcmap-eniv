@@ -1,0 +1,13 @@
+ID;CODE_COM;ALEA;DESCRIPTION;P;I;CRITICITE;NIVEAU;STRATEGIE;MESURE;PROPRIETAIRE;ECHEANCE;STATUT
+R01;C05;Inondation;Crue de l'oued Tamda dans le quartier bas;4;5;;;Réduire;Curage du lit et digue de protection;APC et Direction de l'hydraulique;2027-06;En cours
+R02;C02;Inondation;Ruissellement urbain sur la route principale;3;3;;;Réduire;Recalibrage des avaloirs;APC;2027-03;Prévu
+R03;C01;Feux de forêt;Feu en forêt de pins au contact des habitations;4;4;;;Réduire;Débroussaillage et piste pare-feu;Conservation des forêts;2026-06;En cours
+R04;C07;Feux de forêt;Feu de maquis en été;3;2;;;Accepter;Surveillance depuis la tour de guet;Conservation des forêts;2026-07;Prévu
+R05;C09;Séisme;Faille active à moins de 500 m d'une école;2;5;;;Réduire;Expertise et confortement de l'école;Direction de l'éducation;2028-01;Prévu
+R06;C03;Séisme;Bâti ancien en terre;2;3;;;Transférer;Assurance catastrophes naturelles des logements;Ménages et assureurs;2027-12;À lancer
+R07;C04;Glissement;Talus argileux au-dessus de la route communale;4;3;;;Réduire;Drainage et mur de soutènement;Direction des travaux publics;2027-09;Prévu
+R08;C08;Glissement;Marnes instables sous un hameau;3;4;;;Éviter;Interdire de nouvelles constructions sur la zone;APC (urbanisme);2026-12;En cours
+R09;C06;Tsunami;Submersion du port et de la route côtière;1;5;;;Réduire;Plan d'évacuation vers les zones à plus de 10 m;Protection civile;2027-05;À lancer
+R10;C05;Multirisque;École exposée à l'inondation et au glissement;3;5;;;Réduire;Plan particulier de mise en sûreté de l'école;Direction de l'éducation et Protection civile;2026-12;En cours
+R11;C02;Feux de forêt;Décharge sauvage en lisière de forêt;3;2;;;Éviter;Fermeture et réhabilitation de la décharge;APC;2027-02;À lancer
+R12;C01;Inondation;Pont sous-dimensionné;2;4;;;Réduire;Étude hydraulique et nouveau pont;Direction des travaux publics;2028-06;À lancer
