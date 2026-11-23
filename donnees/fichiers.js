@@ -773,5 +773,53 @@ window.FICHIERS = [
     "titre": "Configuration Claude Desktop pour MCP-ArcGISPro",
     "taille": "1 Ko",
     "description": "Bloc à coller dans claude_desktop_config.json. Remplacez VOTRE_NOM par votre nom d'utilisateur Windows."
+  },
+  {
+    "niveau": "n9",
+    "lecon": "n9-l1",
+    "fichier": "fichiers/MNT_50m.zip",
+    "titre": "MNT du bassin de l'oued Tamda (50 m)",
+    "taille": "296 Ko",
+    "description": "MNT_50m.asc et sa projection (WGS 1984 UTM 30N). À décompresser dans C:\\ENIV\\."
+  },
+  {
+    "niveau": "n9",
+    "lecon": "n9-l4",
+    "fichier": "fichiers/points_cotes.csv",
+    "titre": "Points cotés pour l'interpolation",
+    "taille": "6 Ko",
+    "description": "250 points X ; Y ; Z (WGS 1984 UTM 30N, séparateur point-virgule) tirés du MNT, pour IDW, Spline et TIN."
+  },
+  {
+    "niveau": "p10",
+    "lecon": "p10-l1",
+    "fichier": "fichiers/MNT_50m.zip",
+    "titre": "MNT du bassin de l'oued Tamda (50 m)",
+    "taille": "296 Ko",
+    "description": "MNT_50m.asc et sa projection (WGS 1984 UTM 30N). À décompresser dans C:\\ENIV\\."
+  },
+  {
+    "niveau": "p10",
+    "lecon": "p10-l4",
+    "fichier": "fichiers/points_cotes.csv",
+    "titre": "Points cotés pour l'interpolation",
+    "taille": "6 Ko",
+    "description": "250 points X ; Y ; Z (WGS 1984 UTM 30N, séparateur point-virgule) tirés du MNT, pour IDW, Spline et TIN."
+  },
+  {
+    "niveau": "q11",
+    "lecon": "q11-l1",
+    "fichier": "fichiers/MNT_50m.zip",
+    "titre": "MNT du bassin de l'oued Tamda (50 m)",
+    "taille": "296 Ko",
+    "description": "MNT_50m.asc et sa projection (WGS 1984 UTM 30N). À décompresser dans C:\\ENIV\\."
+  },
+  {
+    "niveau": "q11",
+    "lecon": "q11-l4",
+    "fichier": "fichiers/points_cotes.csv",
+    "titre": "Points cotés pour l'interpolation",
+    "taille": "6 Ko",
+    "description": "250 points X ; Y ; Z (WGS 1984 UTM 30N, séparateur point-virgule) tirés du MNT, pour IDW, Spline et TIN."
   }
 ];

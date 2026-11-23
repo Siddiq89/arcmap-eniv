@@ -850,5 +850,117 @@ window.VIDEOS = [
     "url": "https://www.youtube.com/watch?v=2DzZxwvG1Lw",
     "duree": "",
     "description": "Chaîne YouTube : Dalila AMIAR (GEOMA-SIG)."
+  },
+  {
+    "niveau": "n9",
+    "lecon": "n9-l1",
+    "titre": "Analyses topographiques dans ArcGIS (en arabe)",
+    "url": "https://www.youtube.com/watch?v=Ix4rhcH1A08",
+    "duree": "",
+    "description": "Vidéo en arabe : pente, ombrage, exposition et courbes."
+  },
+  {
+    "niveau": "n9",
+    "lecon": "n9-l1",
+    "titre": "Extraire les courbes de niveau d'un MNT (en arabe)",
+    "url": "https://www.youtube.com/watch?v=43NjIwhiims",
+    "duree": "",
+    "description": "Vidéo en arabe."
+  },
+  {
+    "niveau": "n9",
+    "lecon": "n9-l2",
+    "titre": "ArcGIS : générer pentes, ombrage et exposition",
+    "url": "https://www.youtube.com/watch?v=H-_eVBC7VWI",
+    "duree": "",
+    "description": "Vidéo en français (ArcGIS Astuce 19)."
+  },
+  {
+    "niveau": "n9",
+    "lecon": "n9-l2",
+    "titre": "Carte des pentes à partir d'un DEM (en arabe)",
+    "url": "https://www.youtube.com/watch?v=lk24sfj0phY",
+    "duree": "",
+    "description": "Vidéo en arabe."
+  },
+  {
+    "niveau": "n9",
+    "lecon": "n9-l4",
+    "titre": "Topo to Raster : créer un MNT sous ArcGIS",
+    "url": "https://www.youtube.com/watch?v=2QndpqAs-H4",
+    "duree": "",
+    "description": "Vidéo en français."
+  },
+  {
+    "niveau": "p10",
+    "lecon": "",
+    "titre": "Analyse topographique d'un MNT (en arabe)",
+    "url": "https://www.youtube.com/watch?v=Wk5RSsCksMA",
+    "duree": "",
+    "description": "Vidéo en arabe."
+  },
+  {
+    "niveau": "p10",
+    "lecon": "p10-l1",
+    "titre": "Extraire les courbes de niveau d'un MNT (en arabe)",
+    "url": "https://www.youtube.com/watch?v=43NjIwhiims",
+    "duree": "",
+    "description": "Vidéo en arabe."
+  },
+  {
+    "niveau": "p10",
+    "lecon": "p10-l2",
+    "titre": "ArcGIS : générer pentes, ombrage et exposition",
+    "url": "https://www.youtube.com/watch?v=H-_eVBC7VWI",
+    "duree": "",
+    "description": "Vidéo en français (ArcGIS Astuce 19)."
+  },
+  {
+    "niveau": "q11",
+    "lecon": "q11-l1",
+    "titre": "QGIS : relief et ombrage à partir d'un MNT",
+    "url": "https://www.youtube.com/watch?v=OMa0E6D8FZI",
+    "duree": "",
+    "description": "Vidéo en français."
+  },
+  {
+    "niveau": "q11",
+    "lecon": "q11-l1",
+    "titre": "QGIS : générer des courbes de niveau à partir d'un MNT",
+    "url": "https://www.youtube.com/watch?v=XJHryC-ZeK4",
+    "duree": "",
+    "description": "Vidéo en français."
+  },
+  {
+    "niveau": "q11",
+    "lecon": "q11-l1",
+    "titre": "Cartes, MNT et coupes du relief sur QGIS",
+    "url": "https://www.youtube.com/watch?v=yWTjXHgAbXA",
+    "duree": "",
+    "description": "Vidéo en français : profils (coupes) du relief."
+  },
+  {
+    "niveau": "q11",
+    "lecon": "q11-l2",
+    "titre": "Analyse de terrain avec QGIS 3 : pente, orientation, ombrage, rugosité",
+    "url": "https://www.youtube.com/watch?v=fu99NL-p5vY",
+    "duree": "",
+    "description": "Vidéo en français."
+  },
+  {
+    "niveau": "q11",
+    "lecon": "q11-l3",
+    "titre": "Viewshed analysis : retour d'expérience",
+    "url": "https://www.youtube.com/watch?v=R06al1_2AWQ",
+    "duree": "",
+    "description": "Vidéo en français (Université de Bourgogne Franche-Comté)."
+  },
+  {
+    "niveau": "q11",
+    "lecon": "q11-l4",
+    "titre": "Interpolation IDW sur QGIS",
+    "url": "https://www.youtube.com/watch?v=3uN0qhx0FHk",
+    "duree": "",
+    "description": "Vidéo en français."
   }
 ];
