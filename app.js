@@ -2,8 +2,8 @@
 (function () {
   "use strict";
 
-  // Un parcours par logiciel : ArcMap (n1…), ArcGIS Pro (p1…), QGIS (q1…)
-  var PARCOURS = [window.COURS, window.COURS_PRO, window.COURS_QGIS].filter(Boolean);
+  // Un parcours par logiciel : ArcMap (n1…), ArcGIS Pro (p1…), QGIS (q1…), Python et télédétection (t1…)
+  var PARCOURS = [window.COURS, window.COURS_PRO, window.COURS_QGIS, window.COURS_PYTHON].filter(Boolean);
   var DEFAUTS = {
     arcmap: { cle: "arcmap", nom: "ArcMap 10.8", court: "ArcMap", logiciel: "ArcGIS Desktop 10.8", recherche: "ArcMap 10.8",
       accroche: "ArcMap 10.8, de la première carte à la cartographie des risques",
@@ -576,7 +576,7 @@
     });
     return "/*\n * VIDÉOS TUTORIELLES : fichier généré depuis la page Administration le " + new Date().toLocaleString("fr-FR") + ".\n" +
       " * Remplacez donnees/videos.js par ce fichier pour publier les vidéos à tous les élèves.\n" +
-      " * Champs : niveau (n1… ArcMap, p1… ArcGIS Pro, q1… QGIS), lecon (ex. n4-l2 ou vide), titre, url (YouTube ou videos/fichier.mp4), duree, description.\n */\n" +
+      " * Champs : niveau (n1… ArcMap, p1… ArcGIS Pro, q1… QGIS, t1… Python), lecon (ex. n4-l2 ou vide), titre, url (YouTube ou videos/fichier.mp4), duree, description.\n */\n" +
       "window.VIDEOS = " + JSON.stringify(propres, null, 2) + ";\n";
   }
 

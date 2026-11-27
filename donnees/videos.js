@@ -8,7 +8,7 @@
  *   2. Ou copiez un bloc { ... } ci-dessous et modifiez-le à la main.
  *
  * Champs :
- *   niveau      : "n1"…"n8" (ArcMap), "p1"… (ArcGIS Pro), "q1"… (QGIS)
+ *   niveau      : "n1"…"n8" (ArcMap), "p1"… (ArcGIS Pro), "q1"… (QGIS), "t1"… (Python)
  *   lecon       : identifiant de la leçon (ex. "n4-l2"), ou "" pour tout le niveau
  *   titre       : titre affiché
  *   url         : lien YouTube (https://www.youtube.com/watch?v=...  ou https://youtu.be/...)
@@ -962,5 +962,189 @@ window.VIDEOS = [
     "url": "https://www.youtube.com/watch?v=3uN0qhx0FHk",
     "duree": "",
     "description": "Vidéo en français."
+  },
+  {
+    "niveau": "t1",
+    "lecon": "t1-l1",
+    "titre": "Installer les outils nécessaires pour Python (Anaconda, Jupyter)",
+    "url": "https://www.youtube.com/watch?v=SPWFFWoWdF8",
+    "duree": "",
+    "description": "Chaîne YouTube : Jordy Bayo - YoungDevps."
+  },
+  {
+    "niveau": "t1",
+    "lecon": "t1-l2",
+    "titre": "Python : variables et fonctions",
+    "url": "https://www.youtube.com/watch?v=doFpNjdmsw8",
+    "duree": "15:02",
+    "description": "Chaîne YouTube : Machine Learnia."
+  },
+  {
+    "niveau": "t1",
+    "lecon": "t1-l2",
+    "titre": "Python : if/else, while, for",
+    "url": "https://www.youtube.com/watch?v=x_Jeyvw7n9I",
+    "duree": "13:17",
+    "description": "Chaîne YouTube : Machine Learnia."
+  },
+  {
+    "niveau": "t1",
+    "lecon": "t1-l3",
+    "titre": "NumPy pour le machine learning",
+    "url": "https://www.youtube.com/watch?v=NzDQTrqsxas",
+    "duree": "24:33",
+    "description": "Chaîne YouTube : Machine Learnia."
+  },
+  {
+    "niveau": "t1",
+    "lecon": "t1-l3",
+    "titre": "pandas : introduction et analyse d'un jeu de données",
+    "url": "https://www.youtube.com/watch?v=zZkNOdBWgFQ",
+    "duree": "17:30",
+    "description": "Chaîne YouTube : Machine Learnia."
+  },
+  {
+    "niveau": "t1",
+    "lecon": "t1-l3",
+    "titre": "Matplotlib : les bases",
+    "url": "https://www.youtube.com/watch?v=O_OeWxpnUc0",
+    "duree": "18:53",
+    "description": "Chaîne YouTube : Machine Learnia."
+  },
+  {
+    "niveau": "t2",
+    "lecon": "t2-l1",
+    "titre": "Introduction à GeoPandas",
+    "url": "https://www.youtube.com/watch?v=nmvyW3EygI0",
+    "duree": "",
+    "description": "Chaîne YouTube : Professeur Cot."
+  },
+  {
+    "niveau": "t2",
+    "lecon": "t2-l1",
+    "titre": "GeoPandas tutoriel, partie 1 : introduction",
+    "url": "https://www.youtube.com/watch?v=xYKIKXOtxRs",
+    "duree": "",
+    "description": "Chaîne YouTube : Jordy Bayo - YoungDevps."
+  },
+  {
+    "niveau": "t2",
+    "lecon": "t2-l2",
+    "titre": "Gérer les données spatiales sur Python avec GeoPandas",
+    "url": "https://www.youtube.com/watch?v=7VmVxe2MS1c",
+    "duree": "",
+    "description": "Chaîne YouTube : Liora."
+  },
+  {
+    "niveau": "t2",
+    "lecon": "t2-l3",
+    "titre": "Utiliser GeoPandas",
+    "url": "https://www.youtube.com/watch?v=hONrwu8Kbx4",
+    "duree": "",
+    "description": "Chaîne YouTube : Yves Voirin."
+  },
+  {
+    "niveau": "t3",
+    "lecon": "t3-l2",
+    "titre": "SciPy : optimisation, Fourier et ndimage (traitement d'images)",
+    "url": "https://www.youtube.com/watch?v=P0Xr5TIML8U",
+    "duree": "30:12",
+    "description": "Chaîne YouTube : Machine Learnia."
+  },
+  {
+    "niveau": "t4",
+    "lecon": "t4-l1",
+    "titre": "Introduction à la télédétection : définition, composantes et types (en arabe)",
+    "url": "https://www.youtube.com/watch?v=41GbClDnxwc",
+    "duree": "",
+    "description": "Chaîne YouTube : المهندس عز فليفل. Vidéo en arabe."
+  },
+  {
+    "niveau": "t4",
+    "lecon": "t4-l1",
+    "titre": "Le concept de la télédétection et son fonctionnement (en arabe)",
+    "url": "https://www.youtube.com/watch?v=aG7FE7Zflbk",
+    "duree": "",
+    "description": "Chaîne YouTube : Ahmed Abd El-Hay. Vidéo en arabe."
+  },
+  {
+    "niveau": "t4",
+    "lecon": "",
+    "titre": "La télédétection et ses applications, explication simple (en arabe)",
+    "url": "https://www.youtube.com/watch?v=I2UKwpyy72o",
+    "duree": "",
+    "description": "Chaîne YouTube : geography show. Vidéo en arabe."
+  },
+  {
+    "niveau": "t5",
+    "lecon": "t5-l1",
+    "titre": "NDVI avec masque des nuages sur Sentinel-2, Google Earth Engine et Python (en arabe)",
+    "url": "https://www.youtube.com/watch?v=cRSUbrb6OK4",
+    "duree": "38:05",
+    "description": "Chaîne YouTube : Dr Nour Negm. Vidéo en arabe."
+  },
+  {
+    "niveau": "t6",
+    "lecon": "t6-l1",
+    "titre": "Formation Python machine learning : introduction",
+    "url": "https://www.youtube.com/watch?v=82KLS2C_gNQ",
+    "duree": "8:30",
+    "description": "Chaîne YouTube : Machine Learnia."
+  },
+  {
+    "niveau": "t6",
+    "lecon": "t6-l1",
+    "titre": "Scikit-learn : KNN, régression et apprentissage supervisé",
+    "url": "https://www.youtube.com/watch?v=P6kSc3qVph0",
+    "duree": "20:07",
+    "description": "Chaîne YouTube : Machine Learnia."
+  },
+  {
+    "niveau": "t6",
+    "lecon": "t6-l2",
+    "titre": "Apprentissage non supervisé avec Python (K-means)",
+    "url": "https://www.youtube.com/watch?v=FTtzd31IAOw",
+    "duree": "41:13",
+    "description": "Chaîne YouTube : Machine Learnia."
+  },
+  {
+    "niveau": "t6",
+    "lecon": "t6-l4",
+    "titre": "Ensemble learning : bagging, boosting, stacking et Random Forest",
+    "url": "https://www.youtube.com/watch?v=7C_YpudYtw8",
+    "duree": "25:57",
+    "description": "Chaîne YouTube : Machine Learnia."
+  },
+  {
+    "niveau": "t6",
+    "lecon": "t6-l4",
+    "titre": "Classification Random Forest (Cafés de l'axe Modélisation GET)",
+    "url": "https://www.youtube.com/watch?v=4aS8-T077lY",
+    "duree": "",
+    "description": "Chaîne YouTube : OMP."
+  },
+  {
+    "niveau": "t7",
+    "lecon": "t7-l2",
+    "titre": "Sélection de modèle : train_test_split, validation croisée, GridSearchCV",
+    "url": "https://www.youtube.com/watch?v=w_bLGK4Pteo",
+    "duree": "21:49",
+    "description": "Chaîne YouTube : Machine Learnia."
+  },
+  {
+    "niveau": "t7",
+    "lecon": "t7-l2",
+    "titre": "Les techniques de validation croisée",
+    "url": "https://www.youtube.com/watch?v=VoyMOVfCSfc",
+    "duree": "21:11",
+    "description": "Chaîne YouTube : Machine Learnia."
+  },
+  {
+    "niveau": "t8",
+    "lecon": "t8-l3",
+    "titre": "Google Earth Engine avec Python : NDVI sur Sentinel-2 (en arabe)",
+    "url": "https://www.youtube.com/watch?v=cRSUbrb6OK4",
+    "duree": "38:05",
+    "description": "Chaîne YouTube : Dr Nour Negm. Vidéo en arabe."
   }
 ];

@@ -6,7 +6,7 @@
  *   2. ajoutez un bloc { ... } ci-dessous (virgule entre les blocs).
  *
  * Champs :
- *   niveau      : "n1"…"n8" (ArcMap), "p1"… (ArcGIS Pro), "q1"… (QGIS), ou "" pour un fichier général
+ *   niveau      : "n1"…"n8" (ArcMap), "p1"… (ArcGIS Pro), "q1"… (QGIS), "t1"… (Python), ou "" pour un fichier général
  *   lecon       : identifiant de la leçon (ex. "n4-l2"), ou "" pour tout le niveau
  *   fichier     : chemin depuis le dossier du site, ex. "fichiers/mes_donnees.zip"
  *   titre, taille, description : texte affiché
@@ -845,5 +845,157 @@ window.FICHIERS = [
     "titre": "Registre des risques (fictif)",
     "taille": "2 Ko",
     "description": "12 risques fictifs par commune : aléa, probabilité P, impact I, stratégie, mesure, responsable, échéance, statut. Séparateur point-virgule, UTF-8."
+  },
+  {
+    "niveau": "t1",
+    "lecon": "t1-l1",
+    "fichier": "fichiers/TP_ENIV_complet.zip",
+    "titre": "Données de TP de base",
+    "taille": "559 Ko",
+    "description": "Shapefiles, tables, MNT et risques. À décompresser dans C:\\ENIV\\ (utilisées aux niveaux 1, 2, 3 et 8)."
+  },
+  {
+    "niveau": "t1",
+    "lecon": "t1-l1",
+    "fichier": "fichiers/TP_Teledetection.zip",
+    "titre": "Données de télédétection et scripts Python",
+    "taille": "5,8 Mo",
+    "description": "Deux images fictives de type Sentinel-2 (juin 2024 et août 2025, 6 bandes, 20 m), points d'entraînement et de validation, scripts py_01 à py_10 et environnement conda. À décompresser dans C:\\ENIV\\."
+  },
+  {
+    "niveau": "t1",
+    "lecon": "t1-l1",
+    "fichier": "fichiers/environnement_eniv.yml",
+    "titre": "Environnement conda « eniv »",
+    "taille": "1 Ko",
+    "description": "conda env create -f environnement_eniv.yml installe Python, NumPy, pandas, GeoPandas, rasterio, scikit-learn et JupyterLab."
+  },
+  {
+    "niveau": "t1",
+    "lecon": "t1-l3",
+    "fichier": "fichiers/py_01_bases_python.py",
+    "titre": "Script py_01 : bases, pandas et matplotlib",
+    "taille": "2 Ko",
+    "description": "Taux de croissance des communes et graphique en barres."
+  },
+  {
+    "niveau": "t1",
+    "lecon": "t1-l3",
+    "fichier": "fichiers/population_communes.csv",
+    "titre": "Population des communes (CSV)",
+    "taille": "1 Ko",
+    "description": "Séparateur point-virgule."
+  },
+  {
+    "niveau": "t2",
+    "lecon": "t2-l2",
+    "fichier": "fichiers/py_02_vecteur_geopandas.py",
+    "titre": "Script py_02 : GeoPandas",
+    "taille": "3 Ko",
+    "description": "Reprojection, jointures attributaire et spatiale, tampon, carte et GeoPackage."
+  },
+  {
+    "niveau": "t2",
+    "lecon": "t2-l1",
+    "fichier": "fichiers/donnees_projections.zip",
+    "titre": "Données pour les projections",
+    "taille": "5 Ko",
+    "description": "Communes_WGS84, Communes_NordSahara1959 et Forages_sans_projection."
+  },
+  {
+    "niveau": "t3",
+    "lecon": "t3-l1",
+    "fichier": "fichiers/MNT_50m.zip",
+    "titre": "MNT 50 m (ASCII)",
+    "taille": "296 Ko",
+    "description": "MNT fictif du bassin de l'oued Tamda, WGS 1984 UTM 30N."
+  },
+  {
+    "niveau": "t3",
+    "lecon": "t3-l3",
+    "fichier": "fichiers/py_03_raster_mnt.py",
+    "titre": "Script py_03 : rasterio et NumPy",
+    "taille": "3 Ko",
+    "description": "Pente, reclassement, découpage par commune et écriture de GeoTIFF."
+  },
+  {
+    "niveau": "t4",
+    "lecon": "t4-l2",
+    "fichier": "fichiers/TP_Teledetection.zip",
+    "titre": "Données de télédétection et scripts Python",
+    "taille": "5,8 Mo",
+    "description": "Images S2_2024-06-15_Tamda.tif et S2_2025-08-20_Tamda.tif : B2, B3, B4, B8, B11, B12, réflectance x 10 000."
+  },
+  {
+    "niveau": "t4",
+    "lecon": "t4-l3",
+    "fichier": "fichiers/py_04_composites.py",
+    "titre": "Script py_04 : compositions colorées",
+    "taille": "3 Ko",
+    "description": "Couleurs naturelles, infrarouge, SWIR et signatures spectrales des classes."
+  },
+  {
+    "niveau": "t5",
+    "lecon": "t5-l1",
+    "fichier": "fichiers/py_05_indices.py",
+    "titre": "Script py_05 : NDVI, SAVI, NDWI, NDBI",
+    "taille": "3 Ko",
+    "description": "Calcul des indices, GeoTIFF à 4 bandes et seuillage."
+  },
+  {
+    "niveau": "t5",
+    "lecon": "t5-l3",
+    "fichier": "fichiers/py_06_changements_incendie.py",
+    "titre": "Script py_06 : zone incendiée (dNBR)",
+    "taille": "3 Ko",
+    "description": "NBR avant/après, classes de sévérité, périmètre en shapefile."
+  },
+  {
+    "niveau": "t6",
+    "lecon": "t6-l2",
+    "fichier": "fichiers/py_07_kmeans.py",
+    "titre": "Script py_07 : K-means",
+    "taille": "2 Ko",
+    "description": "Classification non supervisée et méthode du coude."
+  },
+  {
+    "niveau": "t6",
+    "lecon": "t6-l4",
+    "fichier": "fichiers/py_08_random_forest.py",
+    "titre": "Script py_08 : Random Forest",
+    "taille": "3 Ko",
+    "description": "Extraction des pixels, entraînement, carte d'occupation du sol 2024."
+  },
+  {
+    "niveau": "t7",
+    "lecon": "t7-l1",
+    "fichier": "fichiers/py_09_evaluation.py",
+    "titre": "Script py_09 : évaluation",
+    "taille": "4 Ko",
+    "description": "Matrice de confusion, kappa, validation croisée, SVM et k-NN, filtre majoritaire, surfaces par commune."
+  },
+  {
+    "niveau": "t8",
+    "lecon": "t8-l1",
+    "fichier": "fichiers/risques_bassin_tamda.zip",
+    "titre": "Données risques du bassin",
+    "taille": "307 Ko",
+    "description": "Glissements, lithologie et autres couches de risques fictives (dossier TP\\Risques)."
+  },
+  {
+    "niveau": "t8",
+    "lecon": "t8-l2",
+    "fichier": "fichiers/py_10_susceptibilite_glissements.py",
+    "titre": "Script py_10 : susceptibilité aux glissements",
+    "taille": "4 Ko",
+    "description": "Random Forest présence/absence, courbe ROC, carte en 4 classes."
+  },
+  {
+    "niveau": "t8",
+    "lecon": "t8-l2",
+    "fichier": "fichiers/scripts_python.zip",
+    "titre": "Tous les scripts Python du parcours",
+    "taille": "17 Ko",
+    "description": "py_01 à py_10 et environnement_eniv.yml."
   }
 ];

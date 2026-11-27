@@ -1,0 +1,18 @@
+# Environnement conda du parcours Python (SIG ENIV) — logiciels libres et gratuits
+# Installation : conda env create -f environnement_eniv.yml   puis   conda activate eniv
+name: eniv
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - numpy
+  - pandas
+  - matplotlib
+  - geopandas
+  - rasterio
+  - scipy
+  - scikit-learn
+  - joblib
+  - jupyterlab
+  - folium
+  - mapclassify

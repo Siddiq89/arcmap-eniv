@@ -1,12 +1,17 @@
-SIG ENIV — Maîtrisez ArcMap, ArcGIS Pro et QGIS : de la première carte à l'analyse des risques naturels
+SIG ENIV — Maîtrisez ArcMap, ArcGIS Pro, QGIS et Python : de la première carte à l'analyse des risques naturels
 Enseignant : BOUHAFSI SIDDIQ
 =========================================================
 
-TROIS PARCOURS, chacun avec sa progression (onglets en haut de l'accueil)
+QUATRE PARCOURS, chacun avec sa progression (onglets en haut de l'accueil)
   ArcMap 10.8   : donnees/cours.js       (niveaux n1 à n8, 33 leçons)
   ArcGIS Pro    : donnees/cours_pro.js   (niveaux p1 à p8, 23 leçons ; niveau 5
                   ModelBuilder inspiré du programme de Fathy Geo Code)
   QGIS          : donnees/cours_qgis.js  (niveaux q1 à q8, 19 leçons)
+  Python et télédétection : donnees/cours_python.js (niveaux t1 à t8,
+                  25 leçons) : Python, GeoPandas, rasterio, indices NDVI/NBR,
+                  machine learning (K-means, Random Forest), glissements.
+                  Données : fichiers/TP_Teledetection.zip (images Sentinel-2
+                  fictives du bassin de l'oued Tamda) ; scripts py_01 à py_10.
 
 PARCOURS ARCMAP (8 niveaux, 33 leçons)
   1 Interface  2 Données  3 Symbologie  4 ArcToolbox  5 ModelBuilder
